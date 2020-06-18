@@ -3,17 +3,34 @@
 Decidim.configure do |config|
   config.application_name = "opensourcepolitics"
   config.mailer_sender = "ne-pas-repondre@opensourcepolitics.eu"
+  config.mailer_reply = "reply@opensourcepolitics.eu"
 
   # Change these lines to set your preferred locales
-  config.default_locale = :fr
-  config.available_locales = [:fr, :en, :ca, :es]
+  config.default_locale = :en
+  config.available_locales = [:en, :fr, :nl, :de]
+
+  config.maximum_attachment_height_or_width = 6000
+
+  # Restrict access to the system part with an authorized ip list.
+  # You can use a single ip like ("1.2.3.4"), or an ip subnet like ("1.2.3.4/24")
+  # You may specify multiple ip in an array ["1.2.3.4", "1.2.3.4/24"]
+  # config.system_whitelist_ips = ["127.0.0.1"]
 
   # Geocoder configuration
   config.geocoder = {
       static_map_url: "https://image.maps.cit.api.here.com/mia/1.6/mapview",
-      here_app_id: Rails.application.secrets.geocoder[:here_app_id],
-      here_app_code: Rails.application.secrets.geocoder[:here_app_code]
+      here_api_key: Rails.application.secrets.geocoder[:here_api_key],
+      here_app_id: "DEPRECATED",
+      here_app_code: "DEPRECATED"
   }
+
+  if defined?(Decidim::Initiatives) && defined?(Decidim::Initiatives.do_not_require_authorization)
+    Decidim::Initiatives.minimum_committee_members = 0
+    Decidim::Initiatives.default_signature_time_period_length = 6.months
+    Decidim::Initiatives.print_enabled = false
+    Decidim::Initiatives.default_components = []
+    Decidim::Initiatives.timestamp_service = "Decidim::Initiatives::UtcTimestamp"
+  end
 
   # Custom resource reference generator method
   # config.reference_generator = lambda do |resource, component|
@@ -40,7 +57,7 @@ Decidim.configure do |config|
   # that an organization's administrator injects malicious scripts to spy on or
   # take over user accounts.
   #
-  config.enable_html_header_snippets = false
+  config.enable_html_header_snippets = true
 
   # SMS gateway configuration
   #
@@ -87,7 +104,7 @@ Decidim.configure do |config|
   #   end
   # end
   #
-  # config.timestamp_service = "MyTimestampService"
+  config.timestamp_service = "Decidim::Initiatives::UtcTimestamp"
 
   # PDF signature service configuration
   #

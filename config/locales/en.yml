@@ -30,4 +30,45 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  decidim:
+    authorization_handlers:
+      admin:
+        decidim:
+          help:
+            - Validate with an external Decidim account
+        dummy_authorization_handler:
+          help:
+            - Validate with your external Decidim account
+        saml:
+          help:
+            - Validate with a CSAM eID account
+      decidim:
+        name: Omniauth Decidim
+        explanation: Validate with your external Decidim account
+      dummy_authorization_handler:
+        name: BOSA dummy authorization
+        explanation: Add additional informations to your account
+      saml:
+        name: CSAM eID
+        explanation: Validate with your CSAM eID account
+    authorization_modals:
+      content:
+        unauthorized:
+          explanation: Sorry, you are not allowed to perfom this action
+          invalid_field: "%{field} is not valid. %{value}"
+          ok: Close
+          title: Action forbidden
+    verifications:
+      authorizations:
+        index:
+          title: Authorizations list
+        first_login:
+          actions:
+            saml: Validate with your CSAM eID account
+            dummy_authorization_handler: Add additional informations to your account
+  layouts:
+    decidim:
+      footer:
+        download_open_data: Open data
+      user_profile:
+        back_to_account: Back to account
