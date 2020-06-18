@@ -4,9 +4,11 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
+# gem "decidim", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
+gem "decidim", git: "https://github.com/belighted/bosa-app-petition-decidim-middleware", branch: "alt/petition_merge"
 # gem "decidim-consultations", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
-gem "decidim-initiatives", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
+# gem "decidim-initiatives", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
+gem "decidim-initiatives", git: "https://github.com/belighted/bosa-app-petition-decidim-middleware", branch: "alt/petition_merge"
 
 # gem "decidim", path: "../decidim"
 # gem "decidim-consultations", path: "../decidim"
