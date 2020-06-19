@@ -4,22 +4,40 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
+# ----------------------------------------------------------------------------------------------------------------------
+
 # gem "decidim", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
-gem "decidim", git: "https://github.com/belighted/bosa-app-petition-decidim-middleware", branch: "alt/petition_merge"
-# gem "decidim-consultations", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
+# --------
+gem 'decidim', git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
+
+
 # gem "decidim-initiatives", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
-gem "decidim-initiatives", git: "https://github.com/belighted/bosa-app-petition-decidim-middleware", branch: "alt/petition_merge"
+# --------
+# Use default from original decidim
+gem "decidim-initiatives", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
-# gem "decidim", path: "../decidim"
-# gem "decidim-consultations", path: "../decidim"
-# gem "decidim-initiatives", path: "../decidim"
-
-gem "decidim-initiatives_no_signature_allowed", git: "https://github.com/OpenSourcePolitics/decidim-module-initiatives_nosignature_allowed.git", branch: "alt/petition"
-#gem "decidim-initiatives_no_signature_allowed", path: "../decidim-module-initiatives_nosignature_allowed"
-
+# gem "decidim-initiatives_no_signature_allowed", git: "https://github.com/OpenSourcePolitics/decidim-module-initiatives_nosignature_allowed.git", branch: "alt/petition"
+# TODO: prepare updated version of `decidim-initiatives_no_signature_allowed`
+#
 gem "decidim-term_customizer", git: "https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git", branch: "0.dev"
-gem "decidim-cookies", git:"https://github.com/OpenSourcePolitics/decidim-module_cookies", branch: "feature/orejime"
-gem "decidim-navbar_links", git: "https://github.com/OpenSourcePolitics/decidim-module-navbar_links", branch: "0.22.0.dev"
+# --------
+# TODO: prepare updated version
+
+
+# gem "decidim-cookies", git:"https://github.com/OpenSourcePolitics/decidim-module_cookies", branch: "feature/orejime"
+# --------
+# Is using decidim `release/0.22-stable` inside (in master branch)
+# need to test more to make sure everything is working as expected
+gem "decidim-cookies", git:"https://github.com/belighted/decidim-module-cookies"
+
+
+# gem "decidim-navbar_links", git: "https://github.com/OpenSourcePolitics/decidim-module-navbar_links", branch: "0.22.0.dev"
+# --------
+# Fake update to 0.22
+# It is using decidim v0.19 inside
+gem "decidim-navbar_links", git: "https://github.com/belighted/decidim-module-navbar_links", branch: "fake-v0.22.0"
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 gem "bootsnap"
 gem "puma"
