@@ -18,16 +18,20 @@ gem "decidim-initiatives", git: 'https://github.com/decidim/decidim', branch: "r
 
 # gem "decidim-initiatives_no_signature_allowed", git: "https://github.com/OpenSourcePolitics/decidim-module-initiatives_nosignature_allowed.git", branch: "alt/petition"
 # TODO: prepare updated version of `decidim-initiatives_no_signature_allowed`
-#
-gem "decidim-term_customizer", git: "https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git", branch: "0.dev"
+
+
+# gem "decidim-term_customizer", git: "https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git", branch: "0.dev"
 # --------
-# TODO: prepare updated version
+# Fake update to 0.22
+# It is using decidim v0.20 inside
+# TODO: get back to original https://github.com/mainio/decidim-module-term_customizer AFTER they upgrade it to official decidim 0.22 (otherwise can't properly bundle install because of dependency versions resolution)
+gem "decidim-term_customizer", git: "https://github.com/belighted/decidim-module-term_customizer.git", branch: "fake-v0.22"
 
 
 # gem "decidim-cookies", git:"https://github.com/OpenSourcePolitics/decidim-module_cookies", branch: "feature/orejime"
 # --------
-# Is using decidim `release/0.22-stable` inside (in master branch)
-# need to test more to make sure everything is working as expected
+# It is using decidim `release/0.22-stable` inside (in master branch) which is OK!
+# TODO: need to test more to make sure everything is working as expected. As for decidim versions - nothing to do! Yay!
 gem "decidim-cookies", git:"https://github.com/belighted/decidim-module-cookies"
 
 
@@ -35,6 +39,7 @@ gem "decidim-cookies", git:"https://github.com/belighted/decidim-module-cookies"
 # --------
 # Fake update to 0.22
 # It is using decidim v0.19 inside
+# TODO: Update to latest 0.22 if needed (and after it is officially released, otherwise can't properly bundle install because of dependency versions resolution)
 gem "decidim-navbar_links", git: "https://github.com/belighted/decidim-module-navbar_links", branch: "fake-v0.22.0"
 
 # ----------------------------------------------------------------------------------------------------------------------
