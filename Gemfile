@@ -5,23 +5,13 @@ source "https://rubygems.org"
 ruby RUBY_VERSION
 
 # ----------------------------------------------------------------------------------------------------------------------
-
-# gem "decidim", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
-# --------
 gem 'decidim', git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
 gem "decidim-verifications_omniauth", git: "https://github.com/belighted/decidim-module-verifications_omniauth"
-# gem "decidim-verifications_omniauth", path: "../decidim-module-verifications_omniauth"
 
-
-# gem "decidim-initiatives", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
-# --------
-# Use default from original decidim
 gem "decidim-initiatives", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
-# gem "decidim-initiatives_no_signature_allowed", git: "https://github.com/OpenSourcePolitics/decidim-module-initiatives_nosignature_allowed.git", branch: "alt/petition"
-# TODO: prepare updated version of `decidim-initiatives_no_signature_allowed`
-
+gem "decidim-initiatives_no_signature_allowed", git: "https://github.com/belighted/decidim-module-initiatives_nosignature_allowed"
 
 # gem "decidim-term_customizer", git: "https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git", branch: "0.dev"
 # --------
