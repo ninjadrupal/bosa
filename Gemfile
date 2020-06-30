@@ -10,6 +10,9 @@ ruby RUBY_VERSION
 # --------
 gem 'decidim', git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
+gem "decidim-verifications_omniauth", git: "https://github.com/belighted/decidim-module-verifications_omniauth"
+# gem "decidim-verifications_omniauth", path: "../decidim-module-verifications_omniauth"
+
 
 # gem "decidim-initiatives", git: "https://github.com/OpenSourcePolitics/decidim.git", branch: "alt/petition_merge"
 # --------
@@ -29,10 +32,7 @@ gem "decidim-term_customizer", git: "https://github.com/belighted/decidim-module
 
 
 # gem "decidim-cookies", git:"https://github.com/OpenSourcePolitics/decidim-module_cookies", branch: "feature/orejime"
-# --------
-# It is using decidim `release/0.22-stable` inside (in master branch) which is OK!
-# TODO: need to test more to make sure everything is working as expected. As for decidim versions - nothing to do! Yay!
-gem "decidim-cookies", git:"https://github.com/belighted/decidim-module-cookies"
+gem "decidim-cookies", git: "https://github.com/belighted/decidim-module-cookies"
 
 
 # gem "decidim-navbar_links", git: "https://github.com/OpenSourcePolitics/decidim-module-navbar_links", branch: "0.22.0.dev"
@@ -70,6 +70,7 @@ gem "rubyzip", require: "zip"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
+  gem 'pry-rails'
 
   gem "decidim-dev", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
   # gem "decidim-dev", path: "../decidim"
