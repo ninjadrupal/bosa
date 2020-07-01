@@ -558,6 +558,10 @@ fr:
       unavailable_scope: Portée indisponible
     menu:
       initiatives: Pétitions
+    proposals:
+      proposals:
+        edit:
+          attachment_legend: Ajouter une pièce jointe (facultatif)
     resources:
       initiatives_type:
         actions:

@@ -15,6 +15,14 @@ GIT
       decidim-core (= 0.22.0.rc1)
 
 GIT
+  remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
+  revision: ccbf0bfb3efb39435676ba5dbb3186e5f9a2c5a5
+  specs:
+    decidim-initiatives_no_signature_allowed (0.22.0.rc1)
+      decidim-core (= 0.22.0.rc1)
+      decidim-initiatives (= 0.22.0.rc1)
+
+GIT
   remote: https://github.com/belighted/decidim-module-navbar_links
   revision: 4fc4a2700d749696b39e3badeca3f6890920e35b
   branch: fake-v0.22.0
@@ -926,6 +934,7 @@ DEPENDENCIES
   decidim-cookies!
   decidim-dev!
   decidim-initiatives!
+  decidim-initiatives_no_signature_allowed!
   decidim-navbar_links!
   decidim-term_customizer!
   decidim-verifications_omniauth!
