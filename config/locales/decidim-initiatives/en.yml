@@ -1,3 +1,4 @@
+---
 en:
   activemodel:
     attributes:
@@ -9,12 +10,9 @@ en:
         attachments_enabled: Enable attachments
         child_scope_threshold_enabled: Enable child scope signatures
         comments_enabled: Enable comments
-        custom_signature_end_date_enabled: Enable authors to choose the end of signature
-          collection period
-        document_number_authorization_handler: Authorization to verify document number
-          on signatures
-        extra_fields_legal_information: Legal information about the collection of
-          personal data
+        custom_signature_end_date_enabled: Enable authors to choose the end of signature collection period
+        document_number_authorization_handler: Authorization to verify document number on signatures
+        extra_fields_legal_information: Legal information about the collection of personal data
         only_global_scope_enabled: Only allow global scope initiatives creation
 
       initiatives_vote:
@@ -67,13 +65,10 @@ en:
       initiatives:
         milestone_completed:
           support_threshold_reached:
-            email_intro: The initiative %{resource_title} has reached the support
-              threshold
-            email_outro: You have received this notification because you are an admin
-              of the platform.
+            email_intro: The initiative %{resource_title} has reached the support threshold
+            email_outro: You have received this notification because you are an admin of the platform.
             email_subject: Support threshold reached
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a>
-              initiative has reached the support threshold
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> initiative has reached the support threshold
 
     initiatives:
       admin:

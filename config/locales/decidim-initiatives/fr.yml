@@ -2,9 +2,13 @@
 fr:
   activemodel:
     attributes:
+      group:
+        avatar: Avatar
       initiative:
+        area_id: "Zone d'application"
         answer: Réponse
-        answer_url: Lien externe
+        answer_date: Date de réponse
+        answer_url: Lien associé
         decidim_user_group_id: Auteur
         description: Description
         offline_votes: Votes en présentiel
@@ -30,11 +34,15 @@ fr:
       initiatives_committee_member:
         user: Membre du Comité de promotion
       initiatives_type:
+        area_enabled: Enable authors to choose the area for their initiative
+        attachments_enabled: Enable attachments
         banner_image: Image d'en-tête
         child_scope_threshold_enabled: Activer les signatures des sous-périmètres
         collect_user_extra_fields: Collecter les données personnelles de l'utilisateur
           lors de la signature
         comments_enabled: Activer les commentaires
+        custom_signature_end_date_enabled: Enable authors to choose the end of signature
+          collection period
         description: Description
         document_number_authorization_handler: Niveau d'autorisation nécessaire pour
           signer les pétitions de ce type
@@ -57,10 +65,20 @@ fr:
         document_number: Numéro de document
         name_and_surname: Nom et surnom
         postal_code: Code postal
+        resident: Je réside dans le périmètre sélectionné
+        user_scope_id: Périmètre
       organization_data:
         address: Adresse
         id_document: Document d'identité
         name: Nom complet
+    errors:
+      models:
+        initiative:
+          attributes:
+            attachment:
+              file: File is invalid
+              needs_to_be_reattached: Needs to be reattached
+              title: Title shouldn't be empty
   activerecord:
     models:
       decidim/initiative:
@@ -75,15 +93,45 @@ fr:
   decidim:
     admin:
       actions:
+        configure: Configure
+        confirm_destroy: Confirm destroy
+        destroy: Destroy
+        new: New
         new_initiative_type: Nouveau type de pétition
+        publish: Publish
+        unpublish: Unpublish
+      filters:
+        decidim_area_id_eq:
+          label: "Zones d'application"
+        search_placeholder:
+          title_or_description_cont: Recherche %{collection} par titre ou description.
+          title_or_description_or_id_string_or_author_name_or_author_nickname_cont: Recherche
+            %{collection} par titre, description, ID ou nom d'auteur.
+        state_eq:
+          values:
+            accepted: Accepté
+            classified: Classée
+            created: Créé
+            debatted: Débattue
+            discarded: Rejeté
+            examinated: Examinée
+            published: Publié
+            rejected: Rejeté
+            validating: Validation technique
+        type_id_eq:
+          label: Type
       menu:
         initiatives: Pétitions
         initiatives_types: Types de pétition
+        participatory_processes_submenu:
+          moderations: Moderations
       models:
         initiatives:
           fields:
+            answered_at: Répondu à
             created_at: Créé à
             id: ID
+            published_at: Publié à l'adresse
             state: État
             supports_count: Signatures
             title: Pétitions
@@ -145,6 +193,14 @@ fr:
             email_subject: Nouvelle étape franchie !
             notification_title: La pétition <a href="%{resource_path}">%{resource_title}</a>
               a atteint %{percentage}% de signatures requises.
+          support_threshold_reached:
+            email_intro: The initiative %{resource_title} has reached the support
+              threshold
+            email_outro: You have received this notification because you are an admin
+              of the platform.
+            email_subject: Support threshold reached
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a>
+              initiative has reached the support threshold
     gamification:
       badges:
         initiatives:
@@ -220,6 +276,8 @@ fr:
         content_blocks:
           highlighted_initiatives:
             max_results: Quantité maximale d'éléments à afficher
+        exports:
+          initiatives: Initiatives
         initiatives:
           edit:
             accept: Accepter la pétition
@@ -247,6 +305,11 @@ fr:
             preview: Aperçu
             print: Impression
             search: Rechercher
+          initiative_attachments:
+            documents: Documents
+            edit: Edit
+            new: New
+            photos: Photos
           show:
             print: Impression
           update:
@@ -302,11 +365,28 @@ fr:
           update: "%{user_name} a mis à jour la pétition %{resource_name}"
       admin_states:
         accepted: Acceptée
+        classified: Classée
         created: Créée
+        debatted: Débattue
         discarded: Retirée
+        examinated: Examinée
         published: Publiée
         rejected: Rejetée
         validating: Validation technique
+      application_helper:
+        filter_area_values:
+          all: All
+        filter_scope_values:
+          all: Tous
+        filter_state_values:
+          accepted: Assez de signatures
+          all: Tous
+          answered: 'Réponse '
+          closed: Fermé
+          open: Ouvrez
+          rejected: Pas assez de signatures
+        filter_type_values:
+          all: Tous
       committee_requests:
         new:
           continue: Continuer
@@ -329,13 +409,17 @@ fr:
             </ul>
           initiative_type: Type de pétition
           more_information: "(Plus d'informations)"
+          select_area: "Sélectionnez une zone d'application"
           select_scope: Sélectionnez une portée
         finish:
           back: Retour
           back_to_initiatives: Retour à l'index des pétitions
           callout_text: Bravo ! Votre pétition a été créée avec succès.
+          confirm: Confirmer
+          edit_my_initiative: Modifier mon initiative
           go_to_my_initiatives: Consulter mes pétitions
           more_information: "(Plus d'informations)"
+          send_my_initiative: Envoyer pour validation
         finish_help:
           access_reminder: Rappelez-vous que vous serez toujours en mesure d'accéder
             à vos pétitions via le menu utilisateur.
@@ -442,6 +526,7 @@ fr:
       initiatives:
         author:
           deleted: Supprimé
+          identifier: 'Identifiant: <b>N°%{identifier}</b>'
         author_list:
           hidden_authors_count:
             one: et 1 autre personne
@@ -453,13 +538,17 @@ fr:
         edit:
           attachment_legend: Ajouter une pièce jointe (Facultatif) 
         filters:
+          select_an_area: "Sélectionnez une zone d'application"
           any: Toutes les pétitions
+          area: "Zones d'application"
           author: Auteur
           closed: Fermées
           myself: Mes pétitions
           open: En cours
+          scope: Champ d'application
           search: Rechercher
           state: État
+          sort: Sort
           type: Type
           type_prompt: Sélectionnez un type
         filters_small_view:
@@ -475,27 +564,35 @@ fr:
               one: Commentaire
               other: commentaires
         orders:
+          answer_date: Date de réponse
           label: 'Trier les pétitions par :'
           most_commented: Les plus commentées
           most_voted: Les plus soutenues
           random: Aléatoire
           recent: Les plus récentes
+          recently_published: Dernière publication
         result:
           answer_title:
-            accepted: Cette proposition a été acceptée car
-            created: Cette proposition a été créée
-            discarded: Cette proposition a été rejetée car
-            published: Cette proposition est publiée parce que
-            rejected: Cette proposition a été rejetée parce que
-            validating: Cette proposition est en cours d'évaluation
-          initiative_rejected_reason: Cette pétition a été rejetée car elle n'a
+            accepted: Cette initiative a été acceptée car
+            classified: Cette initiative a été classée parce que
+            created: Cette initiative a été créée
+            debatted: Cette initiative a été débattue parce que
+            discarded: Cette initiative a été rejetée car
+            examinated: Cette initiative a été examinée pour les raisons suivantes
+            published: Cette initiative est publiée parce que
+            rejected: Cette initiative a été rejetée parce que
+            validating: Cette initiative est en cours d'évaluation
+          initiative_rejected_reason: Cette initiative a été rejetée car elle n'a
             pas atteint le nombre de signatures requis dans le délai de collecte.
         show:
           any_vote_method: Cette pétition recueille des signatures en ligne ainsi
             qu'en présentiel.
           follow_description: Recevoir une notification lorsqu'il y a des actualités
             sur cette pétition
+          of_versions: "(of %{number})"
           offline_method: Cette pétition ne recueille que des soutiens en présentiel.
+          see_other_versions: voir les autres versions
+          version: Version %{number}
         signature_identities:
           select_identity: Sélectionner l'identifiant de l'utilisateur
         signatures_count:
@@ -545,6 +642,17 @@ fr:
           highlighted_initiatives:
             active_initiatives: Pétitions actives
             see_all_initiatives: Voir toutes les pétitions
+      show:
+        badge_name:
+          accepted: Assez de signatures
+          classified: Classée
+          created: Créé
+          debatted: Débattue
+          discarded: Rejeté
+          examinated: Examinée
+          published: Publié
+          rejected: Pas assez de signatures
+          validating: Validation technique
       state:
         accepted: Acceptée
         created: Créée
@@ -554,10 +662,29 @@ fr:
         validating: Validation technique
       states:
         accepted: Acceptées
+        classified: Classée
+        debatted: Débattue
+        examinated: Examinée
         expired: Expirées
       unavailable_scope: Portée indisponible
+      versions:
+        index:
+          number_of_versions: Versions
+          title: Versions
+        shared:
+          back_to_initiative: Go back to initiative
+          changes_at_title: Changes at "%{title}"
+        show:
+          show_all_versions: Show all versions
+          version_author: Version author
+          version_created_at: Version created at
+          version_number_out_of_total: "%{current_version} out of %{total_count}"
+        version:
+          version_index: Version %{index}
     menu:
       initiatives: Pétitions
+    progress_bar:
+      number_delimiter: "."
     proposals:
       proposals:
         edit:
@@ -568,6 +695,8 @@ fr:
           create: Créer une pétition
           vote: Signer une pétition
           title: Actions
+    scopes:
+      global: Global
   layouts:
     decidim:
       admin:
