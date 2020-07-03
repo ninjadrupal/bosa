@@ -36,6 +36,4 @@ module UpdateInitiativeTypeExtend
   end
 end
 
-Decidim::Initiatives::Admin::UpdateInitiativeType.class_eval do
-  include UpdateInitiativeTypeExtend
-end
+Decidim::Initiatives::Admin::UpdateInitiativeType.send(:include, UpdateInitiativeTypeExtend)
