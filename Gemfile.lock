@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
-  revision: 7effc8713864badc1404692304e9fd32525bbda4
+  revision: af0f64293972c83265a6a23c773524e89024fd88
   specs:
     decidim-initiatives_no_signature_allowed (0.22.0.rc1)
       decidim-core (= 0.22.0.rc1)
