@@ -9,7 +9,6 @@
   <div class="medium-centered">
     <div class="callout secondary">
       <%== t ".fill_data_help" %>
-      <%= link_to t(".more_information"), decidim.page_path("initiatives"), target: "_blank" %>.
     </div>
   </div>
 </div>
@@ -18,7 +17,7 @@
   <div class="medium-centered">
     <div class="card">
       <div class="card__content">
-        <%= decidim_form_for(@form, url: next_wizard_path, method: :put, html: { class: "form new_initiative_form" }) do |f| %>
+        <%= decidim_form_for(@form, url: next_wizard_path, method: :put, html: {class: "form new_initiative_form"}) do |f| %>
           <%= f.hidden_field :type_id %>
           <div class=section>
             <% unless single_initiative_type? %>
@@ -33,7 +32,7 @@
             </div>
 
             <div class="field">
-              <%= f.text_area :description, rows: 8, maxlength: 10000, autocomplete: :off, required: true %>
+              <%= f.editor :description, lines: 8, toolbar: :full, required: true %>
             </div>
 
             <% if initiative_type.no_signature_allowed? %>
@@ -56,7 +55,7 @@
             <% else %>
               <div class="field">
                 <%= f.select :scope_id,
-                             scopes.map { |scope| [translated_attribute(scope.scope_name), scope&.scope&.id] },
+                             scopes.map {|scope| [translated_attribute(scope.scope_name), scope&.scope&.id]},
                              prompt: t(".select_scope") %>
               </div>
             <% end %>
@@ -70,36 +69,38 @@
             <% if Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
               <div class="field">
                 <%= f.select :decidim_user_group_id,
-                             Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.map { |g| [g.name, g.id] },
+                             Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.map {|g| [g.name, g.id]},
                              prompt: current_user.name %>
               </div>
             <% end %>
 
-            <fieldset>
-              <legend><b><%= t("attachment_legend", scope: "decidim.initiatives.initiatives.edit") %></b></legend>
-              <div id="attachment-wrapper">
-                <%= f.fields_for :attachment, @form.attachment do |nested_form| %>
-                  <div class="field">
-                    <%= nested_form.text_field :title %>
-                  </div>
+            <% if initiative_type.attachments_enabled? %>
+              <fieldset>
+                <legend><b><%= t("attachment_legend", scope: "decidim.initiatives.initiatives.edit") %></b></legend>
+                <div id="attachment-wrapper">
+                  <%= f.fields_for :attachment, @form.attachment do |nested_form| %>
+                    <div class="field">
+                      <%= nested_form.text_field :title %>
+                    </div>
 
-                  <div class="field">
-                    <%= nested_form.upload :file, optional: false, accept: "application/pdf" %>
-                  </div>
+                    <div class="field">
+                      <%= nested_form.upload :file, optional: false, accept: "application/pdf" %>
+                    </div>
 
-                  <% if @form.errors[:attachment].present? %>
-                    <% @form.errors[:attachment].each do |message| %>
-                      <small class="form-error is-visible">
-                        <%= message %>
-                      </small>
+                    <% if @form.errors[:attachment].present? %>
+                      <% @form.errors[:attachment].each do |message| %>
+                        <small class="form-error is-visible">
+                          <%= message %>
+                        </small>
+                      <% end %>
                     <% end %>
                   <% end %>
-                <% end %>
-              </div>
-            </fieldset>
+                </div>
+              </fieldset>
+            <% end %>
           </div>
           <div class="actions">
-            <%= f.submit t(".continue"), class: "button expanded", data: { disable_with: t(".continue") } %>
+            <%= f.submit t(".continue"), class: "button expanded", data: {disable_with: t(".continue")} %>
           </div>
         <% end %>
       </div>

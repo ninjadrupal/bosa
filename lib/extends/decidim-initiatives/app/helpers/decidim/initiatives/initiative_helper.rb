@@ -15,7 +15,6 @@ module InitiativeHelperExtend
     #
     # Returns a String.
     def state_badge_css_class(initiative)
-      return "success" if initiative.accepted?
       return "success" if initiative.accepted? || initiative.debatted? || initiative.published?
       return "alert" if initiative.classified?
 
@@ -58,7 +57,6 @@ module InitiativeHelperExtend
         request.env[:available_authorizations] = permissions_for(:vote, initiative.type)
       else
         html_options["data-open"] = "authorizationModal"
-        html_options["data-open-url"] = authorization_sign_modal_initiative_path(initiative)
         html_options["data-open-url"] = authorization_sign_modal_initiative_path(initiative, redirect: action)
       end
 
