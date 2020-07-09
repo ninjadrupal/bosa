@@ -22,4 +22,4 @@ module ConfirmationsControllerExtend
   end
 end
 
-Devise::ConfirmationsController.send(:include, ConfirmationsControllerExtend)
+#Devise::ConfirmationsController.send(:include, ConfirmationsControllerExtend)

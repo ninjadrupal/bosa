@@ -15,6 +15,12 @@ module DecidimAws
 
     Decidim.unconfirmed_access_for = 0.days
 
+    config.to_prepare do
+      Dir.glob("#{Rails.root}/lib/extends/**/*.rb").each do |override|
+        require_dependency override
+      end
+    end
+
     # config.action_mailer.asset_host = "https://broom.osp.cat"
     # config.session_store :active_record_store,
     #   :key => '_decidim_session'

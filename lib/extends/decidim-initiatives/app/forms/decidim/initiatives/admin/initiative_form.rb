@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "active_support/concern"
 
-module InitiativeFormExtend
+module AdminInitiativeFormExtend
   extend ActiveSupport::Concern
 
   included do
@@ -29,8 +29,7 @@ module InitiativeFormExtend
         end
       end
     end
-
   end
 end
 
-Decidim::Initiatives::Admin::InitiativeForm.send(:include, InitiativeFormExtend)
+Decidim::Initiatives::Admin::InitiativeForm.send(:include, AdminInitiativeFormExtend)
