@@ -1,5 +1,6 @@
 
 require "extends/decidim-core/lib/decidim/view_model"
+require "extends/decidim-core/app/uploaders/decidim/attachment_uploader"
 require "extends/decidim-core/app/models/decidim/user"
 require "extends/decidim-core/app/cells/decidim/progress_bar_cell"
 
