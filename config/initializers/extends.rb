@@ -5,6 +5,7 @@ require "extends/decidim-core/app/cells/decidim/progress_bar_cell"
 
 require "extends/decidim-initiatives/app/helpers/decidim/initiatives/application_helper"
 require "extends/decidim-initiatives/app/helpers/decidim/initiatives/initiative_helper"
+require "extends/decidim-initiatives/app/cells/decidim/initiatives/initiative_m_cell"
 require "extends/decidim-initiatives/app/permissions/decidim/initiatives/admin/permissions"
 require "extends/decidim-initiatives/app/forms/decidim/initiatives/admin/initiative_type_form"
 require "extends/decidim-initiatives/app/forms/decidim/initiatives/admin/initiative_form"
