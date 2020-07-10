@@ -107,6 +107,10 @@ module Decidim
     after_save :notify_state_change
     after_create :notify_creation
 
+    alias_method :online?, :online_signature_type?
+    alias_method :offline?, :offline_signature_type?
+    alias_method :any?, :any_signature_type?
+
     searchable_fields({
                         participatory_space: :itself,
                         A: :title,
