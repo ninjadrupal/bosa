@@ -5,6 +5,9 @@ module InitiativeSignaturesControllerExtend
   extend ActiveSupport::Concern
 
   included do
+
+    helper_method :initiative_type, :extra_data_legal_information, :user_scopes
+
     # GET /initiatives/:initiative_id/initiative_signatures/:step
     def show
       group_id = params[:group_id] || (session[:initiative_vote_form] ||= {})["group_id"]
@@ -101,6 +104,11 @@ module InitiativeSignaturesControllerExtend
 
       session[:initiative_vote_form] = session[:initiative_vote_form].merge(@vote_form.attributes_with_values)
     end
+
+    def user_scopes
+      @user_scopes ||= current_organization.scopes
+    end
+
   end
 end
 
