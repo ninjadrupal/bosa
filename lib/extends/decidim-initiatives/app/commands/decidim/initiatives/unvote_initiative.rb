@@ -17,7 +17,7 @@ module UnvoteInitiativeExtend
     private
 
     def destroy_initiative_vote
-      Initiative.transaction do
+      Decidim::Initiative.transaction do
         @initiative.votes.where(author: @current_user).destroy_all
       end
     end

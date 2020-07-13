@@ -149,7 +149,7 @@ module VoteFormExtend
     def authorization
       return unless signer && handler_name
 
-      @authorization ||= Verifications::Authorizations.new(
+      @authorization ||= Decidim::Verifications::Authorizations.new(
         organization: signer.organization,
         user: signer,
         name: handler_name

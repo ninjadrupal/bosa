@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "active_support/concern"
 
-module PermissionsExtend
+module AdminPermissionsExtend
   extend ActiveSupport::Concern
 
   included do
@@ -118,4 +118,4 @@ module PermissionsExtend
   end
 end
 
-Decidim::Initiatives::Admin::Permissions.send(:include, PermissionsExtend)
+Decidim::Initiatives::Admin::Permissions.send(:include, AdminPermissionsExtend)

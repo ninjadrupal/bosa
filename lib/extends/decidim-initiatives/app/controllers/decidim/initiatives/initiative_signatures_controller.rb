@@ -31,7 +31,7 @@ module InitiativeSignaturesControllerExtend
           group_id: group_id
       )
 
-      VoteInitiative.call(@form) do
+      Decidim::Initiatives::VoteInitiative.call(@form) do
         on(:ok) do
           current_initiative.reload
           render :update_buttons_and_counters
@@ -70,7 +70,7 @@ module InitiativeSignaturesControllerExtend
       if sms_step?
         @confirmation_code_form = Decidim::Verifications::Sms::ConfirmationForm.from_params(parameters)
 
-        ValidateSmsCode.call(@confirmation_code_form, session_sms_code) do
+        Decidim::Initiatives::ValidateSmsCode.call(@confirmation_code_form, session_sms_code) do
           on(:ok) { clear_session_sms_code }
 
           on(:invalid) do
@@ -81,7 +81,7 @@ module InitiativeSignaturesControllerExtend
         end
       end
 
-      VoteInitiative.call(@vote_form) do
+      Decidim::Initiatives::VoteInitiative.call(@vote_form) do
         on(:ok) do
           session[:initiative_vote_form] = {}
         end

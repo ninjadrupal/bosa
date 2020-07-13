@@ -14,7 +14,7 @@ module InitiativeVotesControllerExtend
         signer: current_user
       )
 
-      VoteInitiative.call(@form, current_user) do
+      Decidim::Initiatives::VoteInitiative.call(@form, current_user) do
         on(:ok) do
           current_initiative.reload
           render :update_buttons_and_counters
@@ -32,7 +32,7 @@ module InitiativeVotesControllerExtend
     def destroy
       enforce_permission_to :unvote, :initiative, initiative: current_initiative
 
-      UnvoteInitiative.call(current_initiative, current_user) do
+      Decidim::Initiatives::UnvoteInitiative.call(current_initiative, current_user) do
         on(:ok) do
           current_initiative.reload
           render :update_buttons_and_counters

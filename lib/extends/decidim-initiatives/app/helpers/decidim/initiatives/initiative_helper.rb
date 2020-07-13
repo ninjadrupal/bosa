@@ -124,7 +124,7 @@ module InitiativeHelperExtend
       return unless current_user
 
       Decidim::Initiatives::InitiativeTypes.for(current_user.organization).inject do |result, type|
-        result && ActionAuthorizer.new(current_user, :create, type, type).authorize.ok?
+        result && Decidim::ActionAuthorizer.new(current_user, :create, type, type).authorize.ok?
       end
     end
 

@@ -21,7 +21,7 @@ module VoteInitiativeExtend
 
       percentage_before = initiative.percentage
 
-      Initiative.transaction do
+      Decidim::Initiative.transaction do
         create_votes
       end
 

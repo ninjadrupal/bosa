@@ -13,7 +13,7 @@ module InitiativeFormExtend
     end
 
     def initiative_type
-      @initiative_type ||= InitiativesType.find(type_id)
+      @initiative_type ||= Decidim::InitiativesType.find(type_id)
     end
 
     def available_scopes
@@ -24,21 +24,21 @@ module InitiativeFormExtend
                             end
     end
 
-    # def scope
-    #   @scope ||= Scope.find(scope_id) if scope_id.present?
-    # end
-    #
-    # private
-    #
+    def scope
+      @scope ||= Decidim::Scope.find(scope_id) if scope_id.present?
+    end
+
+    private
+
     # def scope_exists
     #   return if scope_id.blank?
     #
     #   errors.add(:scope_id, :invalid) unless InitiativesTypeScope.where(type: initiative_type, scope: scope).exists?
     # end
-    #
-    # def type
-    #   @type ||= Decidim::InitiativesType.find(type_id)
-    # end
+
+    def type
+      @type ||= Decidim::InitiativesType.find(type_id)
+    end
 
   end
 end
