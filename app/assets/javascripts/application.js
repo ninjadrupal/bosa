@@ -12,5 +12,7 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require_tree .
 //= require decidim
+//= require decidim/date_picker.js
+//= require decidim/translations.js
+//= require decidim/initiatives/similar_initiatives.js
