@@ -11,8 +11,16 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  # devise_scope :user do
+  #   get '/admin_sign_in', to: "decidim/devise/sessions#new"
+  # end
   devise_scope :user do
     get '/admin_sign_in', to: "decidim/devise/sessions#new"
+    post "omniauth_registrations" => "devise/omniauth_registrations#create"
+    match "users/auth/:provider/logout",
+          to: "devise/omniauth_registrations#logout",
+          as: :user_omniauth_logout,
+          via: [:get, :post, :delete]
   end
 
   # authenticate(:user) do
