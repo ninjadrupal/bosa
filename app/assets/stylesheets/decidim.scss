@@ -20,6 +20,7 @@ $secondary: #e94b4e;
 // $google: #dd4b39;
 
 @import "decidim/application";
+@import "decidim/extends/*";
 
 // @import "fontface";
 // TODO : PR on decidim-core/app/assets/stylesheets/decidim/utils/_settings.scss to add !default on this variable.

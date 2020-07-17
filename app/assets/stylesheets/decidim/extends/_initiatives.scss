@@ -1,0 +1,24 @@
+.initiative-authors {
+  .publish-date {
+    margin-right: 15px;
+  }
+
+  .reference {
+    display: inline-block;
+    margin-left: -10px;
+  }
+}
+
+.area-header {
+  span {
+    padding: 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+
+    img {
+      max-width: 75%
+    }
+  }
+}
