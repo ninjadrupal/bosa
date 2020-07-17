@@ -20,3 +20,18 @@ user.save!
 6. Fill the rest of the form and submit it.
 
 You're good to go!
+
+## Capistrano deployment
+
+You can deploy app via capistrano utils. Currently we support following stages: `staging`.
+
+We have included support for:
+
+* puma management
+* sidekiq management via systemd
+
+Commands:
+
+* `bundle exec cap -T` - list of available capistrano tasks
+* `bundle exec cap staging deploy` - deploy app to staging
+* `BRANCH=master bundle exec cap staging deploy` - deploy specific branch to staging(default: master)
