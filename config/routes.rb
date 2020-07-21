@@ -42,6 +42,15 @@ Rails.application.routes.draw do
 
   # get "/search", to: redirect('/404')
 
+  Decidim::Api::Engine.routes.draw do
+    # get "/graphiql", to: "graphiql#show", graphql_path: "/api", as: :graphiql
+    # mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api", as: :graphiql
+    post "/translate", to: "translation#translate"
+    # get "/docs", to: "documentation#show", as: :documentation
+    # get "/", to: redirect("/api/docs")
+    # post "/" => "queries#create", as: :root
+  end
+
   mount Decidim::Core::Engine => '/'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
