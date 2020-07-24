@@ -5,8 +5,12 @@ module OrganizationAppearanceFormExtend
   extend ActiveSupport::Concern
 
   included do
+
+    DEEPL_LOCALES = %w(EN DE FR ES PT IT NL PL RU).freeze
+
     attribute :header_snippets, String
     attribute :enable_custom_colors, Virtus::Attribute::Boolean
+
   end
 end
 

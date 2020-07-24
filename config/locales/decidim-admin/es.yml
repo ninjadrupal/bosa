@@ -1,0 +1,20 @@
+---
+es:
+  decidim:
+    admin:
+      officializations:
+        index:
+          filter:
+            all: Todos
+            not_officialized: No validado
+            officialized: Validado
+          filter_by: Filtrar por
+          search: Busca en
+          show_email: Mostrar dirección de correo electrónico
+        show_email_modal:
+          description: Si necesita contactar directamente con un participante, puede hacer clic en el botón Ver para ver la dirección de correo electrónico. Esta acción será registrada.
+          email_address: Dirección de correo electrónico
+          full_name: Nombre y apellido
+          hidden: oculto
+          show: Ver
+          title: Mostrar la dirección de correo electrónico del participante

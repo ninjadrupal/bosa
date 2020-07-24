@@ -8,6 +8,8 @@ module AdminInitiativeFormExtend
 
     attribute :offline_votes, Hash
 
+    validate :title, :title_max_length
+
     def map_model(model)
       self.type_id = model.type.id
       self.decidim_scope_id = model.scope&.id
@@ -29,6 +31,22 @@ module AdminInitiativeFormExtend
         end
       end
     end
+
+    # def signature_type_updatable?
+    #   @signature_type_updatable ||= begin
+    #                                   state ||= context.initiative.state
+    #                                   state == "validating" && context.current_user.admin?
+    #                                 end
+    # end
+
+    def title_max_length
+      title.each do |locale, value|
+        if value.length > 150
+          errors.add("title_#{locale}".to_s, :too_long, { count: 150 })
+        end
+      end
+    end
+
   end
 end
 
