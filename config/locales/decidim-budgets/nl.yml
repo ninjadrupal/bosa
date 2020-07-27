@@ -1,0 +1,14 @@
+---
+nl:
+  decidim:
+    budgets:
+      projects:
+        filters:
+          category_prompt: Select a category
+          scope: Scope
+        orders:
+          highest_cost: Highest cost
+          label: Order projects by
+          lowest_cost: Lowest cost
+          most_voted: Most voted
+          random: Random order

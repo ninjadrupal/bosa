@@ -1,0 +1,30 @@
+---
+es:
+  decidim:
+    assemblies:
+      pages:
+        home:
+          highlighted_assemblies:
+            assemblies_button_title: Enlace a la página de ensamblajes que muestra todos los ensamblajes
+      show:
+        social_networks_title: Comparte esta reunión en
+      statistics:
+        posts_count: Mensajes
+
+    conferences:
+      pages:
+        home:
+          highlighted_conferences:
+            conferences_button_title: Enlace a la página de la conferencia que muestra todas las conferencias
+
+    pages:
+      home:
+        hero:
+          participate_title: Participar en los procesos de la plataforma
+        sub_hero:
+          register_title: Regístrese para crear una cuenta en la plataforma
+    participatory_processes:
+      pages:
+        home:
+          highlighted_processes:
+            processes_button_title: Enlace a la página de procesos que muestra todos los procesos

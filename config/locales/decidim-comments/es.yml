@@ -1,0 +1,10 @@
+---
+es:
+  decidim:
+    events:
+      comments:
+        user_group_mentioned:
+          email_intro: Se ha mencionado un grupo al que usted pertenece
+          email_outro: Recibió esta notificación porque es miembro del grupo %{nombre_del_grupo} que se mencionó en %{título_de_recursos}.
+          email_subject: Usted ha sido mencionado en %{resource_title} como miembro de %{group_name}.
+          notification_title: Usted fue mencionado en <a href="%{resource_path}">%{resource_title}</a> por <a href="%{author_path}">%{author_name} %{author_nickname}</a> como miembro de <a href="%{group_path}">%{group_nickname}</a>

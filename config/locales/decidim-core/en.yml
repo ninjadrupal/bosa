@@ -1,0 +1,28 @@
+---
+en:
+  comments:
+    translate: Translate
+    translated: Translated
+
+  decidim:
+    authorization_modals:
+      content:
+        ok:
+          authorize: Already authorized
+          explanation: "%{authorization}"
+          title: Authorization confirmed
+
+    translate:
+      original: Translate text
+      tooltip: Translated with Deepl
+      translated: Back to the original version
+
+  devise:
+    registrations:
+      logout:
+        error: Could not sign you out from %{kind}.
+        success: Successfully signed out from your %{kind} account.
+
+  errors:
+    messages:
+      taken: Taken

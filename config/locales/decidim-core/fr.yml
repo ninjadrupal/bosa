@@ -1,0 +1,117 @@
+---
+fr:
+  activemodel:
+    models:
+      decidim/promote_to_admin: Promu comme administrateur du groupe
+      decidim/resource_endorsed_event: Ressource soutenue
+  activerecord:
+    models:
+      decidim/endorsement:
+        one: Soutien
+        other: Soutiens
+
+  carrierwave:
+    errors:
+      general: Il y a eu une erreur lors du chargement de l'image
+  comments:
+    translate: Traduire
+    translated: Traduit
+  decidim:
+    accessibility:
+      logo: "%{organisation} logo officiel de l'organisation"
+      skip_button: Passer au contenu principal
+    admin:
+      actions:
+        cancel: Annuler
+    admin_log:
+      user:
+        show_email: "%{user_name} a consulté le courrier électronique du participant %{resource_name}"
+    admin_terms_of_use:
+      default_body: "<h2>ADMIN CONDITIONS D'UTILISATION</h2><p>Nous espérons que vous avez reçu la leçon habituelle de l'administrateur système local. Cela se résume généralement à ces trois choses:</p><ol><li>Respecter la vie privée des autres.</li><li>Penser avant de cliquer.</li><li>Avec un grand pouvoir vient une grande responsabilité.</li></ol>"
+
+    application:
+      document:
+        download: Télécharger le fichier
+    author:
+      avatar: Avatar
+      endorsements:
+        one: soutien
+        other: soutiens
+    authorization_modals:
+      content:
+        ok:
+          authorize: Déjà autorisé
+          explanation: "%{autorisation}> %{autorisation"
+          title: Autorisation confirmée
+
+    endorsement_buttons_cell:
+      already_endorsed: Soutenu
+      endorse: Soutenir
+    endorsements:
+      identities:
+        done: Fait
+        select_identity: Sélectionner une identité
+    events:
+      resource_endorsed:
+        email_intro: '%{endorser_name} %{endorser_nickname}, que vous suivez, vient de soutenir "%{resource_title}" et nous pensons que cela pourrait vous intéresser. Consultez-le et contribuez :'
+        email_outro: Vous avez reçu cette notification parce que vous suivez %{endorser_nickname}. Vous pouvez arrêter de recevoir des notifications en cliquant sur le lien précédent.
+        email_subject: "%{endorser_nickname} a soutenu une nouvelle ressource"
+        notification_title: Le <a href="%{resource_path}">%{resource_title}</a> %{resource_type} a été approuvé par <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>.
+
+    follows:
+      create:
+        participatory_space: Espace participatif suivi
+
+    messaging:
+      conversations:
+        show:
+          not_allowed: Cet utilisateur n'accepte plus de messages directs.
+
+    notifications_settings:
+      show:
+        allow_public_contact: Permettre à n'importe qui de m'envoyer un message direct, même si je ne le suis pas.
+        direct_messages: Recevoir des messages directs de n'importe qui.
+
+    progress_bar:
+      show:
+        number_delimiter: "."
+    resource_endorsements:
+      create:
+        error: Il y a eu un problème pour soutenir la ressource.
+    shared:
+      results_per_page:
+        title: Sélectionnez le nombre de résultats par page
+    translate:
+      original: Traduire le texte
+      tooltip: Traduit avec Deepl
+      translated: Revenir à la version originale
+    user_contact_disabled: Ce participant n'accepte pas les messages directs.
+
+  devise:
+    omniauth_callbacks:
+      failure: 'Impossible de vous authentifier à partir de "%{kind}" : %{reason}.'
+      success: Authentifié avec succès à partir de votre compte "%{kind}".
+    registrations:
+      logout:
+        error: Impossible de vous déconnecter à distance de "%{kind}".
+        success: Vous avez été automatiquement déconnecté de votre compte "%{kind}".
+
+  errors:
+    messages:
+      invalid_time_zone: n'est pas un fuseau horaire valide
+      taken: Pris
+  time:
+    formats:
+      long_dashed: "%Y-%m-%d %H:%M:%S"
+  versions:
+    dropdown:
+      choose_diff_view_html: 'Mode de vue HTML:'
+      option_escaped: Avec échappement
+      option_unescaped: Sans échappement
+  views:
+    pagination:
+      first_title: Lien vers la première page
+      last_title: Lien vers la dernière page
+      next_title: Lien vers la page suivante
+      previous_title: Lien vers la page précédente
+      title: 'Numéro de page '

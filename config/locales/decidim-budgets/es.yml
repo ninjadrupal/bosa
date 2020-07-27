@@ -1,0 +1,13 @@
+---
+es:
+  decidim:
+    budgets:
+      projects:
+        filters:
+          category_prompt: Seleccione una categoría
+        orders:
+          highest_cost: El costo más alto
+          label: Ordene los proyectos por
+          lowest_cost: El costo más bajo
+          most_voted: La más votada
+          random: Orden aleatorio

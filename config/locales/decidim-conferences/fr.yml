@@ -1,0 +1,14 @@
+---
+fr:
+  decidim:
+    admin:
+      models:
+        conference_user_role:
+          roles:
+            valuator: Valorisateur
+
+    conferences:
+      photo:
+        image:
+          attributes:
+            alt: Photo pour les médias
