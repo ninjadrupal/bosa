@@ -1,0 +1,29 @@
+---
+nl:
+  activemodel:
+    attributes:
+      participatory_process:
+        scope_type_max_depth_id: Scope filter depth
+        show_metrics: Show metrics
+
+  decidim:
+    admin:
+      models:
+        participatory_process_user_role:
+          roles:
+            valuator: Valuator
+
+      participatory_process_user_roles:
+        edit:
+          title: Update participatory process admin
+        new:
+          title: New participatory process admin
+
+    participatory_processes:
+      admin:
+        participatory_processes:
+          form:
+            scope_type_max_depth_help: Restrict the scope filter depth; The filter will show from general to the selected scope type.
+      statistics:
+        followers_count: Followers
+        no_stats: There are no statistics yet.

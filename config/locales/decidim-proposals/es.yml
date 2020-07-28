@@ -1,0 +1,9 @@
+---
+es:
+  decidim:
+    proposals:
+      proposals:
+        filters:
+          category_prompt: Seleccione una categoría
+        show:
+          back_to_list: Volver a la lista

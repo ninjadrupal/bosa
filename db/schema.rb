@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 2020_06_30_083226) do
     t.bigint "decidim_organization_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "color"
+    t.string "logo"
     t.index ["area_type_id"], name: "index_decidim_areas_on_area_type_id"
     t.index ["decidim_organization_id"], name: "index_decidim_areas_on_decidim_organization_id"
   end

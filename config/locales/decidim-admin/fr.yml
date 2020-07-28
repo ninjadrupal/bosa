@@ -1,0 +1,93 @@
+---
+fr:
+  activemodel:
+    attributes:
+      attachment:
+        title: Titre du document lié
+      organization:
+        rich_text_editor_in_public_views: Activer l'éditeur de texte enrichi pour les participants
+        time_zone: Fuseau horaire
+
+  decidim:
+    admin:
+      actions:
+        per_page: Par page
+
+      admin_terms_of_use:
+        accept:
+          error: Il y a eu une erreur lors de la validation des conditions d'utilisation de l'espace d'administration.
+          success: Super ! Vous avez accepté les conditions d'utilisation de l'espace d'administration.
+        actions:
+          accept: J'accepte ces conditions
+          are_you_sure: Êtes-vous sûr de vouloir refuser les conditions d'utilisation ?
+          refuse: Refuser les conditions
+          title: Accepter les termes et conditions d'utilisation
+        required_review:
+          alert: 'Obligatoire : Consulter les conditions d''utilisation de notre espace d''administration'
+          callout: Veuillez prendre un moment pour consulter les conditions d'utilisation de l'espace d'administration. Sinon, vous ne pourrez pas administrer la plate-forme.
+          cta: Consulter maintenant.
+        title: Conditions d'utilisation de l'espace d'administration
+
+      component_permissions:
+        update:
+          error: Il y a eu un problème de mise à jour des autorisations de cette composante.
+
+      filters:
+        category_id_eq:
+          label: Catégorie
+        filter_label: Filtrez
+        officialized_at_null:
+          label: État
+          values:
+            'false': Officialisé
+            'true': Non officialisé
+        private_space_eq:
+          label: Privé
+          values:
+            'false': Public
+            'true': Privé
+        published_at_null:
+          label: Publié
+          values:
+            'false': Publié
+            'true': Non publié
+        scope_id_eq:
+          label: Champ d'application
+        search_label: Recherchez
+        search_placeholder:
+          name_or_nickname_or_email_cont: Recherche %{collection} par e-mail, nom ou surnom.
+          title_cont: Recherche %{collection} par titre.
+        state_eq:
+          label: État
+          values:
+            accepted: Accepté
+            created: Créé
+            discarded: Rejeté
+            published: Publié
+            rejected: Rejeté
+
+      newsletters:
+        index:
+          subscribed_count: 'Souscrit :'
+        select_recipients_to_deliver:
+          recipients_count: Cette lettre d'information sera envoyée aux utilisateurs <strong id='recipients_count'>%{count}</strong>.
+
+      officializations:
+        index:
+          filter:
+            all: Tous
+            not_officialized: Non validé
+            officialized: Validé
+          filter_by: Filtrer par
+          search: Recherchez
+          show_email: Afficher l'adresse électronique
+        show_email_modal:
+          description: Si vous devez contacter directement un participant, vous pouvez cliquer sur le bouton Afficher pour voir l'adresse électronique. Cette action sera enregistrée.
+          email_address: Adresse électronique
+          full_name: Nom et prénom
+          hidden: caché
+          show: Voir
+          title: Afficher l'adresse électronique du participant
+      organization:
+        form:
+          rich_text_editor_in_public_views_help: Dans certaines zones de texte, les participants pourront insérer des balises HTML en utilisant l'éditeur de texte enrichi.

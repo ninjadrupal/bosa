@@ -1,0 +1,71 @@
+---
+fr:
+  activemodel:
+    attributes:
+      assembly:
+        decidim_assemblies_type_id: Type d'assemblée
+
+  decidim:
+    admin:
+      actions:
+        new_assembly_type: Nouveau type d'assemblée
+      assemblies_types:
+        create:
+          error: Une erreur s'est produite lors de la création du type d'assemblée
+          success: Type d'assemblée créé avec succès.
+        destroy:
+          success: Type d'assemblée supprimé avec succès.
+        new:
+          create: Créer
+          title: Nouveau type d'assemblée
+        update:
+          error: Il y a eu un problème de mise à jour de ce type d'assemblée.
+          success: Type d'assemblée mis à jour avec succès.
+
+      models:
+        assembly_user_role:
+          roles:
+            valuator: Valorisateur
+      titles:
+        assemblies_types: Types d'assemblées
+    admin_log:
+      assembly_type:
+        create: "%{user_name} a créé le type d'assemblée %{resource_name}"
+        delete: "%{user_name} a supprimé le membre %{resource_name} du type d'assemblée %{space_name}"
+        publish: "%{user_name} a publié le type d'assemblée %{resource_name}"
+        unpublish: "%{user_name} non publié le %{resource_name} type d'assemblée"
+        update: "%{user_name} a mis à jour le type d'assemblée %{resource_name}"
+    assemblies:
+      admin:
+        assemblies_types:
+          form:
+            title: Titre
+
+      pages:
+        home:
+          highlighted_assemblies:
+            assemblies_button_title: Lien vers la page des assemblées affichant toutes les assemblées
+      show:
+        social_networks_title: Partagez cette assemblée sur
+      statistics:
+        posts_count: Posts
+    conferences:
+      pages:
+        home:
+          highlighted_conferences:
+            conferences_button_title: Lien vers la page des conférences affichant toutes les conférences
+    log:
+      value_types:
+        assembly_type_presenter:
+          not_found: 'Le type d''assemblée n''a pas été trouvé dans la base de données (ID : %{id})'
+    pages:
+      home:
+        hero:
+          participate_title: Participer aux processus de la plateforme
+        sub_hero:
+          register_title: Inscrivez-vous pour créer un compte sur la plateforme
+    participatory_processes:
+      pages:
+        home:
+          highlighted_processes:
+            processes_button_title: Lien vers la page des processus affichant tous les processus

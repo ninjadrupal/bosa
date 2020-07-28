@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "active_support/concern"
 
-module ApplicationHelperExtend
+module InitiativesApplicationHelperExtend
   extend ActiveSupport::Concern
 
   included do
@@ -42,4 +42,4 @@ module ApplicationHelperExtend
   end
 end
 
-Decidim::Initiatives::ApplicationHelper.send(:include, ApplicationHelperExtend)
+Decidim::Initiatives::ApplicationHelper.send(:include, InitiativesApplicationHelperExtend)

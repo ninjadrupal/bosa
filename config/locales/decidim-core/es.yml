@@ -1,0 +1,95 @@
+---
+es:
+  activemodel:
+    models:
+      decidim/resource_endorsed_event: Recurso sostenido
+  activerecord:
+    models:
+      decidim/endorsement:
+        one: Apoyo
+        other: Apoyadores
+
+  carrierwave:
+    errors:
+      general: Hubo un error al cargar la imagen
+  comments:
+    translate: Traducir
+    translated: Traducido
+
+  decidim:
+    accessibility:
+      logo: "%{organización} logotipo oficial de la organización"
+      skip_button: Saltar al contenido principal
+
+    admin_log:
+      user:
+        show_email: "%{nombre_de_usuario} revisó el correo electrónico del participante %{nombre_de_recurso}"
+
+    application:
+      document:
+        download: Descargue el archivo
+    author:
+      endorsements:
+        one: apoyo
+        other: apoya
+    authorization_modals:
+      content:
+        ok:
+          authorize: Ya autorizado
+          explanation: "%{autorización}> %{autorización"
+          title: Autorización confirmada
+
+    endorsement_buttons_cell:
+      already_endorsed: Apoyado
+      endorse: Apoyo
+    endorsements:
+      identities:
+        done: Hecho
+        select_identity: Seleccione una identidad
+    events:
+      resource_endorsed:
+        email_intro: '%{endorser_name} %{endorser_nickname}, que usted está siguiendo, acaba de apoyar "%{resource_title}" y creemos que puede estar interesado. Compruébelo y contribuya:'
+        email_outro: Recibió esta notificación porque usted sigue %{endorser_nickname}. Puede dejar de recibir notificaciones haciendo clic en el enlace anterior.
+        email_subject: "%{endorser_nickname} apoyó un nuevo recurso"
+        notification_title: El <a href="%{resource_path}">%{resource_title}</a> %{resource_type} fue aprobado por <a href="%{endorser_path}">%{endorser_name} %{endorser_nickname}</a>.
+    messaging:
+      conversations:
+        show:
+          not_allowed: Este usuario ya no acepta mensajes directos.
+    notifications_settings:
+      show:
+        allow_public_contact: Permitiendo que cualquiera me envíe un mensaje directo, incluso si no lo hago.
+        direct_messages: Recibir mensajes directos de cualquiera.
+    resource_endorsements:
+      create:
+        error: Ha habido un problema de mantenimiento del recurso.
+    shared:
+      results_per_page:
+        title: Seleccione el número de resultados por página
+    translate:
+      original: Traducir el texto
+      tooltip: Traducido con Deepl
+      translated: Volver a la versión original
+    user_contact_disabled: Este participante no acepta mensajes directos.
+
+  devise:
+    registrations:
+      logout:
+        error: Incapaz de desconectarse remotamente de "%{kind}".
+        success: Usted ha sido automáticamente desconectado de su cuenta "%{kind}".
+
+  errors:
+    messages:
+      taken: Tomado
+
+  time:
+    formats:
+      long_dashed: "%Y-%m-%d %H:%M:%S"
+
+  views:
+    pagination:
+      first_title: Enlace a la primera página
+      last_title: Enlace a la última página
+      next_title: Enlace a la siguiente página
+      previous_title: Enlace a la página anterior
+      title: Número de página

@@ -1,0 +1,15 @@
+---
+fr:
+  decidim:
+    blogs:
+      posts:
+        show:
+          back: Retour à la liste
+          comments: Commentaires
+
+    components:
+      blogs:
+        settings:
+          step:
+            endorsements_blocked: Approbations bloquées
+            endorsements_enabled: Approbations autorisées

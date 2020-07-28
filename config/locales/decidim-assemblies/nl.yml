@@ -1,0 +1,56 @@
+---
+nl:
+  activemodel:
+    attributes:
+      assembly:
+        decidim_assemblies_type_id: Assembly type
+
+  decidim:
+    admin:
+      actions:
+        new_assembly_type: New assembly type
+      assemblies_types:
+        create:
+          error: There was a problem creating a new assembly type.
+          success: Assembly type created successfully.
+        destroy:
+          success: Assembly type successfully deleted.
+        new:
+          title: New assembly type
+        update:
+          error: There was a problem updating this assembly type.
+          success: Assembly type successfully updated.
+      menu:
+        assemblies_types: Assemblies types
+      models:
+        assembly_user_role:
+          roles:
+            valuator: Valuator
+
+    assemblies:
+      pages:
+        home:
+          highlighted_assemblies:
+            assemblies_button_title: Link to the Assemblies page displaying all the assemblies
+      show:
+        social_networks_title: Share this assembly on
+      statistics:
+        posts_count: Posts
+
+    conferences:
+      pages:
+        home:
+          highlighted_conferences:
+            conferences_button_title: Link to the Conferences page displaying all the conferences
+
+    pages:
+      home:
+        hero:
+          participate_title: Participate to the platform's processes
+        sub_hero:
+          register_title: Sign up to create an account on the platform
+    participatory_processes:
+      pages:
+        home:
+          highlighted_processes:
+            processes_button_title: Link to the Processes page displaying all the processes

@@ -1,0 +1,21 @@
+---
+en:
+  decidim:
+    admin:
+      areas:
+        form:
+          color: Area color
+          logo: Area logo
+
+      filters:
+        state_eq:
+          label: State
+
+      officializations:
+        index:
+          filter:
+            all: All
+            not_officialized: Not validated
+            officialized: Validated
+          filter_by: Filter by
+          search: Search

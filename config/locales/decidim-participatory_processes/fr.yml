@@ -1,0 +1,33 @@
+---
+fr:
+  activemodel:
+    attributes:
+      participatory_process:
+        related_process_ids: Processus connexes
+        scope_type_max_depth_id: Profondeur du filtre
+        show_metrics: Afficher les mesures
+
+  decidim:
+    admin:
+      models:
+        participatory_process_user_role:
+          roles:
+            valuator: Valorisateur
+
+      participatory_process_user_roles:
+        edit:
+          title: Mise à jour de l'administration du processus participatif
+        new:
+          title: Nouvelle administration du processus participatif
+
+    participatory_processes:
+      admin:
+        participatory_processes:
+          form:
+            related_processes: Processus connexes
+            scope_type_max_depth_help: Restreindre la profondeur du filtre du champ d'application ; le filtre affichera du général au type de champ d'application sélectionné.
+      show:
+        related_processes: Processus connexes
+      statistics:
+        followers_count: Suiveurs
+        no_stats: Il n'y a pas encore de statistiques.
