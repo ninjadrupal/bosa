@@ -8,7 +8,7 @@ module VerificationsAuthorizationsControllerExtend
 
     helper_method :handler, :unauthorized_methods, :disabled_methods, :authorization_anti_affinity
 
-    helper MetadataHelper
+    include Decidim::Verifications::MetadataHelper
 
     protected
 

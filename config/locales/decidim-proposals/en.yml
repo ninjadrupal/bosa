@@ -5,3 +5,6 @@ en:
       proposals:
         filters:
           category_prompt: Select a category
+      versions:
+        stats:
+          version_number: Version Number
