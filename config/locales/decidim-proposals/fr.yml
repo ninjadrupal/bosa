@@ -1,0 +1,192 @@
+---
+fr:
+  activemodel:
+    attributes:
+      proposal:
+        decidim_scope_id: Champ d'application
+      valuation_assignment:
+        admin_log:
+          valuator_role_id: Nom de l'évaluateur
+    errors:
+      models:
+        proposal:
+          attributes:
+            body:
+              cant_be_equal_to_template: ne peut être égal au modèle
+
+    models:
+      decidim/proposals/admin/update_proposal_scope_event: Modification du champ d'application de la proposition
+
+  decidim:
+    admin:
+      filters:
+        is_emendation_true:
+          label: Type
+          values:
+            'false': Propositions
+            'true': Amendements
+        search_placeholder:
+          id_string_or_title_cont: Recherche %{collection} par ID ou par titre.
+        state_eq:
+          values:
+            evaluating: Évaluation
+            withdrawn: Retiré
+        state_null:
+          label: Statut
+          values:
+            'true': Pas de réponse
+        valuator_role_ids_has:
+          label: Assigné à l'évaluateur
+    components:
+      proposals:
+        settings:
+          global:
+            allow_card_image: Autoriser l'image de la carte
+            new_proposal_body_template: Nouveau modèle de corps de proposition
+            new_proposal_body_template_help: Vous pouvez définir le texte prérempli pour les nouvelles propositions
+          step:
+            answers_with_costs: Permettre les coûts sur les réponses aux propositions
+            publish_answers_immediately: Publier immédiatement les réponses aux propositions
+
+    events:
+      proposals:
+        proposal_mentioned:
+          email_intro: Votre proposition "%{mentioned_proposal_title}" a été mentionnée <a href="%{resource_url}">dans cet espace</a> dans les commentaires.
+
+        proposal_update_scope:
+          email_intro: 'Un administrateur a mis à jour le champ d''application de votre proposition "%{titre_ressource}", consultez cette page :'
+          email_subject: Le champ d'application de la proposition %{titre_ressource} a été mis à jour
+          notification_title: Le <a href="%{chemin_des_ressources}">%{titre_des_ressources}</a> champ d'application de la proposition a été mis à jour par un administrateur.
+
+    proposals:
+      actions:
+        answer_proposal: Proposition de réponse
+        show: Afficher la proposition
+
+      admin:
+        proposal_answers:
+          form:
+            accepted: Accepté
+            answer_proposal: Réponse
+            evaluating: Évaluation
+            rejected: Rejeté
+
+        proposals:
+          index:
+            actions: Actions
+            assign_to_valuator: Affecter à l'évaluateur
+            assign_to_valuator_button: Affecter
+            cancel: Annuler
+            change_category: Changer de catégorie
+            change_scope: Changement de portée
+            merge: Fusionner dans un nouveau
+            merge_button: Fusionner
+            publish: Publier
+            publish_answers: Publier les réponses
+            select_component: Sélectionnez un composant
+            selected: choisi
+            split: Fractionner la proposition
+            split_button: Scinder
+            title: Propositions
+            unassign_from_valuator: Détachement de l'évaluateur
+            unassign_from_valuator_button: Détacher
+            update: Mettre à jour
+            update_scope_button: Champ d'application de la mise à jour
+
+          publish_answers:
+            number_of_proposals: Les réponses aux propositions %{number} seront publiées.
+            select_a_proposal: Veuillez sélectionner une proposition
+          show:
+            amendments_count: Les amendements comptent
+            assigned_valuators: Évaluateurs assignés
+            authors: Auteurs
+            body: Corps
+            comments_count: Les commentaires comptent
+            comments_negative_count: Contre
+            comments_neutral_count: Neutre
+            comments_positive_count: Favor
+            created_at: Date de création
+            documents: Documents
+            endorsements_count: Les soutiens comptent
+            endorsements_ranking: Classement par endossements
+            endorsers: Adhérents
+            link: Lien
+            n_more_endorsers:
+              one: et 1 autre
+              other: et %{account} plus
+            photos: Photos
+            proposals: Propositions
+            ranking: "%{classement} de %{total}"
+            related_meetings: Réunions connexes
+            remove_assignment: Supprimer l'affectation
+            remove_assignment_confirmation: Êtes-vous sûr de vouloir retirer l'évaluateur de cette proposition ?
+            valuators: Évaluateurs
+            votes_count: Nombre de votes
+            votes_ranking: Classement par soutiens
+          update_category:
+            invalid: 'Ces propositions avaient déjà la catégorie %{subject_name} : %{proposals}.'
+            select_a_category: Veuillez sélectionner une catégorie
+            select_a_proposal: Veuillez sélectionner une proposition
+            success: 'Propositions mises à jour avec succès dans la catégorie %{subject_name} : %{proposals}.'
+          update_scope:
+            invalid: 'Ces propositions avaient déjà la portée %{subject_name} : %{proposals}.'
+            select_a_proposal: Veuillez sélectionner une proposition
+            select_a_scope: Veuillez sélectionner un champ d'application
+            success: 'Propositions mises à jour avec succès au champ d''application %{subject_name} : %{proposals}.'
+
+        valuation_assignments:
+          create:
+            invalid: Il y a eu une erreur dans l'attribution des propositions à un évaluateur
+            success: Propositions confiées à un évaluateur avec succès
+          delete:
+            invalid: Il y a eu une erreur dans l'attribution des propositions d'un évaluateur
+            success: Évaluateur non assigné des propositions retenues
+      admin_log:
+        proposal:
+          publish_answer: "%{user_name} a publié la réponse à la proposition de %{resource_name} sur le %{space_name} espace"
+        valuation_assignment:
+          create: "%{user_name} a attribué la proposition %{resource_name} à un évaluateur"
+          delete: "%{nom_d'utilisateur} non attribué un évaluateur de la proposition %{proposal_title}"
+
+      application_helper:
+        filter_scope_values:
+          all: Tous
+        filter_state_values:
+          not_answered: Pas de réponse
+
+      collaborative_drafts:
+        filters:
+          scope: Champ d'application
+
+      models:
+        proposal:
+          fields:
+            published_answer: Réponse publiée
+            valuator: Valorisateur
+            valuators: Évaluateurs
+
+      proposals:
+        filters:
+          activity: Mon activité
+          all: Tous
+          category_prompt: Sélectionner une catégorie
+          my_proposals: Mes propositions
+          scope: Champ d'application
+          type: Type
+
+        orders:
+          most_commented: Les plus commentés
+          most_endorsed: La plupart ont approuvé
+          most_followed: Les plus suivis
+          with_more_authors: Avec plus d'auteurs
+
+        show:
+          back_to_list: Retour à la liste
+          estimated_cost: Estimation du coût
+          read_less: Lire la suite
+          read_more: En savoir plus
+        tags:
+          changed_from: "(modifié de <u>%{previous_name}</u> par un administrateur)"
+
+      publish_answers:
+        success: Les réponses aux propositions ont été publiées avec succès.

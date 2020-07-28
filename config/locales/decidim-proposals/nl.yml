@@ -1,0 +1,161 @@
+---
+nl:
+  activemodel:
+    attributes:
+      proposal:
+        decidim_scope_id: Champ d'application
+      valuation_assignment:
+        admin_log:
+          valuator_role_id: Valuator name
+
+    models:
+      decidim/proposals/admin/update_proposal_scope_event: Proposal scope changed
+
+  decidim:
+    admin:
+      filters:
+        is_emendation_true:
+          label: Type
+          values:
+            'false': Proposals
+            'true': Amendments
+        search_placeholder:
+          id_string_or_title_cont: Search %{collection} by ID or title.
+        state_eq:
+          values:
+            evaluating: Evaluating
+            withdrawn: Withdrawn
+        state_null:
+          label: Status
+          values:
+            'true': Not answered
+        valuator_role_ids_has:
+          label: Assigned to valuator
+    components:
+      proposals:
+        settings:
+          global:
+            allow_card_image: Allow card image
+            new_proposal_body_template: New proposal body template
+            new_proposal_body_template_help: You can define prefilled text that the new Proposals will have
+          step:
+            publish_answers_immediately: Publish proposal answers immediately
+
+    events:
+      proposals:
+        proposal_mentioned:
+          email_intro: Your proposal "%{mentioned_proposal_title}" has been mentioned <a href="%{resource_url}">in this space</a> in the comments.
+
+        proposal_update_scope:
+          email_intro: 'An admin has updated the scope of your proposal "%{resource_title}", check it out in this page:'
+          email_subject: The %{resource_title} proposal scope has been updated
+          notification_title: The <a href="%{resource_path}">%{resource_title}</a> proposal scope has been updated by an admin.
+
+    proposals:
+      actions:
+        answer_proposal: Answer proposal
+        show: Show proposal
+
+      admin:
+        proposal_answers:
+          form:
+            accepted: Accepted
+            answer_proposal: Answer
+            evaluating: Evaluating
+            rejected: Rejected
+
+        proposals:
+          index:
+            assign_to_valuator: Assign to valuator
+            assign_to_valuator_button: Assign
+            change_scope: Change scope
+            publish_answers: Publish answers
+            unassign_from_valuator: Unassign from valuator
+            unassign_from_valuator_button: Unassign
+            update_scope_button: Update Scope
+
+          publish_answers:
+            number_of_proposals: Answers for %{number} proposals will be published.
+          show:
+            amendments_count: Amendments count
+            assigned_valuators: Assigned valuators
+            authors: Authors
+            body: Body
+            comments_count: Comments count
+            comments_negative_count: Against
+            comments_neutral_count: Neutral
+            comments_positive_count: Favor
+            created_at: Aangemaakt op
+            documents: Documents
+            endorsements_count: Endorsements count
+            endorsements_ranking: Ranking by endorsements
+            endorsers: Endorsers
+            link: Link
+            n_more_endorsers:
+              one: and 1 more
+              other: and %{count} more
+            photos: Photos
+            proposals: Proposals
+            ranking: "%{ranking} of %{total}"
+            related_meetings: Related meetings
+            remove_assignment: Remove assignment
+            remove_assignment_confirmation: Are you sure you want to remove the valuator from this proposal?
+            valuators: Valuators
+            votes_count: Aantal stemmen
+            votes_ranking: Ranking by supports
+          update_category:
+            invalid: 'These proposals already had the %{subject_name} category: %{proposals}.'
+            select_a_category: Gelieve een categorie te selecteren
+            select_a_proposal: Selecteer een voorstel
+            success: 'Proposals successfully updated to the %{subject_name} category: %{proposals}.'
+          update_scope:
+            invalid: 'These proposals already had the %{subject_name} scope: %{proposals}.'
+            select_a_proposal: Selecteer een voorstel
+            select_a_scope: Please select a scope
+            success: 'Proposals successfully updated to the %{subject_name} scope: %{proposals}.'
+
+        valuation_assignments:
+          create:
+            invalid: There was an error assigning proposals to a valuator
+            success: Proposals assigned to a valuator successfully
+          delete:
+            invalid: There was an error unassigning proposals from a valuator
+            success: Valuator unassigned from proposals successfully
+      admin_log:
+        proposal:
+          publish_answer: "%{user_name} published the answer to %{resource_name} proposal on the %{space_name} space"
+        valuation_assignment:
+          create: "%{user_name} assigned the %{resource_name} proposal to a valuator"
+          delete: "%{user_name} unassigned a valuator from the %{proposal_title} proposal"
+
+      application_helper:
+        filter_category_values:
+          all: All
+        filter_scope_values:
+          all: All
+        filter_state_values:
+          not_answered: Not answered
+
+      collaborative_drafts:
+        filters:
+          scope: Scope
+
+      models:
+        proposal:
+          fields:
+            published_answer: Published answer
+            valuator: Valuator
+            valuators: Valuators
+
+      proposals:
+        filters:
+          scope: Scope
+          type: Type
+
+        show:
+          back_to_list: Back to list
+        tags:
+          changed_from: "(changed from <u>%{previous_name}</u> by an administrator)"
+
+      publish_answers:
+        success: Proposals answers successfully published.

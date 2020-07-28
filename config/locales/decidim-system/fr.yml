@@ -1,0 +1,22 @@
+---
+fr:
+  decidim:
+    system:
+      models:
+        organization:
+          fields:
+            omniauth_settings: Réglages Omniauth
+      organizations:
+        omniauth_settings:
+          enabled: Activé
+          facebook:
+            app_id: ID de l'application
+            app_secret: App secret
+          google_oauth2:
+            client_id: Numéro de client
+            client_secret: Secret de client
+          icon: Icône
+          icon_path: Chemin des icônes
+          twitter:
+            api_key: Clé API
+            api_secret: Secret de l'API

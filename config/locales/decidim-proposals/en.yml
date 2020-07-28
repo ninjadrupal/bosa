@@ -1,0 +1,7 @@
+---
+en:
+  decidim:
+    proposals:
+      proposals:
+        filters:
+          category_prompt: Select a category

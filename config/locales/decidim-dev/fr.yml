@@ -1,0 +1,9 @@
+---
+fr:
+  decidim:
+    components:
+      dummy:
+        settings:
+          step:
+            endorsements_blocked: Approbations bloquées
+            endorsements_enabled: Approbations autorisées

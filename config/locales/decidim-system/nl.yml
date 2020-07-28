@@ -1,0 +1,13 @@
+---
+nl:
+  decidim:
+    system:
+      models:
+        organization:
+          fields:
+            omniauth_settings: Omniauth settings
+      organizations:
+        omniauth_settings:
+          enabled: Enabled
+          icon: Icon
+          icon_path: Icon path
