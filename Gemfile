@@ -7,7 +7,7 @@ ruby RUBY_VERSION
 # ----------------------------------------------------------------------------------------------------------------------
 gem 'decidim', git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
-gem "decidim-verifications_omniauth", git: "https://github.com/belighted/decidim-module-verifications_omniauth"
+gem "decidim-verifications_omniauth", git: "git@github.com:belighted/decidim-module-verifications_omniauth.git"
 
 gem "decidim-initiatives", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
@@ -73,6 +73,15 @@ group :development do
   gem "spring", "~> 2.0"
   gem "spring-watcher-listen", "~> 2.0"
   gem "web-console", "~> 3.5"
+  gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-rails", "~> 1.6", require: false
+  gem 'capistrano-rbenv', '~> 2.2', require: false
+  gem 'capistrano3-puma', require: false
+  gem 'capistrano-sidekiq', '2.0.0.beta5', require: false
+end
+
+group :staging do
+  gem "sidekiq"
 end
 
 group :production do

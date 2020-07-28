@@ -15,8 +15,8 @@ if Rails.env.production?
     policy.script_src :self, :https, :unsafe_inline, :unsafe_eval
     policy.style_src :self, :https, :unsafe_inline
 
-    #   # Specify URI for violation reports
-    #   # policy.report_uri "/csp-violation-report-endpoint"
+    # Specify URI for violation reports
+    # policy.report_uri "/csp-violation-report-endpoint"
   end
 end
 
