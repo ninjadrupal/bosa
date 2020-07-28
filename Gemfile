@@ -48,6 +48,7 @@ gem "ruby-progressbar"
 gem "sentry-raven"
 
 gem "activerecord-session_store"
+gem 'deepl-rb'
 
 gem "omniauth-oauth2", ">= 1.4.0", "< 2.0"
 gem "omniauth_openid_connect", "0.3.1"
