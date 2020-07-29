@@ -78,15 +78,15 @@ Rails.application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
+
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      :address => Rails.application.secrets.smtp_address,
-      :port => Rails.application.secrets.smtp_port,
-      :authentication => Rails.application.secrets.smtp_authentication,
-      :user_name => Rails.application.secrets.smtp_username,
-      :password => Rails.application.secrets.smtp_password,
-      :domain => Rails.application.secrets.smtp_domain,
-      :enable_starttls_auto => Rails.application.secrets.smtp_starttls_auto,
-      :openssl_verify_mode => 'none'
+    :user_name => '7a5656ff076dc3',
+    :password => '0b5f01509a51c8',
+    :address => 'smtp.mailtrap.io',
+    :domain => 'smtp.mailtrap.io',
+    :port => '2525',
+    :authentication => :cram_md5
   }
 
   # Use a different logger for distributed setups.
