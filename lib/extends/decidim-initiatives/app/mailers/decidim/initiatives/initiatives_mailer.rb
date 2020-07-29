@@ -6,7 +6,7 @@ module InitiativesInitiativesMailerExtend
 
   included do
 
-    def notify_state_change(initiative, user, state)
+    def notify_state_change(initiative, user)
       return if user.email.blank?
 
       @initiative = initiative
@@ -21,7 +21,7 @@ module InitiativesInitiativesMailerExtend
         @body = I18n.t(
           "decidim.initiatives.initiatives_mailer.status_change_body_for",
           title: translated_attribute(initiative.title),
-          state: I18n.t(state, scope: "decidim.initiatives.admin_states")
+          state: I18n.t(initiative.state, scope: "decidim.initiatives.admin_states")
         )
 
         @link = initiative_url(initiative, host: @organization.host)

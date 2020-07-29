@@ -10,7 +10,7 @@ module CreateAreaExtend
 
     def create_area
       Decidim.traceability.create!(
-        Area,
+        Decidim::Area,
         form.current_user,
         name: form.name,
         organization: form.organization,
