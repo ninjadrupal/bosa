@@ -56,6 +56,9 @@ gem "omniauth-saml", "~> 1.10"
 gem "savon", "~> 2.12.0"
 gem "akami", git: "https://github.com/OpenSourcePolitics/akami", branch: "fix-timestamp"
 
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
+
 gem "dotenv-rails"
 gem "rubyzip", require: "zip"
 
@@ -80,13 +83,8 @@ group :development do
   gem 'capistrano-sidekiq', '2.0.0.beta5', require: false
 end
 
-group :staging do
-  gem "sidekiq"
-end
-
 group :production do
   gem "newrelic_rpm"
-  gem "sidekiq"
   gem "fog-aws"
   gem "dalli-elasticache"
 end
