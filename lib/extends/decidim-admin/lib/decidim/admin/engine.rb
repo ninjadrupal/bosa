@@ -9,6 +9,7 @@
 #
 #     menu_initializer = Rails.application.initializers.find {|a| a.name == 'decidim_admin.menu'}
 #     menu_initializer.context_class.initializer("decidim_admin.menu_extend", after: 'decidim_admin.menu') do
+=begin
       Decidim::MenuRegistry.destroy(:admin_menu)
 
       Decidim.menu :admin_menu do |menu|
@@ -125,6 +126,7 @@
                   active: [%w(decidim/admin/area_types), []],
                   if: allowed_to?(:update, :help_sections)
       end
+=end
 #     end
 #     menu_initializer.context_class.initializers.find {|a| a.name == 'decidim_admin.menu_extend'}.run
 #   end
