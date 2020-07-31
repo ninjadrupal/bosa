@@ -47,7 +47,7 @@ module InitiativeSearchExtend
     def search_type_id
       return query if type_ids.include?("all")
 
-      types = InitiativesTypeScope.where(decidim_initiatives_types_id: type_ids).pluck(:id)
+      types = Decidim::InitiativesTypeScope.where(decidim_initiatives_types_id: type_ids).pluck(:id)
 
       query.where(scoped_type: types)
     end
