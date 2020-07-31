@@ -55,8 +55,9 @@
             <% else %>
               <div class="field">
                 <%= f.select :scope_id,
-                             scopes.map {|scope| [translated_attribute(scope.scope_name), scope&.scope&.id]},
-                             prompt: t(".select_scope") %>
+                             scopes.map {|scope| [translated_attribute(scope.scope_name), scope&.scope&.id]} #,
+                             # prompt: t(".select_scope")
+                %>
               </div>
             <% end %>
 
