@@ -76,6 +76,7 @@
                   active: [%w(decidim/admin/oauth_applications), []],
                   if: allowed_to?(:read, :oauth_application)
       end
+=end
 
       Decidim.menu :admin_settings_menu do |menu|
         menu.item I18n.t("menu.configuration", scope: "decidim.admin"),
@@ -126,7 +127,6 @@
                   active: [%w(decidim/admin/area_types), []],
                   if: allowed_to?(:update, :help_sections)
       end
-=end
 #     end
 #     menu_initializer.context_class.initializers.find {|a| a.name == 'decidim_admin.menu_extend'}.run
 #   end
