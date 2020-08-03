@@ -14,8 +14,8 @@
     $.ajax(refreshUrl).done(function(response){
       userIdentitiesDialog.html(response);
     });
-  } // else {
+  } //else {
   var $initiativeVoteButton = $('#initiative-<%= current_initiative.id %>-vote-cabin');
   $initiativeVoteButton.html('<%= j(render partial: "decidim/initiatives/initiatives/vote_cabin", locals: { initiative: current_initiative }) %>');
-  //}
+  // }
 }());
