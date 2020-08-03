@@ -8,19 +8,24 @@ module CreateInitiativeControllerExtend
 
   included do
 
-    before_action :enforce_create_initiative_permission, only: [
-      :select_initiative_type_step,
-      :previous_form_step,
-      :show_similar_initiatives_step,
-      :fill_data_step,
-      :finish_step
-    ]
+    before_action :enforce_create_initiative_permission, only: [:show, :update]
 
     def show
       send("#{step}_step", initiative: session_initiative, type_id: params[:type_id])
     end
 
     private
+
+    def previous_form_step(parameters)
+      @form = build_form(Decidim::Initiatives::PreviousForm, parameters)
+
+      if !single_initiative_type? && initiative_type_id.blank?
+        redirect_to create_initiative_path(:select_initiative_type)
+        return
+      end
+
+      render_wizard
+    end
 
     def finish_step(_parameters)
       session[:initiative][:description] = nil
