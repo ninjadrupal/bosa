@@ -14,7 +14,8 @@ module InitiativeVotesControllerExtend
         signer: current_user
       )
 
-      Decidim::Initiatives::VoteInitiative.call(@form, current_user) do
+      # Decidim::Initiatives::VoteInitiative.call(@form, current_user) do
+      Decidim::Initiatives::VoteInitiative.call(@form) do
         on(:ok) do
           current_initiative.reload
           render :update_buttons_and_counters
