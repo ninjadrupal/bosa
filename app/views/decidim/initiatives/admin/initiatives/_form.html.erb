@@ -74,12 +74,6 @@
       </div>
     <% end %>
 
-    <% if can_edit_custom_signature_end_date?(current_initiative) %>
-      <div class="row column">
-        <%= form.date_field :signature_end_date, disabled: !allowed_to?(:update, :initiative, initiative: current_initiative) %>
-      </div>
-    <% end %>
-
     <% if current_initiative.area_enabled? && current_user.admin? %>
       <div class="field">
         <%= form.areas_select :area_id,

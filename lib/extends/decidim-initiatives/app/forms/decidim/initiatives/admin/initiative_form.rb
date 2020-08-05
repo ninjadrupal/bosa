@@ -47,6 +47,12 @@ module AdminInitiativeFormExtend
       end
     end
 
+    def scoped_type_id
+      return unless type && decidim_scope_id
+
+      type.scopes.find_by(decidim_scopes_id: decidim_scope_id.presence).id
+    end
+
   end
 end
 

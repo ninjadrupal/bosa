@@ -61,7 +61,8 @@ module VoteFormExtend
       list = initiative.votable_initiative_type_scopes.select do |initiative_type_scope|
         if initiative_type_scope.scope.present?
           initiative_type_scope.scope == user_authorized_scope ||
-            initiative_type_scope.scope.ancestor_of?(user_authorized_scope)
+            initiative_type_scope.scope.ancestor_of?(user_authorized_scope) ||
+            user_authorized_scope.nil? # When initiative has global scope and user has no scope authorization
         else
           initiative.type.only_global_scope_enabled && user_authorized_scope.nil?
         end
