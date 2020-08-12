@@ -8,10 +8,12 @@ ruby RUBY_VERSION
 gem 'decidim', git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
 gem "decidim-verifications_omniauth", git: "git@github.com:belighted/decidim-module-verifications_omniauth.git"
+# gem "decidim-verifications_omniauth", path: "../decidim-module-verifications_omniauth"
 
 gem "decidim-initiatives", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
 
 gem "decidim-initiatives_no_signature_allowed", git: "https://github.com/belighted/decidim-module-initiatives_nosignature_allowed"
+# gem "decidim-initiatives_no_signature_allowed", path: "../decidim-module-initiatives_nosignature_allowed"
 
 # gem "decidim-term_customizer", git: "https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git", branch: "0.dev"
 # --------
@@ -50,11 +52,17 @@ gem "sentry-raven"
 gem "activerecord-session_store"
 gem 'deepl-rb'
 
-gem "omniauth-oauth2", ">= 1.4.0", "< 2.0"
-gem "omniauth_openid_connect", "0.3.1"
+# gem "omniauth-oauth2", ">= 1.4.0", "< 2.0"
+# gem "omniauth_openid_connect", "0.3.1"
 gem "omniauth-saml", "~> 1.10"
+gem "omniauth-rails_csrf_protection"
 gem "savon", "~> 2.12.0"
-gem "akami", git: "https://github.com/OpenSourcePolitics/akami", branch: "fix-timestamp"
+
+# gem "akami", git: "https://github.com/OpenSourcePolitics/akami", branch: "fix-timestamp"
+# gem "akami", path: "../_lib/akami"
+gem "signer"
+gem "pry"
+gem "http_logger"
 
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
