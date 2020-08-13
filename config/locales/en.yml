@@ -78,7 +78,7 @@ en:
             authn_context: Authentication context (authn_context)
             issuer: Issuer URL
             idp_slo_target_url: Logout URL (idp_slo_target_url)
-            idp_cert_fingerprint : Certificate fingerprint
+            idp_cert_fingerprint: Certificate fingerprint
             idp_cert: Certificate
             idp_key: Certificate private key
             person_services_wsdl: Person Services WSDL URL
@@ -98,7 +98,7 @@ en:
             authn_context: Authentication context (authn_context)
             issuer: Issuer URL
             idp_slo_target_url: Logout URL (idp_slo_target_url)
-            idp_cert_fingerprint : Certificate fingerprint
+            idp_cert_fingerprint: Certificate fingerprint
             idp_cert: Certificate
             idp_key: Certificate private key
             person_services_wsdl: Person Services WSDL URL
