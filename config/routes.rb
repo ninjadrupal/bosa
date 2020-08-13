@@ -3,6 +3,7 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
+  get "/healthcheck", to: "healthcheck#show"
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
@@ -11,9 +12,6 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  # devise_scope :user do
-  #   get '/admin_sign_in', to: "decidim/devise/sessions#new"
-  # end
   devise_scope :user do
     get '/admin_sign_in', to: "decidim/devise/sessions#new"
     post "omniauth_registrations" => "devise/omniauth_registrations#create"
