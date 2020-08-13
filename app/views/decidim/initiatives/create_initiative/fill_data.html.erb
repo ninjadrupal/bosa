@@ -9,6 +9,7 @@
   <div class="medium-centered">
     <div class="callout secondary">
       <%== t ".fill_data_help" %>
+      <%= link_to t(".more_information"), decidim.page_path("initiatives"), target: "_blank" %>.
     </div>
   </div>
 </div>
@@ -32,7 +33,7 @@
             </div>
 
             <div class="field">
-              <%= f.editor :description, lines: 8, toolbar: :full, required: true %>
+              <%= f.text_area :description, rows: 8, maxlength: 10000, autocomplete: :off, required: true %>
             </div>
 
             <% if initiative_type.no_signature_allowed? %>
