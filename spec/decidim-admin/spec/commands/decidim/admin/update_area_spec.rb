@@ -21,7 +21,8 @@ module Decidim::Admin
         name: name,
         area_type: area_type,
         color: color,
-        logo: logo
+        logo: logo,
+        remove_logo: false
       )
     end
     let(:invalid) { false }

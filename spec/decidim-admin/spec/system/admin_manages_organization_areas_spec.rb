@@ -27,8 +27,8 @@ describe "Organization Areas", type: :system do
 
       within ".new_area" do
         fill_in_i18n :area_name, "#area-name-tabs", en: "My area",
-                     es: "Mi area",
-                     ca: "La meva area"
+                     fr: "Ma zone",
+                     nl: "Mijn gebied"
         select area_type.name["en"], from: :area_area_type_id
 
         find("*[type=submit]").click
@@ -65,8 +65,8 @@ describe "Organization Areas", type: :system do
         it "edits area" do
           within ".edit_area" do
             fill_in_i18n :area_name, "#area-name-tabs", en: "Another area",
-                         es: "Otra area",
-                         ca: "Una altra area"
+                         fr: "Un autre zone",
+                         nl: "Een ander gebied"
             find("*[type=submit]").click
           end
 
@@ -112,7 +112,7 @@ describe "Organization Areas", type: :system do
 
   def click_delete_area
     within find("tr", text: translated(area.name)) do
-      accept_confirm { click_link "Delete" }
+      accept_confirm { click_link "Destroy" }
     end
   end
 end
