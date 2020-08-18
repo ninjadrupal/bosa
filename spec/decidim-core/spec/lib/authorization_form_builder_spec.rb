@@ -12,7 +12,7 @@ module Decidim
     let(:builder) { described_class.new(:authorization_handler, record, helper, {}) }
 
     before do
-      allow(helper).to receive(:authorizations_path).and_return("/authorizations")
+      # allow(helper).to receive(:authorizations_path).and_return("/authorizations")
     end
 
     def find(selector)
