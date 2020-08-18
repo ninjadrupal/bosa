@@ -53,16 +53,15 @@ Rails.application.config.middleware.use OmniAuth::Builder do
         authn_context: :authn_context,
         assertion_consumer_service_url: :assertion_consumer_service_url,
         idp_sso_target_url: :idp_sso_target_url,
-        idp_slo_target_url: :idp_slo_target_url
-      ),
-      person_services: {
-        wsdl: Rails.application.secrets.dig(:person_services, :wsdl),
-        cert: Rails.application.secrets.dig(:person_services, :cert),
-        ca_cert: Rails.application.secrets.dig(:person_services, :ca_cert),
-        key: Rails.application.secrets.dig(:person_services, :key),
-        secret: Rails.application.secrets.dig(:person_services, :secret),
-        proxy: Rails.application.secrets.dig(:person_services, :proxy)
-      }
+        idp_slo_target_url: :idp_slo_target_url,
+        person_services_wsdl: :person_services_wsdl,
+        person_services_cert: :person_services_cert,
+        person_services_ca_cert: :person_services_ca_cert,
+        person_services_key: :person_services_key,
+        person_services_secret: :person_services_secret,
+        person_services_proxy: :person_services_proxy,
+        person_services_fallback_rrn: :person_services_fallback_rrn,
+      )
     )
   end
 
