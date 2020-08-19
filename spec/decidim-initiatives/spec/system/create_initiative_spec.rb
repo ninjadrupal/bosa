@@ -98,7 +98,7 @@ describe "Initiative", type: :system do
 
         it "Have fields for title and description" do
           expect(page).to have_xpath("//input[@id='initiative_title']")
-          expect(page).to have_xpath("//input[@id='initiative_description']", visible: false)
+          expect(page).to have_xpath("//textarea[@id='initiative_description']", visible: false)
         end
 
         it "Offers contextual help" do
@@ -128,7 +128,7 @@ describe "Initiative", type: :system do
 
         it "Have fields for title and description" do
           expect(page).to have_xpath("//input[@id='initiative_title']")
-          expect(page).to have_xpath("//input[@id='initiative_description']", visible: false)
+          expect(page).to have_xpath("//textarea[@id='initiative_description']", visible: false)
         end
 
         it "Offers contextual help" do
@@ -144,7 +144,7 @@ describe "Initiative", type: :system do
         before do
           find_button("I want to promote this initiative").click
           fill_in "Title", with: translated(initiative.title, locale: :en)
-          fill_in_editor "initiative_description", with: translated(initiative.description, locale: :en)
+          fill_in "Description", with: translated(initiative.description, locale: :en)
           find_button("Continue").click
         end
 
@@ -174,7 +174,7 @@ describe "Initiative", type: :system do
           before do
             find_button("I want to promote this initiative").click
             fill_in "Title", with: translated(initiative.title, locale: :en)
-            fill_in_editor "initiative_description", with: translated(initiative.description, locale: :en)
+            fill_in "Description", with: translated(initiative.description, locale: :en)
             find_button("Continue").click
           end
 
@@ -193,7 +193,7 @@ describe "Initiative", type: :system do
           it "Information collected in previous steps is already filled" do
             expect(find(:xpath, "//input[@id='initiative_type_id']", visible: false).value).to eq(initiative_type.id.to_s)
             expect(find(:xpath, "//input[@id='initiative_title']").value).to eq(translated(initiative.title, locale: :en))
-            expect(find(:xpath, "//input[@id='initiative_description']", visible: false).value).to eq(translated(initiative.description, locale: :en))
+            expect(find(:xpath, "//textarea[@id='initiative_description']", visible: false).value).to eq(translated(initiative.description, locale: :en))
           end
 
           context "when only one signature collection and scope are available" do
@@ -228,7 +228,7 @@ describe "Initiative", type: :system do
 
           before do
             fill_in "Title", with: translated(initiative.title, locale: :en)
-            fill_in_editor "initiative_description", with: translated(initiative.description, locale: :en)
+            fill_in "Description", with: translated(initiative.description, locale: :en)
             find_button("Continue").click
           end
 
@@ -247,6 +247,13 @@ describe "Initiative", type: :system do
         context "when the initiative type enables area" do
           let(:initiative_type) { create(:initiatives_type, :area_enabled, organization: organization, minimum_committee_members: initiative_type_minimum_committee_members, signature_type: "offline") }
 
+          before do
+            find_button("I want to promote this initiative").click
+            fill_in "Title", with: translated(initiative.title, locale: :en)
+            fill_in "Description", with: translated(initiative.description, locale: :en)
+            find_button("Continue").click
+          end
+
           it "shows the area" do
             expect(page).to have_content("Area")
           end
@@ -260,7 +267,7 @@ describe "Initiative", type: :system do
           find_button("I want to promote this initiative").click
 
           fill_in "Title", with: translated(initiative.title, locale: :en)
-          fill_in_editor "initiative_description", with: translated(initiative.description, locale: :en)
+          fill_in "Description", with: translated(initiative.description, locale: :en)
           find_button("Continue").click
 
           select("Online", from: "Signature collection type")
@@ -314,7 +321,7 @@ describe "Initiative", type: :system do
           find_button("I want to promote this initiative").click
 
           fill_in "Title", with: translated(initiative.title, locale: :en)
-          fill_in_editor "initiative_description", with: translated(initiative.description, locale: :en)
+          fill_in "Description", with: translated(initiative.description, locale: :en)
           find_button("Continue").click
 
           select(translated(initiative_type_scope.scope.name, locale: :en), from: "Scope")

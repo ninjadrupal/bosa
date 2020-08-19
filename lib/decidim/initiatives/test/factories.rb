@@ -6,7 +6,8 @@ require "decidim/dev"
 FactoryBot.define do
   factory :initiatives_type, class: "Decidim::InitiativesType" do
     title { generate_localized_title }
-    description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    # description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    description { generate_localized_title }
     banner_image { Decidim::Dev.test_file("city2.jpeg", "image/jpeg") }
     organization
     signature_type { :online }
@@ -98,7 +99,8 @@ FactoryBot.define do
 
   factory :initiative, class: "Decidim::Initiative" do
     title { generate_localized_title }
-    description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    # description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+    description { generate_localized_title }
     organization
     author { create(:user, :confirmed, organization: organization) }
     published_at { Time.current }
