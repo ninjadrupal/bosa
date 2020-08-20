@@ -32,12 +32,13 @@ module AdminInitiativeFormExtend
       end
     end
 
-    # def signature_type_updatable?
-    #   @signature_type_updatable ||= begin
-    #                                   state ||= context.initiative.state
-    #                                   state == "validating" && context.current_user.admin?
-    #                                 end
-    # end
+    def signature_type_updatable?
+      # @signature_type_updatable ||= begin
+      #                                 state ||= context.initiative.state
+      #                                 state == "validating" && context.current_user.admin?
+      #                               end
+      @signature_type_updatable = context.initiative.state == "validating" && context.current_user.admin?
+    end
 
     def title_max_length
       title.each do |locale, value|

@@ -14,8 +14,8 @@ describe "User answers the initiative", type: :system do
           :initiative_answer,
           "#initiative-answer-tabs",
           en: "An answer",
-          es: "Una respuesta",
-          ca: "Una resposta"
+          fr: "Una respuesta",
+          nl: "Una resposta"
         )
         expect(page).to have_css("#initiative_state", visible: false)
         expect(page).to have_css("#initiative_signature_start_date")
@@ -73,8 +73,8 @@ describe "User answers the initiative", type: :system do
           :initiative_answer,
           "#initiative-answer-tabs",
           en: "An answer",
-          es: "Una respuesta",
-          ca: "Una resposta"
+          fr: "Una respuesta",
+          nl: "Una resposta"
         )
       end
 
@@ -95,8 +95,8 @@ describe "User answers the initiative", type: :system do
               :initiative_answer,
               "#initiative-answer-tabs",
               en: "An answer",
-              es: "Una respuesta",
-              ca: "Una resposta"
+              fr: "Una respuesta",
+              nl: "Una resposta"
             )
             expect(page).to have_css("#initiative_signature_start_date")
             expect(page).to have_css("#initiative_signature_end_date")
@@ -119,8 +119,8 @@ describe "User answers the initiative", type: :system do
               :initiative_answer,
               "#initiative-answer-tabs",
               en: "An answer",
-              es: "Una respuesta",
-              ca: "Una resposta"
+              fr: "Una respuesta",
+              nl: "Una resposta"
             )
             expect(page).to have_css("#initiative_signature_start_date")
             expect(page).to have_css("#initiative_signature_end_date")

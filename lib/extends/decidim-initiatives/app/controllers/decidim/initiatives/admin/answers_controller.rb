@@ -14,7 +14,7 @@ module AdminAnswersControllerExtend
       @form = form(Decidim::Initiatives::Admin::InitiativeAnswerForm)
                 .from_params(params, initiative: current_initiative)
 
-      UpdateInitiativeAnswer.call(current_initiative, @form, current_user) do
+      Decidim::Initiatives::Admin::UpdateInitiativeAnswer.call(current_initiative, @form, current_user) do
         on(:ok) do
           flash[:notice] = I18n.t("initiatives.update.success", scope: "decidim.initiatives.admin")
           redirect_to initiatives_path
