@@ -33,7 +33,7 @@
             </div>
 
             <div class="field">
-              <%= f.editor :description, lines: 8, toolbar: :full, required: true %>
+              <%= f.text_area :description, rows: 8, maxlength: 10000, autocomplete: :off, required: true %>
             </div>
 
             <% if initiative_type.no_signature_allowed? %>
