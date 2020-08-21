@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+include ActionView::Helpers::NumberHelper
 
 describe "Initiative signing", type: :system do
   let(:organization) { create(:organization, available_authorizations: authorizations) }
@@ -194,8 +195,8 @@ describe "Initiative signing", type: :system do
   end
 
   def signature_text(number)
-    return "1/#{initiative.supports_required}\nSIGNATURE" if number == 1
+    return "1/#{number_with_delimiter(initiative.supports_required, delimiter: t(".decidim.progress_bar.number_delimiter"))}\nSIGNATURE" if number == 1
 
-    "#{number}/#{initiative.supports_required}\nSIGNATURES"
+    "#{number}/#{number_with_delimiter(initiative.supports_required, delimiter: t(".decidim.progress_bar.number_delimiter"))}\nSIGNATURES"
   end
 end

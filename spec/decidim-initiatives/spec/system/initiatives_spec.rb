@@ -18,6 +18,7 @@ describe "Initiatives", type: :system do
     let!(:unpublished_initiative) do
       create(:initiative, :created, organization: organization)
     end
+    let!(:target_path) { decidim_initiatives.initiative_path(initiative.id) }
 
     before do
       visit decidim_initiatives.initiatives_path
@@ -73,7 +74,7 @@ describe "Initiatives", type: :system do
 
     it "displays the filter initiative type filter" do
       within ".new_filter[action='/initiatives']" do
-        expect(page).to have_css("#filter_type")
+        expect(page).to have_css("#filter_type_id_")
       end
     end
 

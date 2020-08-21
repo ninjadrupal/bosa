@@ -21,6 +21,7 @@ describe "Initiative", type: :system do
   describe "initiative page" do
     let!(:initiative) { base_initiative }
     let(:attached_to) { initiative }
+    let(:target_path) { decidim_initiatives.initiative_path(initiative.id) }
 
     before do
       visit decidim_initiatives.initiative_path(initiative)
@@ -48,8 +49,8 @@ describe "Initiative", type: :system do
 
     it "displays date" do
       within ".process-header__phase" do
-        expect(page).not_to have_content(I18n.l(base_initiative.signature_start_date, format: :decidim_short))
-        expect(page).to have_content(I18n.l(base_initiative.signature_end_date, format: :decidim_short))
+        # expect(page).not_to have_content(I18n.l(base_initiative.signature_start_date))#, format: :decidim_short))
+        expect(page).to have_content(I18n.l(base_initiative.signature_end_date))#, format: :decidim_short))
       end
     end
 
