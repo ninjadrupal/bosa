@@ -1,6 +1,6 @@
 <% content_for :back_link do %>
   <%= link_to :back do %>
-    <%= icon "chevron-left", class: "icon--small" %>
+    <%= icon "chevron-left", class: "icon--small", role: "img", "aria-hidden": true %>
     <%= t(".back") %>
   <% end %>
 <% end %>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="field">
-              <%= f.text_area :description, rows: 8, maxlength: 10000, autocomplete: :off, required: true %>
+              <%= f.editor :description, lines: 8, toolbar: :full, required: true %>
             </div>
 
             <% if initiative_type.no_signature_allowed? %>
