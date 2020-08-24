@@ -15,11 +15,6 @@ module UserExtend
 
     validate :all_roles_are_valid
 
-    # Overrides devise email required validation.
-    def email_required?
-      false
-    end
-
     def tos_accepted?
       return true if managed
       return true if email.blank?

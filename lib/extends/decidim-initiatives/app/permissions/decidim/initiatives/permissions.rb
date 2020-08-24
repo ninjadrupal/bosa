@@ -23,12 +23,12 @@ module PermissionsExtend
       list_public_initiatives?
       read_public_initiative?
       search_initiative_types_and_scopes?
-      request_membership?
 
       return permission_action unless user
 
       create_initiative?
       create_initiative_with_type?
+      request_membership?
 
       vote_initiative?
       sign_initiative?
@@ -43,16 +43,6 @@ module PermissionsExtend
 
     def initiative_type
       @initiative_type ||= context.fetch(:initiative_type, nil) || initiative.type
-    end
-
-    def read_public_initiative?
-      return unless [:initiative, :participatory_space].include?(permission_action.subject) &&
-        permission_action.action == :read
-
-      return allow! if readable?(initiative)
-      return allow! if user && (initiative.has_authorship?(user) || user.admin?)
-
-      disallow!
     end
 
     def creation_enabled?
@@ -72,6 +62,22 @@ module PermissionsExtend
       Decidim::Initiatives.creation_enabled && (
       creation_authorized_for?(initiative_type) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
       )
+    end
+
+    def request_membership?
+      return unless permission_action.subject == :initiative &&
+        permission_action.action == :request_membership
+
+      can_request = !initiative.published? &&
+        initiative.promoting_committee_enabled? &&
+        !initiative.has_authorship?(user) &&
+        (
+        Decidim::Initiatives.do_not_require_authorization ||
+          UserAuthorizations.for(user).any? ||
+          Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
+        )
+
+      toggle_allow(can_request)
     end
 
     def creation_authorized?
@@ -97,6 +103,7 @@ module PermissionsExtend
       can_unvote = initiative.accepts_online_unvotes? &&
         initiative.organization&.id == user.organization&.id &&
         initiative.votes.where(author: user).any? &&
+        (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
         authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
 
       toggle_allow(can_unvote)
@@ -108,11 +115,8 @@ module PermissionsExtend
       initiative.votes_enabled? &&
         initiative.organization&.id == user.organization&.id &&
         initiative.votes.where(author: user).empty? &&
+        (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
         authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
-    end
-
-    def readable?(initiative)
-      initiative.published? || initiative.rejected? || initiative.accepted? || initiative.debatted? || initiative.examinated? || initiative.classified?
     end
 
   end

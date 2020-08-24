@@ -388,6 +388,8 @@ nl:
           title:
             one: "%{count} initiatief"
             other: "%{count} initiatieven"
+        edit:
+          attachment_legend: Een bijlage toevoegen (optioneel)
         filters:
           any: Alle
           author: Auteur

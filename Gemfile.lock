@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:belighted/decidim-module-verifications_omniauth.git
-  revision: f0fca50b26721a840ba9d86aa7737bfa583cd0fa
+  revision: 3ef9d42503a063e96026e9b9e98537e5ad951cf9
   specs:
     decidim-verifications_omniauth (0.22.0.rc1)
       decidim-core (= 0.22.0.rc1)
@@ -14,7 +14,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
-  revision: 6f2f4717d511b1c0a7b55211840eeaacf7ce5a32
+  revision: a925b5ac729ea38aba4354a7191c2e0c45cd9eb4
   specs:
     decidim-initiatives_no_signature_allowed (0.22.0.rc1)
       decidim-core (= 0.22.0.rc1)
