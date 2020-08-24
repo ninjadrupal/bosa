@@ -7,34 +7,6 @@ module AdminInitiativesControllerExtend
   # Changes moved from decidim-module-initiatives_nosignature_allowed
 
   included do
-
-    # PUT /admin/initiatives/:id
-    def update
-      enforce_permission_to :update, :initiative, initiative: current_initiative
-
-      params[:id] = params[:slug]
-      if params[:initiative].present?
-        current_organization.available_locales.each do |locale|
-          params[:initiative]["description_#{locale}"] = Decidim::ApplicationController.helpers.strip_tags(params[:initiative]["description_#{locale}"])
-        end
-      end
-
-      @form = form(Decidim::Initiatives::Admin::InitiativeForm)
-                .from_params(params, initiative: current_initiative)
-
-      Decidim::Initiatives::Admin::UpdateInitiative.call(current_initiative, @form, current_user) do
-        on(:ok) do |initiative|
-          flash[:notice] = I18n.t("initiatives.update.success", scope: "decidim.initiatives.admin")
-          redirect_to edit_initiative_path(initiative)
-        end
-
-        on(:invalid) do
-          flash.now[:alert] = I18n.t("initiatives.update.error", scope: "decidim.initiatives.admin")
-          render :edit, layout: "decidim/admin/initiative"
-        end
-      end
-    end
-
     # GET /admin/initiatives/:id/export_votes
     def export_votes
       enforce_permission_to :export_votes, :initiative, initiative: current_initiative

@@ -37,7 +37,7 @@
     </div>
 
     <div class="row column">
-      <%= form.translated :text_area, :description, rows: 8, maxlength: 10000, autocomplete: :off, disabled: !allowed_to?(:update, :initiative, initiative: current_initiative) %>
+      <%= form.translated :editor, :description, toolbar: :full, lines: 8, disabled: !allowed_to?(:update, :initiative, initiative: current_initiative) %>
     </div>
 
     <div class="row">

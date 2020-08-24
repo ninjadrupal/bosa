@@ -9,20 +9,20 @@
 
 :schedule:
   CalculateAllMetrics:
-    cron: '5 17 * * *'
+    cron: '0 6,14,22 * * *'
     class: CalculateAllMetricsJob
   PreloadOpenData:
-    cron: '5 17 * * *'
+    cron: '0 17 * * *'
     class: PreloadOpenDataJob
   CheckPublishedInitiatives:
-    cron: '5 17 * * *'
+    cron: '0 8,16,23 * * *'
     class: CheckPublishedInitiatives
   CheckValidatingInitiatives:
-    cron: '5 17 * * *'
+    cron: '30 8,16,23 * * *'
     class: CheckValidatingInitiatives
   NotifyProgressInitiatives:
-    cron: '5 17 * * *'
+    cron: '45 8,16,23 * * *'
     class: NotifyProgressInitiatives
   CleanSessions:
-    cron: '5 17 * * *'
+    cron: '0 5 * * *'
     class: CleanSessions
