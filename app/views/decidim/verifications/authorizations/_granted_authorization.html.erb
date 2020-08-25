@@ -17,10 +17,17 @@
       </span>
     </div>
   </div>
+
   <% if authorization.expired? %>
     <div class="card--list__data">
       <span class="card--list__data__icon">
-        <%= icon "reload" %>
+      <%= icon "reload", role: "img" %>
+      </span>
+    </div>
+  <% elsif authorization.renewable? %>
+    <div class="card--list__data">
+      <span class="card--list__data__icon">
+        <%= icon "reload", role: "img" %>
       </span>
     </div>
   <% end %>

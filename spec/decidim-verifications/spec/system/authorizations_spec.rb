@@ -80,7 +80,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
         end
 
         click_link "Authorizations"
-        click_link "Example authorization"
+        click_link "BOSA dummy authorization"
 
         fill_in "Document number", with: "123456789X"
         page.execute_script("$('#authorization_handler_date_of_birth').focus()")
@@ -94,8 +94,8 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
         end
 
         within ".authorizations-list" do
-          expect(page).to have_content("Example authorization")
-          expect(page).to have_no_link("Example authorization")
+          expect(page).to have_content("BOSA dummy authorization")
+          expect(page).to have_no_link("BOSA dummy authorization")
         end
       end
 
@@ -105,7 +105,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
         end
 
         click_link "Authorizations"
-        click_link "Example authorization"
+        click_link "BOSA dummy authorization"
 
         fill_in "Document number", with: "12345678"
         page.execute_script("$('#authorization_handler_date_of_birth').focus()")
@@ -131,7 +131,79 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
         click_link "Authorizations"
 
         within ".authorizations-list" do
-          expect(page).to have_content("Example authorization")
+          expect(page).to have_content("BOSA dummy authorization")
+        end
+      end
+
+      context "when the authorization is renewable" do
+        describe "and still not over the waiting period" do
+          let!(:authorization) do
+            create(:authorization, name: "dummy_authorization_handler", user: user, granted_at: 1.minute.ago)
+          end
+
+          it "can't be renewed yet" do
+            within_user_menu do
+              click_link "My account"
+            end
+
+            click_link "Authorizations"
+
+            within ".authorizations-list" do
+              expect(page).to have_no_link("BOSA dummy authorization")
+              expect(page).to have_no_css(".authorization-renewable")
+            end
+          end
+        end
+
+        describe "and passed the time between renewals" do
+          let!(:authorization) do
+            create(:authorization, name: "dummy_authorization_handler", user: user, granted_at: 2.months.ago)
+          end
+
+          it "can be renewed" do
+            within_user_menu do
+              click_link "My account"
+            end
+
+            click_link "Authorizations"
+
+            within ".authorizations-list" do
+              expect(page).to have_link("BOSA dummy authorization")
+              expect(page).to have_css(".authorization-renewable")
+            end
+          end
+
+          it "shows a modal with renew information" do
+            within_user_menu do
+              click_link "My account"
+            end
+
+            click_link "Authorizations"
+            click_link "BOSA dummy authorization"
+
+            within "#renew-modal" do
+              expect(page).to have_content("BOSA dummy authorization")
+              expect(page).to have_content("This is the data of the current verification:")
+              expect(page).to have_content("Continue")
+              expect(page).to have_content("Cancel")
+            end
+          end
+
+          describe "and clicks on the button to renew" do
+            it "shows the verification form to start again" do
+              within_user_menu do
+                click_link "My account"
+              end
+              click_link "Authorizations"
+              click_link "BOSA dummy authorization"
+              within "#renew-modal" do
+                click_link "Continue"
+              end
+
+              expect(page).to have_content("Document number")
+              expect(page).to have_button "Send"
+            end
+          end
         end
       end
 
@@ -148,7 +220,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
           click_link "Authorizations"
 
           within ".authorizations-list" do
-            expect(page).to have_no_link("Example authorization")
+            expect(page).to have_no_link("BOSA dummy authorization")
             expect(page).to have_content(I18n.localize(authorization.granted_at, format: :long))
           end
         end
@@ -167,8 +239,11 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
           click_link "Authorizations"
 
           within ".authorizations-list" do
-            expect(page).to have_link("Example authorization")
-            click_link "Example authorization"
+            expect(page).to have_link("BOSA dummy authorization")
+            click_link "BOSA dummy authorization"
+          end
+          within "#renew-modal" do
+            click_link "Continue"
           end
 
           fill_in "Document number", with: "123456789X"
