@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
+require 'rake'
 require "spec_helper"
 
 describe "decidim_initiatives:notify_progress", type: :task do
+  let(:task) {
+    application_name = Rails.application.class.parent_name
+    application = Object.const_get(application_name)
+    application::Application.load_tasks
+    Rake::Task['decidim_initiatives:notify_progress']
+  }
+
   it "preloads the Rails environment" do
     expect(task.prerequisites).to include "environment"
   end

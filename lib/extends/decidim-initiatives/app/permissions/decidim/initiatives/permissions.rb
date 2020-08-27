@@ -73,7 +73,7 @@ module PermissionsExtend
         !initiative.has_authorship?(user) &&
         (
         Decidim::Initiatives.do_not_require_authorization ||
-          UserAuthorizations.for(user).any? ||
+          Decidim::Initiatives::UserAuthorizations.for(user).any? ||
           Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
         )
 
