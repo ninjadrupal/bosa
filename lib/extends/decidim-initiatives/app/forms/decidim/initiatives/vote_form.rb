@@ -29,11 +29,11 @@ module VoteFormExtend
       }
     end
 
-    def encrypted_metadata
-      return unless required_personal_data?
-
-      @encrypted_metadata ||= encryptor.encrypt({})
-    end
+    # def encrypted_metadata
+    #   return unless required_personal_data?
+    #
+    #   @encrypted_metadata ||= encryptor.encrypt({})
+    # end
 
     # Public: The hash to uniquely identify an initiative vote. It uses the
     # initiative scope as a default.

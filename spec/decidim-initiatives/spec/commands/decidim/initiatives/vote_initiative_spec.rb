@@ -26,10 +26,11 @@ module Decidim
 
       let(:personal_data_params) do
         {
-          name_and_surname: ::Faker::Name.name,
-          document_number: ::Faker::IDNumber.spanish_citizen_number,
-          date_of_birth: ::Faker::Date.birthday(18, 40),
-          postal_code: ::Faker::Address.zip_code,
+          # name_and_surname: ::Faker::Name.name,
+          # document_number: ::Faker::IDNumber.spanish_citizen_number,
+          # date_of_birth: ::Faker::Date.birthday(18, 40),
+          # postal_code: ::Faker::Address.zip_code,
+          user_scope_id: nil,
           resident: true
         }
       end
@@ -82,8 +83,8 @@ module Decidim
           end
 
           before do
-            create(:initiative_user_vote, initiative: initiative)
-            create(:initiative_user_vote, initiative: initiative)
+            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
+            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
           end
 
           it "notifies the followers" do
@@ -121,10 +122,10 @@ module Decidim
           end
 
           before do
-            create(:initiative_user_vote, initiative: initiative)
-            create(:initiative_user_vote, initiative: initiative)
-            create(:initiative_user_vote, initiative: initiative)
-            create(:initiative_user_vote, initiative: initiative)
+            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
+            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
+            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
+            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
           end
 
           it "notifies the admins" do
@@ -171,12 +172,13 @@ module Decidim
             command_with_personal_data.call
             vote = InitiativesVote.last
             expect(vote.encrypted_metadata).to be_present
-            expect(vote.decrypted_metadata).to eq personal_data_params
+            # expect(vote.decrypted_metadata).to eq personal_data_params
+            expect(vote.decrypted_metadata).to eq({user_scope_id: nil, resident: true})
           end
 
           context "when another signature exists with the same hash_id" do
             before do
-              create(:initiative_user_vote, initiative: initiative, hash_id: form_with_personal_data.hash_id)
+              create(:initiative_user_vote, initiative: initiative, scope: organization.scopes.first, hash_id: form_with_personal_data.hash_id)
             end
 
             it "broadcasts invalid" do
@@ -184,7 +186,8 @@ module Decidim
             end
           end
 
-          context "when initiative type has document number authorization handler" do
+          # (?) turn off this part as there is no `document_number` any more (see VoteFormExtend `metadata` method)
+          xcontext "when initiative type has document number authorization handler" do
             let(:handler_name) { "dummy_authorization_handler" }
             let(:unique_id) { "test_digest" }
             let(:metadata) { { test: "dummy" } }
@@ -240,6 +243,16 @@ module Decidim
               end
             end
           end
+        end
+
+        def new_form
+          p = personal_data_params.merge(
+            {
+              name_and_surname: ::Faker::Name.name,
+              document_number: ::Faker::IDNumber.spanish_citizen_number
+            }
+          )
+          form_klass.from_params(form_params.merge(p)).with_context(current_organization: organization)
         end
       end
     end

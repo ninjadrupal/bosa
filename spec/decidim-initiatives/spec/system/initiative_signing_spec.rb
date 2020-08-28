@@ -96,7 +96,7 @@ describe "Initiative signing", type: :system do
             expect(page).to have_content("VERIFY YOUR ACCOUNT")
           end
           click_button "Verify your account"
-          sleep 1
+          sleep 10
           expect(page).to have_text("Authorization required")
         end
       end
