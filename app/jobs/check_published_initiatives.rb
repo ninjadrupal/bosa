@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class CheckPublishedInitiatives < ApplicationJob
-
   def perform
-    application_name = Rails.application.class.parent_name
-    application = Object.const_get(application_name)
-    application::Application.load_tasks
-    Rake::Task["decidim_initiatives:check_published"].invoke
+    DecidimAws::Application.load_tasks
+    Rake::Task["decidim_initiatives:check_published"].clear
+
+    load Rails.root.join('lib', 'tasks', 'decidim_initiatives_extras.rake')
+    Rake::Task['decidim_initiatives:check_published'].invoke
   end
 end
