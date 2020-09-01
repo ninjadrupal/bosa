@@ -73,6 +73,7 @@ gem "rubyzip", require: "zip"
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
   gem 'pry-rails'
+  gem 'webdrivers'
 
   gem "decidim-dev", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
   # gem "decidim-dev", path: "../decidim"
@@ -95,4 +96,8 @@ group :production do
   gem "newrelic_rpm"
   gem "fog-aws"
   gem "dalli-elasticache"
+end
+
+group :test do
+  gem 'database_cleaner-active_record'
 end

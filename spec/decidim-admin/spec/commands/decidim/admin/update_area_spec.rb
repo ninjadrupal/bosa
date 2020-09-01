@@ -54,7 +54,8 @@ module Decidim::Admin
       end
 
       it "updates the area logo" do
-        expect(area.logo).to eq(logo)
+        new_logo = File.basename(area.logo.file.file)
+        expect(new_logo).to eq(logo.original_filename)
       end
 
       it "traces the action", versioning: true do
