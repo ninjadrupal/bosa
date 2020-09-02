@@ -1,101 +1,84 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 ruby RUBY_VERSION
 
-# ----------------------------------------------------------------------------------------------------------------------
-gem 'decidim', git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
+DECIDIM_VERSION = { git: 'https://github.com/decidim/decidim', branch: 'release/0.22-stable' }
 
-gem "decidim-verifications_omniauth", git: "git@github.com:belighted/decidim-module-verifications_omniauth.git"
-# gem "decidim-verifications_omniauth", path: "../decidim-module-verifications_omniauth"
+gem 'decidim', DECIDIM_VERSION
+gem 'decidim-initiatives', DECIDIM_VERSION
+gem 'decidim-verifications_omniauth', git: 'git@github.com:belighted/decidim-module-verifications_omniauth.git'
+gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed'
 
-gem "decidim-initiatives", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
-
-gem "decidim-initiatives_no_signature_allowed", git: "https://github.com/belighted/decidim-module-initiatives_nosignature_allowed"
-# gem "decidim-initiatives_no_signature_allowed", path: "../decidim-module-initiatives_nosignature_allowed"
-
-# gem "decidim-term_customizer", git: "https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git", branch: "0.dev"
+# gem 'decidim-term_customizer', git: 'https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git', branch: '0.dev'
 # --------
 # Fake update to 0.22
 # It is using decidim v0.20 inside
 # TODO: get back to original https://github.com/mainio/decidim-module-term_customizer AFTER they upgrade it to official decidim 0.22 (otherwise can't properly bundle install because of dependency versions resolution)
-gem "decidim-term_customizer", git: "https://github.com/belighted/decidim-module-term_customizer.git", branch: "fake-v0.22"
+gem 'decidim-term_customizer', git: 'https://github.com/belighted/decidim-module-term_customizer.git', branch: 'fake-v0.22'
 
+# gem 'decidim-cookies', git:'https://github.com/OpenSourcePolitics/decidim-module_cookies', branch: 'feature/orejime'
+gem 'decidim-cookies', git: 'https://github.com/belighted/decidim-module-cookies'
 
-# gem "decidim-cookies", git:"https://github.com/OpenSourcePolitics/decidim-module_cookies", branch: "feature/orejime"
-gem "decidim-cookies", git: "https://github.com/belighted/decidim-module-cookies"
-
-
-# gem "decidim-navbar_links", git: "https://github.com/OpenSourcePolitics/decidim-module-navbar_links", branch: "0.22.0.dev"
+# gem 'decidim-navbar_links', git: 'https://github.com/OpenSourcePolitics/decidim-module-navbar_links', branch: '0.22.0.dev'
 # --------
 # Fake update to 0.22
 # It is using decidim v0.19 inside
 # TODO: Update to latest 0.22 if needed (and after it is officially released, otherwise can't properly bundle install because of dependency versions resolution)
-gem "decidim-navbar_links", git: "https://github.com/belighted/decidim-module-navbar_links", branch: "fake-v0.22.0"
+gem 'decidim-navbar_links', git: 'https://github.com/belighted/decidim-module-navbar_links', branch: 'fake-v0.22.0'
 
 # ----------------------------------------------------------------------------------------------------------------------
-
-gem "bootsnap"
-gem "puma"
-gem "uglifier"
-
-gem "faker", "~> 1.9"
-
 # Avoid wicked_pdf require error
-gem "wicked_pdf"
-gem "wkhtmltopdf-binary"
-
-gem "ruby-progressbar"
-gem "sentry-raven"
-
-gem "activerecord-session_store"
+# gem 'akami', git: 'https://github.com/OpenSourcePolitics/akami', branch: 'fix-timestamp'
+# gem 'akami', path: '../_lib/akami'
+# gem 'omniauth-oauth2', '>= 1.4.0', '< 2.0'
+# gem 'omniauth_openid_connect', '0.3.1'
+gem 'activerecord-session_store'
+gem 'bootsnap'
 gem 'deepl-rb'
-
-# gem "omniauth-oauth2", ">= 1.4.0", "< 2.0"
-# gem "omniauth_openid_connect", "0.3.1"
-gem "omniauth-saml", "~> 1.10"
-gem "omniauth-rails_csrf_protection"
-gem "savon", "~> 2.12.0"
-
-# gem "akami", git: "https://github.com/OpenSourcePolitics/akami", branch: "fix-timestamp"
-# gem "akami", path: "../_lib/akami"
-gem "signer"
-gem "pry"
-gem "http_logger"
-
+gem 'faker', '~> 1.9'
+gem 'http_logger'
+gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-saml', '~> 1.10'
+gem 'pry'
+gem 'puma'
+gem 'ruby-progressbar'
+gem 'rubyzip', require: 'zip'
+gem 'savon', '~> 2.12.0'
+gem 'sentry-raven'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
-
-gem "dotenv-rails"
-gem "rubyzip", require: "zip"
+gem 'signer'
+gem 'uglifier'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
-  gem "byebug", "~> 11.0", platform: :mri
+  gem 'byebug', '~> 11.0', platform: :mri
+  gem 'decidim-dev', git: 'https://github.com/decidim/decidim', branch: 'release/0.22-stable'
+  gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'webdrivers'
-
-  gem "decidim-dev", git: 'https://github.com/decidim/decidim', branch: "release/0.22-stable"
-  # gem "decidim-dev", path: "../decidim"
 end
 
 group :development do
-  gem "letter_opener_web", "~> 1.3"
-  gem "listen", "~> 3.1"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
-  gem "web-console", "~> 3.5"
-  gem "capistrano", "~> 3.10", require: false
-  gem "capistrano-rails", "~> 1.6", require: false
+  gem 'capistrano', '~> 3.10', require: false
+  gem 'capistrano-rails', '~> 1.6', require: false
   gem 'capistrano-rbenv', '~> 2.2', require: false
-  gem 'capistrano3-puma', require: false
   gem 'capistrano-sidekiq', '2.0.0.beta5', require: false
+  gem 'capistrano3-puma', require: false
+  gem 'letter_opener_web', '~> 1.3'
+  gem 'listen', '~> 3.1'
+  gem 'spring', '~> 2.0'
+  gem 'spring-watcher-listen', '~> 2.0'
+  gem 'web-console', '~> 3.5'
 end
 
 group :production do
-  gem "newrelic_rpm"
-  gem "fog-aws"
-  gem "dalli-elasticache"
+  gem 'dalli-elasticache'
+  gem 'fog-aws'
+  gem 'newrelic_rpm'
 end
 
 group :test do
