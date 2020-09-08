@@ -61,6 +61,9 @@ fr:
           date_of_birth: Votre date de naissance
         name: CSAM eID
         explanation: Confirmer votre identité avec un compte CSAM eID
+      csam:
+        name: CSAM
+        explanation: Validate with your CSAM account
     authorization_modals:
       content:
         unauthorized:

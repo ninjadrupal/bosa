@@ -51,6 +51,9 @@ en:
       saml:
         name: CSAM eID
         explanation: Validate with your CSAM eID account
+      csam:
+        name: CSAM
+        explanation: Validate with your CSAM account
     authorization_modals:
       content:
         unauthorized:

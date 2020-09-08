@@ -50,6 +50,9 @@ nl:
       saml:
         explanation: Validate with your CSAM eID account
         name: CSAM eID
+      csam:
+        name: CSAM
+        explanation: Validate with your CSAM account
       started_at: Started at
     authorization_modals:
       content:
