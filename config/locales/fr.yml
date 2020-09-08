@@ -141,6 +141,7 @@ fr:
         first_login:
           actions:
             saml: Confirmer votre identité avec un compte CSAM eID
+            csam: Validate with your CSAM account
             dummy_authorization_handler: Ajouter des informations complémentaires à votre profil
       metadata:
         content:

@@ -77,6 +77,7 @@ en:
         first_login:
           actions:
             saml: Validate with your CSAM eID account
+            csam: Validate with your CSAM account
             dummy_authorization_handler: Add additional informations to your account
 
     system:
