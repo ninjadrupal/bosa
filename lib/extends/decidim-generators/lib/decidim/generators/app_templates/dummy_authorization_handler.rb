@@ -19,7 +19,7 @@
 #   it_behaves_like "an authorization handler"
 #
 # See Decidim::AuthorizationHandler for more documentation.
-class DummyAuthorizationHandler < Decidim::AuthorizationHandler
+class DummyAuthorizationHandler < ::Decidim::AuthorizationHandler
   # Define the attributes you need for this authorization handler. Attributes
   # are defined using Virtus.
   #
