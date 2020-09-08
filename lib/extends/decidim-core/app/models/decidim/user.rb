@@ -32,7 +32,7 @@ module UserExtend
 
       Decidim::EventsManager.publish(
         event: "decidim.events.core.welcome_notification",
-        event_class: WelcomeNotificationEvent,
+        event_class: Decidim::WelcomeNotificationEvent,
         resource: self,
         affected_users: [self]
       )
