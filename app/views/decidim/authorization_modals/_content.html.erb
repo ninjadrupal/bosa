@@ -14,7 +14,7 @@
   <div class="reveal__header <%= base_code %>-authorization">
     <h3 class="reveal__title"><%= t ".#{base_code}.title" %></h3>
   </div>
-  <% authorizations.statuses.each do |status| %>
+  <% authorizations&.statuses&.each do |status| %>
     <% next if status.ok? || (authorizations.global_code && status.code != base_code) || authorization_anti_affinity.include?(status.handler_name) %>
     <p><%= t ".#{status.code}.explanation", authorization: t("#{status.handler_name}.name", scope: "decidim.authorization_handlers") %></p>
     <% if status.data[:extra_explanation] %>
