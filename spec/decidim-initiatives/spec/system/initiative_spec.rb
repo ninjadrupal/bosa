@@ -49,13 +49,22 @@ describe "Initiative", type: :system do
 
     it "displays date" do
       within ".process-header__phase" do
-        # expect(page).not_to have_content(I18n.l(base_initiative.signature_start_date))#, format: :decidim_short))
         expect(page).to have_content(I18n.l(base_initiative.signature_end_date))#, format: :decidim_short))
       end
     end
 
-    context "when in a manual state" do
-      let(:base_initiative) { create(:initiative, :debatted, :with_answer, organization: organization) }
+    it_behaves_like "has attachments"
+  end
+
+  describe "initiative page when in a manual state", tt: true do
+    context "as an admin" do
+      let(:confirmed_user) { create(:user, :confirmed, :admin, organization: organization) }
+      let(:initiative) { create(:initiative, :debatted, :with_answer, organization: organization) }
+
+      before do
+        login_as confirmed_user, scope: :user
+        visit decidim_initiatives.initiative_path(initiative)
+      end
 
       it "displays the initiative status with the appropriate color" do
         expect(page).to have_css(".initiative-status.success")
@@ -63,10 +72,20 @@ describe "Initiative", type: :system do
       end
 
       it "displays date" do
-        expect(page).to have_content(I18n.l(base_initiative.answer_date.to_date, format: :decidim_short))
+        expect(page).to have_content(I18n.l(initiative.answer_date.to_date, format: :decidim_short))
       end
     end
 
-    it_behaves_like "has attachments"
+    context "as an guest" do
+      let(:initiative) { create(:initiative, :debatted, :with_answer, organization: organization) }
+
+      before do
+        visit decidim_initiatives.initiative_path(initiative)
+      end
+
+      it "disallows the access" do
+        expect(page).to have_content("You are not authorized to perform this action")
+      end
+    end
   end
 end
