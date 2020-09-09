@@ -73,7 +73,7 @@ describe "InitiativeTypesController", type: :system do
 
       select("In-person", from: "Signature type")
       check "Enable attachments"
-      uncheck "Enable participants to undo their online signatures"
+      page.find(:css, '#initiatives_type_attachments_enabled').uncheck
       check "Enable authors to choose the end of signature collection period"
       check "Enable authors to choose the area for their initiative"
 

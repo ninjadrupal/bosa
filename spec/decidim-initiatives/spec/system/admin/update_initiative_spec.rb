@@ -29,8 +29,8 @@ describe "User prints the initiative", type: :system do
           visit decidim_admin.root_path
         end
 
-        it "does not see admin TOS" do
-          expect(page).not_to have_content("Please take a moment to review Admin Terms of Use. Otherwise you won't be able to admin the platform. ")
+        it "sees admin TOS" do
+          expect(page).to have_content("Please take a moment to review Admin Terms of Use. Otherwise you won't be able to admin the platform. ")
         end
       end
 
