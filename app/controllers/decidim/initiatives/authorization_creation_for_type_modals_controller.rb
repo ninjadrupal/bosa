@@ -8,10 +8,9 @@ module Decidim
 
       helper Decidim::Verifications::AntiAffinityHelper
       helper_method :authorizations, :authorize_action_path, :redirect_url, :initiative_type
-      layout false
 
       def show
-        render template: "decidim/authorization_modals/show"
+        render template: "decidim/authorization_modals/show", layout: false
       end
 
       private
