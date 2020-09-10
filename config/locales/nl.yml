@@ -36,6 +36,8 @@ nl:
           help: '["Validate with your external Decidim account"]'
         saml:
           help: '["Validate with a CSAM eID account"]'
+        csam:
+          help: '["Validate with a CSAM account"]'
       decidim:
         explanation: Validate with your external Decidim account
         name: Omniauth Decidim

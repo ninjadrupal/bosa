@@ -42,6 +42,9 @@ en:
         saml:
           help:
             - Validate with a CSAM eID account
+        csam:
+          help:
+            - Validate with a CSAM account
       decidim:
         name: Omniauth Decidim
         explanation: Validate with your external Decidim account

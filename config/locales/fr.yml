@@ -50,6 +50,9 @@ fr:
         saml:
           help:
             - Confirmer une identité avec un compte CSAM eID
+        csam:
+          help:
+            - Validate with a CSAM account
       decidim:
         name: Omniauth Decidim
         explanation: Confirmer votre identité avec un compte Decidim externe
