@@ -56,7 +56,7 @@ describe "Initiative", type: :system do
     it_behaves_like "has attachments"
   end
 
-  describe "initiative page when in a manual state", tt: true do
+  describe "initiative page when in a manual state" do
     context "as an admin" do
       let(:confirmed_user) { create(:user, :confirmed, :admin, organization: organization) }
       let(:initiative) { create(:initiative, :debatted, :with_answer, organization: organization) }

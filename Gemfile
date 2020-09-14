@@ -8,7 +8,7 @@ DECIDIM_VERSION = { git: 'https://github.com/decidim/decidim', branch: 'release/
 
 gem 'decidim', DECIDIM_VERSION
 gem 'decidim-initiatives', DECIDIM_VERSION
-gem 'decidim-verifications_omniauth', git: 'git@github.com:belighted/decidim-module-verifications_omniauth.git'
+gem 'decidim-verifications_omniauth', git: 'git@github.com:belighted/decidim-module-verifications_omniauth.git', branch: 'master'
 gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed'
 
 # gem 'decidim-term_customizer', git: 'https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git', branch: '0.dev'

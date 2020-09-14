@@ -12,8 +12,7 @@ module InitiativesVoteExtend
                optional: true
 
     clear_validators!
-    validates :initiative, uniqueness: { scope: [:author, :scope] }
-    validates :initiative, uniqueness: { scope: [:hash_id, :scope] }
+    validates :initiative, uniqueness: { scope: [:author, :scope, :hash_id] }
 
     scope :for_scope, ->(scope) { where(scope: scope) }
 
