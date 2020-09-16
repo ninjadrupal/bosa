@@ -47,26 +47,12 @@ fr:
         decidim:
           help:
             - Confirmer une identité avec un compte Decidim externe
-        saml:
-          help:
-            - Confirmer une identité avec un compte CSAM eID
-        csam:
-          help:
-            - Validate with a CSAM account
       decidim:
         name: Omniauth Decidim
         explanation: Confirmer votre identité avec un compte Decidim externe
       dummy_authorization_handler:
         name: BOSA dummy authorization
         explanation: Ajouter des informations complémentaires à votre profil
-      saml:
-        fields:
-          date_of_birth: Votre date de naissance
-        name: CSAM eID
-        explanation: Confirmer votre identité avec un compte CSAM eID
-      csam:
-        name: CSAM
-        explanation: Validate with your CSAM account
     authorization_modals:
       content:
         unauthorized:
@@ -93,58 +79,12 @@ fr:
           modal_close: Fermer la fenêtre
           modal_title: Refusez-vous vraiment les conditions d'utilisation ?
 
-    system:
-      organizations:
-        omniauth_settings:
-          saml:
-            provider_name: Provider name
-            icon_path: Icon path
-            idp_sso_target_url: Provider URL (idp_sso_target_url)
-            assertion_consumer_service_url: Callback URL (assertion_consumer_service_url)
-            authn_context: Authentication context (authn_context)
-            issuer: Issuer URL
-            idp_slo_target_url: Logout URL (idp_slo_target_url)
-            idp_cert_fingerprint: Certificate fingerprint
-            idp_cert: Certificate
-            idp_key: Certificate private key
-            person_services_wsdl: Person Services WSDL URL
-            person_services_cert: Person Services Certificate
-            person_services_ca_cert: Person Services CA Certificate
-            person_services_key: Person Services private key
-            person_services_secret: Person Services private key secret
-            person_services_proxy: Person Services proxy URL
-            person_services_fallback_rrn: Person Services fallback RRN
-            enable_scope_mapping: 'Enable scope mapping ("true" or "false")'
-            scope_mapping_level_id: Scope mapping level Id (scope_type_id)
-          csam:
-            provider_name: Provider name
-            icon_path: Icon path
-            idp_sso_target_url: Provider URL (idp_sso_target_url)
-            assertion_consumer_service_url: Callback URL (assertion_consumer_service_url)
-            authn_context: Authentication context (authn_context)
-            issuer: Issuer URL
-            idp_slo_target_url: Logout URL (idp_slo_target_url)
-            idp_cert_fingerprint: Certificate fingerprint
-            idp_cert: Certificate
-            idp_key: Certificate private key
-            person_services_wsdl: Person Services WSDL URL
-            person_services_cert: Person Services Certificate
-            person_services_ca_cert: Person Services CA Certificate
-            person_services_key: Person Services private key
-            person_services_secret: Person Services private key secret
-            person_services_proxy: Person Services proxy URL
-            person_services_fallback_rrn: Person Services fallback RRN
-            enable_scope_mapping: 'Enable scope mapping ("true" or "false")'
-            scope_mapping_level_id: Scope mapping level Id (scope_type_id)
-
     verifications:
       authorizations:
         index:
           title: Liste des autorisations
         first_login:
           actions:
-            saml: Confirmer votre identité avec un compte CSAM eID
-            csam: Validate with your CSAM account
             dummy_authorization_handler: Ajouter des informations complémentaires à votre profil
       metadata:
         content:
