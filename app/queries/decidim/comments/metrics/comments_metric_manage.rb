@@ -22,7 +22,6 @@ module Decidim
             record.assign_attributes(cumulative: cumulative_value, quantity: quantity_value)
             record.save!
           rescue => e
-            binding.pry
             next
           end
         end
