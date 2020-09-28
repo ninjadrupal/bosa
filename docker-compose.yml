@@ -22,6 +22,7 @@ services:
       - .:/home/app/web:cached
       - bundle:/home/app/bundle
       - node_modules:/home/app/web/node_modules
+    env_file: .env
     environment:
       - NODE_ENV=development
       - RAILS_ENV=${RAILS_ENV:-development}

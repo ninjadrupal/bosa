@@ -4,6 +4,13 @@ ARG PG_MAJOR
 ARG NODE_MAJOR
 ARG BUNDLER_VERSION
 
+# Configure locale, bundler, define app dir
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
+  BUNDLE_JOBS=4 \
+  BUNDLE_RETRY=3 \
+  APP_USER=app \
+  HOME_APP=/home/app/web
+
 # Common dependencies
 RUN apt-get update -qq \
   && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
@@ -15,10 +22,8 @@ RUN apt-get update -qq \
   && apt-get clean \
   && rm -rf /var/cache/apt/archives/* \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-  && truncate -s 0 /var/log/*log
-
-# Add PostgreSQL and nodejs to sources list
-RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+  && truncate -s 0 /var/log/*log \
+  && curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
   && echo 'deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main' $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list && \
   curl -sL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash -
 
@@ -32,18 +37,9 @@ RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrad
     $(cat /tmp/Aptfile | xargs) && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    truncate -s 0 /var/log/*log
-
-# Configure locale, bundler, define app dir
-ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
-  BUNDLE_JOBS=4 \
-  BUNDLE_RETRY=3 \
-  APP_USER=app \
-  HOME_APP=/home/app/web
-
-# Create a user and directory for the app code
-RUN useradd --user-group --create-home --no-log-init --shell /bin/bash $APP_USER && \
-    mkdir -p $HOME_APP \
+    truncate -s 0 /var/log/*log && \
+    useradd --user-group --create-home --no-log-init --shell /bin/bash $APP_USER && \
+    mkdir -p $HOME_APP && \
     chown $APP_USER:$APP_USER /home/app && \
     chown $APP_USER:$APP_USER $HOME_APP
 
