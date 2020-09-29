@@ -3,10 +3,11 @@ FROM ruby:$RUBY_VERSION-slim-buster
 ARG PG_MAJOR
 ARG NODE_MAJOR
 ARG BUNDLER_VERSION
+ARG BUNDLER_WITHOUT="production"
 
 # Configure locale, bundler, define app dir
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 \
-  BUNDLE_JOBS=4 \
+  BUNDLE_JOBS=8 \
   BUNDLE_RETRY=3 \
   APP_USER=app \
   HOME_APP=/home/app/web
@@ -58,5 +59,6 @@ RUN gem update --system && \
     umask 0077 && \
     touch ~/.ssh/known_hosts && \
     ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && \
+    bundle config set without $BUNDLER_WITHOUT && \
     bundle check || bundle install && \
     rm ~/.gitconfig
