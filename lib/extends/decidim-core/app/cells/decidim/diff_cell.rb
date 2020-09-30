@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module DiffCellExtend
   extend ActiveSupport::Concern
 
   included do
-
     def diff_renderer_class
       if current_version.item_type.deconstantize == "Decidim"
         "#{current_version.item_type.pluralize}::DiffRenderer".constantize
@@ -15,7 +15,6 @@ module DiffCellExtend
     rescue NameError
       Decidim::BaseDiffRenderer
     end
-
   end
 end
 

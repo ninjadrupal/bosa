@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesFilterFormBuilderExtend
   extend ActiveSupport::Concern
 
   included do
-
     def initiative_types_select(name, collection, options = {})
       selected = object.send(name)
 
@@ -30,7 +30,6 @@ module InitiativesFilterFormBuilderExtend
 
       select(name, @template.options_for_select(types, selected: selected), options, html_options)
     end
-
   end
 end
 

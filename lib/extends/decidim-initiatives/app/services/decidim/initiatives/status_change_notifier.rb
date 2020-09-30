@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module StatusChangeNotifierExtend
   extend ActiveSupport::Concern
 
   included do
-
     def notify
       notify_initiative_creation if initiative.created?
       notify_validating_initiative if initiative.validating?
@@ -78,7 +78,6 @@ module StatusChangeNotifierExtend
         .notify_state_change(initiative, initiative.author)
         .deliver_later
     end
-
   end
 end
 

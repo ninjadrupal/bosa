@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesTypeScopesControllerExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def scoped_types
@@ -19,7 +19,6 @@ module InitiativesTypeScopesControllerExtend
     def initiative_type
       @initiative_type ||= Decidim::InitiativesType.find(params[:type_id])
     end
-
   end
 end
 

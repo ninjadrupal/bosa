@@ -1,17 +1,16 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module ActionAuthorizerExtend
   extend ActiveSupport::Concern
 
   included do
-
     def authorize
       raise AuthorizationError, "Missing data" unless component && action
 
       Decidim::ActionAuthorizer::AuthorizationStatusCollection.new(authorization_handlers, user, component, resource, action)
     end
-
   end
 end
 
@@ -19,7 +18,6 @@ module AuthorizationStatusCollectionExtend
   extend ActiveSupport::Concern
 
   included do
-
     def initialize(authorization_handlers, user, component, resource, action)
       @authorization_handlers = authorization_handlers
       @statuses = authorization_handlers&.map do |name, opts|
@@ -29,11 +27,9 @@ module AuthorizationStatusCollectionExtend
         Decidim::ActionAuthorizer::AuthorizationStatus.new(status_code, handler, data)
       end
     end
-
   end
 end
 
 Decidim::ActionAuthorizer.send(:include, ActionAuthorizerExtend)
 
 Decidim::ActionAuthorizer::AuthorizationStatusCollection.send(:include, AuthorizationStatusCollectionExtend)
-

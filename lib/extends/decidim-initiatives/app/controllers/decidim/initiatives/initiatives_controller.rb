@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesControllerExtend
   extend ActiveSupport::Concern
 
   included do
-
     helper Decidim::ActionAuthorizationHelper
     include Decidim::Initiatives::SingleInitiativeType
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module UpdateOrganizationExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def attributes
@@ -32,7 +32,6 @@ module UpdateOrganizationExtend
         deepl_api_key: form.deepl_api_key
       }
     end
-
   end
 end
 

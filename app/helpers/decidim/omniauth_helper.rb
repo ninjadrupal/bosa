@@ -22,6 +22,7 @@ module Decidim
     # Public: icon for omniauth buttons
     def oauth_icon(provider)
       return unless social_provider_enabled?(provider)
+
       info = current_organization.enabled_omniauth_providers[provider]
 
       if info

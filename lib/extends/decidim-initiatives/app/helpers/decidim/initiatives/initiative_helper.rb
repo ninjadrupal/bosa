@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativeHelperExtend
   extend ActiveSupport::Concern
 
   included do
-
     include Decidim::Verifications::MetadataHelper
 
     # Public: The css class applied based on the initiative state to
@@ -181,7 +181,6 @@ module InitiativeHelperExtend
     def display_badge?(initiative)
       initiative.rejected? || initiative.accepted? || initiative.debatted? || initiative.examinated? || initiative.classified?
     end
-
   end
 end
 

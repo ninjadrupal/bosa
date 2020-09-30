@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module CreateInitiativeControllerExtend
@@ -7,7 +8,6 @@ module CreateInitiativeControllerExtend
   # Changes moved from decidim-module-initiatives_nosignature_allowed
 
   included do
-
     before_action :enforce_create_initiative_permission, only: [:show, :update]
 
     def show
@@ -39,7 +39,6 @@ module CreateInitiativeControllerExtend
     def enforce_create_initiative_permission
       enforce_permission_to :create, :initiative
     end
-
   end
 end
 

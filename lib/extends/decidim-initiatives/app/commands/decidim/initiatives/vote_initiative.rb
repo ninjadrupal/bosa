@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module VoteInitiativeExtend
   extend ActiveSupport::Concern
 
   included do
-
     def initialize(form)
       @form = form
     end
@@ -104,7 +104,6 @@ module VoteInitiativeExtend
     def organization_admins
       Decidim::User.where(organization: initiative.organization, admin: true)
     end
-
   end
 end
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module AdminInitiativeFormExtend
   extend ActiveSupport::Concern
 
   included do
-
     attribute :offline_votes, Hash
 
     validate :title, :title_max_length
@@ -53,7 +53,6 @@ module AdminInitiativeFormExtend
 
       type.scopes.find_by(decidim_scopes_id: decidim_scope_id.presence).id
     end
-
   end
 end
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module DestroyAccountExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def destroy_user_account!
@@ -19,7 +19,6 @@ module DestroyAccountExtend
       @user.remove_avatar!
       @user.save!
     end
-
   end
 end
 

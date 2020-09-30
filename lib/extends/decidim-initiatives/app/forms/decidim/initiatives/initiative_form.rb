@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativeFormExtend
   extend ActiveSupport::Concern
 
   included do
-
     def scope_id
       return nil if initiative_type.only_global_scope_enabled?
 
@@ -39,7 +39,6 @@ module InitiativeFormExtend
     def type
       @type ||= Decidim::InitiativesType.find(type_id)
     end
-
   end
 end
 

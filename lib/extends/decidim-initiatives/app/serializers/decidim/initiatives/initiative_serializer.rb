@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativeSerializerExtend
   extend ActiveSupport::Concern
 
   included do
-
     include Decidim::ApplicationHelper
     include Decidim::ResourceHelper
     include Decidim::TranslationsHelper

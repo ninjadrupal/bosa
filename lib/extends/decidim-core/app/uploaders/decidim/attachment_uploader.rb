@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module AttachmentUploaderExtend
   extend ActiveSupport::Concern
 
   included do
-
     protected
 
     def extension_white_list
@@ -23,7 +23,6 @@ module AttachmentUploaderExtend
         %r{application\/pdf}
       ]
     end
-
   end
 end
 

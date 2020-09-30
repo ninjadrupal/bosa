@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesInitiativesMailerExtend
   extend ActiveSupport::Concern
 
   included do
-
     def notify_state_change(initiative, user)
       return if user.email.blank?
 
@@ -74,7 +74,6 @@ module InitiativesInitiativesMailerExtend
         mail(to: "#{user.name} <#{user.email}>", subject: @subject)
       end
     end
-
   end
 end
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module AuthorizationFormBuilderExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def input_field(name, type)
@@ -13,10 +13,10 @@ module AuthorizationFormBuilderExtend
       return scopes_selector if name.to_s == "scope_id"
 
       case type.name
-        when "Date", "Time"
-          date_field name
-        else
-          text_field name
+      when "Date", "Time"
+        date_field name
+      else
+        text_field name
       end
     end
 
@@ -25,7 +25,6 @@ module AuthorizationFormBuilderExtend
 
       collection_select :scope_id, object.user.organization.scopes, :id, ->(scope) { translated_attribute(scope.name) }
     end
-
   end
 end
 

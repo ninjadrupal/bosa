@@ -1,17 +1,16 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module VoteFormExtend
   extend ActiveSupport::Concern
 
   included do
-
     attribute :user_scope_id, Integer
     attribute :resident, Virtus::Attribute::Boolean
 
     attribute :initiative, Integer
     attribute :signer, Integer
-
 
     clear_validators!
     validates :initiative, :signer, presence: true
@@ -86,7 +85,7 @@ module VoteFormExtend
       return scope if handler_name.blank?
       return unless authorized?
 
-      manifest = Decidim::Verifications.workflows.find {|m| m.name == handler_name}
+      manifest = Decidim::Verifications.workflows.find { |m| m.name == handler_name }
       return unless manifest
 
       @user_authorized_scope ||= authorized_scope_candidates.find do |candidates|
@@ -108,7 +107,6 @@ module VoteFormExtend
 
       initiative.scope.descendants
     end
-
 
     protected
 
@@ -203,7 +201,6 @@ module VoteFormExtend
     def user_scope
       @user_scope ||= Decidim::Scope.find(user_scope_id) if user_scope_id.present?
     end
-
   end
 end
 

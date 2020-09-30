@@ -1,16 +1,16 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module FormBuilderExtend
   extend ActiveSupport::Concern
 
   included do
-
     def areas_select(name, collection, options = {}, html_options = {})
       selectables = if collection.first.is_a?(Decidim::Area)
                       assemblies = collection
-                                     .map { |a| [a.name[I18n.locale.to_s], a.id] }
-                                     .sort_by { |arr| arr[0] }
+                                   .map { |a| [a.name[I18n.locale.to_s], a.id] }
+                                   .sort_by { |arr| arr[0] }
 
                       @template.options_for_select(
                         assemblies,
@@ -74,7 +74,6 @@ module FormBuilderExtend
 
       template.html_safe
     end
-
   end
 end
 

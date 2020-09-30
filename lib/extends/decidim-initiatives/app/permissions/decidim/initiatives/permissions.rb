@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module PermissionsExtend
@@ -7,7 +8,6 @@ module PermissionsExtend
   # Changes moved from decidim-module-initiatives_nosignature_allowed
 
   included do
-
     def permissions
       if read_admin_dashboard_action?
         user_can_read_admin_dashboard?
@@ -48,12 +48,12 @@ module PermissionsExtend
     def creation_enabled?
       Decidim::Initiatives.creation_enabled && (
       creation_authorized? || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
-      )
+    )
     end
 
     def create_initiative_with_type?
       return unless permission_action.subject == :initiative_type &&
-        permission_action.action == :create
+                    permission_action.action == :create
 
       toggle_allow(creation_enabled_for?(initiative_type))
     end
@@ -61,21 +61,21 @@ module PermissionsExtend
     def creation_enabled_for?(initiative_type)
       Decidim::Initiatives.creation_enabled && (
       creation_authorized_for?(initiative_type) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
-      )
+    )
     end
 
     def request_membership?
       return unless permission_action.subject == :initiative &&
-        permission_action.action == :request_membership
+                    permission_action.action == :request_membership
 
       can_request = !initiative.published? &&
-        initiative.promoting_committee_enabled? &&
-        !initiative.has_authorship?(user) &&
-        (
-        Decidim::Initiatives.do_not_require_authorization ||
-          Decidim::Initiatives::UserAuthorizations.for(user).any? ||
-          Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
-        )
+                    initiative.promoting_committee_enabled? &&
+                    !initiative.has_authorship?(user) &&
+                    (
+                    Decidim::Initiatives.do_not_require_authorization ||
+                      Decidim::Initiatives::UserAuthorizations.for(user).any? ||
+                      Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
+                  )
 
       toggle_allow(can_request)
     end
@@ -98,13 +98,13 @@ module PermissionsExtend
 
     def unvote_initiative?
       return unless permission_action.action == :unvote &&
-        permission_action.subject == :initiative
+                    permission_action.subject == :initiative
 
       can_unvote = initiative.accepts_online_unvotes? &&
-        initiative.organization&.id == user.organization&.id &&
-        initiative.votes.where(author: user).any? &&
-        (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
-        authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
+                   initiative.organization&.id == user.organization&.id &&
+                   initiative.votes.where(author: user).any? &&
+                   (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
+                   authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
 
       toggle_allow(can_unvote)
     end
@@ -118,7 +118,6 @@ module PermissionsExtend
         (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
         authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
     end
-
   end
 end
 

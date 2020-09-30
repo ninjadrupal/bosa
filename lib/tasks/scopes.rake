@@ -6,14 +6,13 @@ require "json"
 # require "rgeo/geo_json"
 require "custom_csv_filter"
 
-
 namespace :decidim do
   Rails.logger = Logger.new(STDOUT)
 
   namespace :scopes do
     desc "Import scopes"
     task import: :environment do |task|
-      ARGV.each { |a| task a.to_sym do ; end }
+      ARGV.each { |a| task a.to_sym do; end }
       @ROOT = task.application.original_dir
       @TYPES = {}
 
@@ -25,79 +24,79 @@ namespace :decidim do
       end
 
       import_scopes({
-        type_name: "Région",
-        type_plural: "Régions",
-        csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
-        csv_filter: {
-          "LVL_REFNIS": "1"
-        },
-        csv_mapping: {
-          code: "CD_REFNIS",
-          name: {
-            "de": "TX_REFNIS_DE",
-            "fr": "TX_REFNIS_FR",
-            "nl": "TX_REFNIS_NL"
-          }
-        },
-        validation: "DT_VLDT_END"
-      })
+                      type_name: "Région",
+                      type_plural: "Régions",
+                      csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
+                      csv_filter: {
+                        "LVL_REFNIS": "1"
+                      },
+                      csv_mapping: {
+                        code: "CD_REFNIS",
+                        name: {
+                          "de": "TX_REFNIS_DE",
+                          "fr": "TX_REFNIS_FR",
+                          "nl": "TX_REFNIS_NL"
+                        }
+                      },
+                      validation: "DT_VLDT_END"
+                    })
 
       import_scopes({
-        type_name: "Province",
-        type_plural: "Provinces",
-        csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
-        csv_filter: {
-          "LVL_REFNIS": "2"
-        },
-        csv_mapping: {
-          code: "CD_REFNIS",
-          parent: "CD_SUP_REFNIS",
-          name: {
-            "de": "TX_REFNIS_DE",
-            "fr": "TX_REFNIS_FR",
-            "nl": "TX_REFNIS_NL"
-          }
-        },
-        validation: "DT_VLDT_END"
-      })
+                      type_name: "Province",
+                      type_plural: "Provinces",
+                      csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
+                      csv_filter: {
+                        "LVL_REFNIS": "2"
+                      },
+                      csv_mapping: {
+                        code: "CD_REFNIS",
+                        parent: "CD_SUP_REFNIS",
+                        name: {
+                          "de": "TX_REFNIS_DE",
+                          "fr": "TX_REFNIS_FR",
+                          "nl": "TX_REFNIS_NL"
+                        }
+                      },
+                      validation: "DT_VLDT_END"
+                    })
 
       import_scopes({
-        type_name: "Arrondissement",
-        type_plural: "Arrondissements",
-        csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
-        csv_filter: {
-          "LVL_REFNIS": "3"
-        },
-        csv_mapping: {
-          code: "CD_REFNIS",
-          parent: "CD_SUP_REFNIS",
-          name: {
-            "de": "TX_REFNIS_DE",
-            "fr": "TX_REFNIS_FR",
-            "nl": "TX_REFNIS_NL"
-          }
-        },
-        validation: "DT_VLDT_END"
-      })
+                      type_name: "Arrondissement",
+                      type_plural: "Arrondissements",
+                      csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
+                      csv_filter: {
+                        "LVL_REFNIS": "3"
+                      },
+                      csv_mapping: {
+                        code: "CD_REFNIS",
+                        parent: "CD_SUP_REFNIS",
+                        name: {
+                          "de": "TX_REFNIS_DE",
+                          "fr": "TX_REFNIS_FR",
+                          "nl": "TX_REFNIS_NL"
+                        }
+                      },
+                      validation: "DT_VLDT_END"
+                    })
 
       import_scopes({
-        type_name: "Commune",
-        type_plural: "Communes",
-        csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
-        csv_filter: {
-          "LVL_REFNIS": "4"
-        },
-        csv_mapping: {
-          code: "CD_REFNIS",
-          parent: "CD_SUP_REFNIS",
-          name: {
-            "de": "TX_REFNIS_DE",
-            "fr": "TX_REFNIS_FR",
-            "nl": "TX_REFNIS_NL"
-          }
-        },
-        validation: "DT_VLDT_END"
-      })
+                      type_name: "Commune",
+                      type_plural: "Communes",
+                      csv_file: "vendor/bosa/TU_COM_REFNIS.csv",
+                      csv_filter: {
+                        "LVL_REFNIS": "4"
+                      },
+                      csv_mapping: {
+                        code: "CD_REFNIS",
+                        parent: "CD_SUP_REFNIS",
+                        name: {
+                          "de": "TX_REFNIS_DE",
+                          "fr": "TX_REFNIS_FR",
+                          "nl": "TX_REFNIS_NL"
+                        }
+                      },
+                      validation: "DT_VLDT_END"
+                    })
 
       Rails.logger.close
       exit
@@ -106,7 +105,7 @@ namespace :decidim do
     namespace :generate do
       desc "Generate assemblies from scopes"
       task assemblies: :environment do |task|
-        ARGV.each { |a| task a.to_sym do ; end }
+        ARGV.each { |a| task a.to_sym do; end }
 
         if Decidim::Organization.exists?(:host => ARGV[1])
           @organization = Decidim::Organization.find_by(:host => ARGV[1])
@@ -116,12 +115,10 @@ namespace :decidim do
         end
 
         generate_assemblies
-
       end
     end
   end
 end
-
 
 def path_for(path)
   if path.start_with?("/")
@@ -170,15 +167,15 @@ end
 
 def check_csv_filter(options, row)
   result = true
-  options[:csv_filter].each do |key,value|
+  options[:csv_filter].each do |key, value|
     if row.include?(key.to_s)
       Rails.logger.info "CSV filter for #{key} == #{value} with #{row[key.to_s]}"
-      result &&= ( row[key.to_s] == value )
+      result &&= (row[key.to_s] == value)
     end
   end
   if options[:validation].present? && validation_date = parse_validation_date(row[options[:validation]])
     Rails.logger.info "CSV filter validation date #{options[:validation]} with #{validation_date}"
-    result &&= ( validation_date >= Time.zone.now.to_date )
+    result &&= (validation_date >= Time.zone.now.to_date)
   end
   result
 end
@@ -215,20 +212,19 @@ def import_scopes(params)
   end
 
   @scope_type = Decidim::ScopeType.where(decidim_organization_id: @organization.id)
-  .where('name @> ?', {"#{@organization.default_locale}": @options[:type_name]}.to_json)
-  .first_or_create!(
-    name: {"#{@organization.default_locale}": @options[:type_name]},
-    plural: {"#{@organization.default_locale}": @options[:type_plural]}
-  )
+                                  .where('name @> ?', { "#{@organization.default_locale}": @options[:type_name] }.to_json)
+                                  .first_or_create!(
+                                    name: { "#{@organization.default_locale}": @options[:type_name] },
+                                    plural: { "#{@organization.default_locale}": @options[:type_plural] }
+                                  )
 
   if @options[:csv_mapping].dig(:code)
 
     @csv.each do |row|
-
       if check_csv_filter(@options, row)
         # Rails.logger.info row.to_h
         _code = row[@options[:csv_mapping].dig(:code)]
-        _name = @options[:csv_mapping].dig(:name).map { |k,v| [k, row[v]] }.to_h
+        _name = @options[:csv_mapping].dig(:name).map { |k, v| [k, row[v]] }.to_h
 
         _parent = @options[:csv_mapping].dig(:parent) ? Decidim::Scope.find_by(
           :decidim_organization_id => @organization.id,
@@ -277,7 +273,6 @@ def generate_assemblies
     decidim_organization_id: @organization.id,
     parent_id: nil
   ).each do |scope|
-
     parent_assembly = Decidim::Assembly.find_or_create_by!(
       organization: @organization,
       title: scope.name,
@@ -301,7 +296,6 @@ def generate_assemblies
       decidim_organization_id: @organization.id,
       parent_id: scope.id
     ).each do |child_scope|
-
       Rails.logger.info child_scope.name[@organization.default_locale].parameterize
 
       child_assembly = Decidim::Assembly.find_or_create_by!(
@@ -324,6 +318,5 @@ def generate_assemblies
         meta_scope: child_scope.name
       )
     end
-
   end
 end

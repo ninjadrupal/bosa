@@ -7,7 +7,6 @@ Decidim::Verifications.unregister_workflow(:id_documents)
 Decidim::Verifications.unregister_workflow(:postal_letter)
 Decidim::Verifications.unregister_workflow(:sms)
 
-
 Decidim::Verifications.register_workflow(:dummy_authorization_handler) do |workflow|
   workflow.form = "DummyAuthorizationHandler"
   # workflow.action_authorizer = "DummyActionAuthorizer"

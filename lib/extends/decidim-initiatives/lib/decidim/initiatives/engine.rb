@@ -1,13 +1,12 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesEngineExtend
   extend ActiveSupport::Concern
 
   included do
-
     routes do
-
       resources :initiatives, param: :slug, only: [:index, :show], path: "initiatives" do
         resources :versions, only: [:show, :index]
       end
@@ -19,9 +18,7 @@ module InitiativesEngineExtend
           get "authorization_creation_modal", to: "authorization_creation_for_type_modals#show"
         end
       end
-
     end
-
   end
 end
 

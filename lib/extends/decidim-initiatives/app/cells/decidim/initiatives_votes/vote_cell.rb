@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module VoteCellExtend
   extend ActiveSupport::Concern
 
   included do
-
     def user_scope
       metadata[:user_scope]
     end
@@ -20,7 +20,6 @@ module VoteCellExtend
 
       translated_attribute(model.scope.name)
     end
-
   end
 end
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesTypeExtend
   extend ActiveSupport::Concern
 
   included do
-
     before_update :update_global_scope, if: :missing_global_scope?
 
     private
@@ -22,7 +22,6 @@ module InitiativesTypeExtend
         decidim_initiatives_types_id: id
       ).save
     end
-
   end
 end
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesAdminEngineExtend
   extend ActiveSupport::Concern
 
   included do
-
     routes do
       resources :initiatives, only: [:index, :show, :edit, :update], param: :slug do
         collection do
@@ -13,7 +13,6 @@ module InitiativesAdminEngineExtend
         end
       end
     end
-
   end
 end
 

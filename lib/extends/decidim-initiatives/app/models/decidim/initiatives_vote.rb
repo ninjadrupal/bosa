@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesVoteExtend
   extend ActiveSupport::Concern
 
   included do
-
     belongs_to :scope,
                foreign_key: "decidim_scope_id",
                class_name: "Decidim::Scope",
@@ -49,7 +49,6 @@ module InitiativesVoteExtend
     def update_counter_cache
       initiative.update_online_votes_counters
     end
-
   end
 end
 

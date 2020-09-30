@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module MenuPresenterExtend
   extend ActiveSupport::Concern
 
   included do
-
     #
     # Initializes a menu for presentation
     #
@@ -28,7 +28,6 @@ module MenuPresenterExtend
         end
       end
     end
-
   end
 end
 

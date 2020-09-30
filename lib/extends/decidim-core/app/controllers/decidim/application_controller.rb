@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module ApplicationControllerExtend
   extend ActiveSupport::Concern
 
   included do
-
     helper Decidim::DeeplHelper
 
     def skip_store_location?
@@ -25,7 +25,6 @@ module ApplicationControllerExtend
     def same_path?(path1, path2)
       path1.split("?").first == path2.split("?").first
     end
-
   end
 end
 

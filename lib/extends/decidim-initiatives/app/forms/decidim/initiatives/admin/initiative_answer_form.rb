@@ -1,18 +1,18 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module AdminInitiativeAnswerFormExtend
   extend ActiveSupport::Concern
 
   included do
-
     attribute :state, String
     attribute :answer_date, Decidim::Attributes::LocalizedDate
 
     validates :state, presence: true
     validate :state_validation
     validates :answer_date, presence: true, if: :answer_date_allowed?
-    validates :answer_date, date: {before: Date.current.advance(days: 1)}, if: :answer_date_allowed?
+    validates :answer_date, date: { before: Date.current.advance(days: 1) }, if: :answer_date_allowed?
 
     def signature_dates_required?
       @signature_dates_required ||= check_state
@@ -46,7 +46,6 @@ module AdminInitiativeAnswerFormExtend
     def check_state
       manual_states.include? context.initiative.state
     end
-
   end
 end
 

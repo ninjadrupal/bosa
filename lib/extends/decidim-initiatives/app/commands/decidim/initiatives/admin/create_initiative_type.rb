@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module CreateInitiativeTypeExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def attributes
@@ -32,7 +32,6 @@ module CreateInitiativeTypeExtend
       result[:banner_image] = form.banner_image unless form.banner_image.nil?
       result
     end
-
   end
 end
 

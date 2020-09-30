@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module VersionsControllerExtend
   extend ActiveSupport::Concern
 
   included do
-
     helper Decidim::TraceabilityHelper
 
     private
@@ -15,7 +15,6 @@ module VersionsControllerExtend
 
       @current_version ||= current_initiative.versions[params[:id].to_i - 1]
     end
-
   end
 end
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module AdminMenuHelperExtend
   extend ActiveSupport::Concern
 
   included do
-
     # Public: Returns the main menu presenter object
     def main_menu
       @main_menu ||= ::Decidim::MenuPresenter.new(
@@ -25,7 +25,6 @@ module AdminMenuHelperExtend
         active_class: "is-active"
       )
     end
-
   end
 end
 

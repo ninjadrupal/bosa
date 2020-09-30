@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativeSearchExtend
   extend ActiveSupport::Concern
 
   included do
-
     def base_query
       Decidim::Initiative
         .includes(scoped_type: [:scope])
@@ -51,6 +51,7 @@ module InitiativeSearchExtend
 
       query.where(scoped_type: types)
     end
+
     def search_scope_id
       return query if scope_ids.include?("all")
 
@@ -75,9 +76,9 @@ module InitiativeSearchExtend
 
       if status[:published] || status[:examinated] || status[:classified] || status[:debatted]
         query_for_state = query_for_state.where(id: status[:classified])
-                            .or(query_for_state.where(id: status[:examinated]))
-                            .or(query_for_state.where(id: status[:published]))
-                            .or(query_for_state.where(id: status[:debatted]))
+                                         .or(query_for_state.where(id: status[:examinated]))
+                                         .or(query_for_state.where(id: status[:published]))
+                                         .or(query_for_state.where(id: status[:debatted]))
       end
 
       query_for_state
@@ -149,7 +150,6 @@ module InitiativeSearchExtend
     def scope_ids
       [scope_id].flatten
     end
-
   end
 end
 

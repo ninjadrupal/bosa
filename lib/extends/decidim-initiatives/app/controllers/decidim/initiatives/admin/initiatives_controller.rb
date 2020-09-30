@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module AdminInitiativesControllerExtend
@@ -42,7 +43,6 @@ module AdminInitiativesControllerExtend
         end
       end
     end
-
   end
 end
 

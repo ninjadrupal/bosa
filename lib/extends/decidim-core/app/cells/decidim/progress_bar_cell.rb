@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module ProgressBarCellExtend
   extend ActiveSupport::Concern
 
   included do
-
     def container_class
       container_class = "progress__bar"
       container_class += " progress__bar--horizontal" if horizontal? && !small?
@@ -24,7 +24,6 @@ module ProgressBarCellExtend
     def horizontal?
       options[:horizontal].to_s == "true"
     end
-
   end
 end
 

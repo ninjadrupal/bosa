@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module ProgressNotifierExtend
   extend ActiveSupport::Concern
 
   included do
-
     def notify
       initiative.followers.each do |follower|
         next unless initiative.author != follower
@@ -26,7 +26,6 @@ module ProgressNotifierExtend
         .notify_progress(initiative, initiative.author)
         .deliver_later
     end
-
   end
 end
 

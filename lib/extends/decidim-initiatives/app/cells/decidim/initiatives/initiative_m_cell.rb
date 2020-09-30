@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativeMCellExtend
   extend ActiveSupport::Concern
 
   included do
-
     include Decidim::Initiatives::InitiativeHelper
 
     cache :show do
@@ -16,9 +16,9 @@ module InitiativeMCellExtend
 
     def cache_hash
       hash = model.author.cache_version +
-        model.cache_version +
-        model.supports_count.to_s +
-        comments_count.to_s
+             model.cache_version +
+             model.supports_count.to_s +
+             comments_count.to_s
 
       hash << current_user.follows?(model).to_s if current_user
 
@@ -31,14 +31,14 @@ module InitiativeMCellExtend
 
     def state_classes
       case state
-        when "accepted", "published", "debatted"
-          ["success"]
-        when "rejected", "discarded", "classified"
-          ["alert"]
-        when "validating", "examinated"
-          ["warning"]
-        else
-          ["muted"]
+      when "accepted", "published", "debatted"
+        ["success"]
+      when "rejected", "discarded", "classified"
+        ["alert"]
+      when "validating", "examinated"
+        ["warning"]
+      else
+        ["muted"]
       end
     end
 
@@ -73,7 +73,6 @@ module InitiativeMCellExtend
         render_comments_count
       end
     end
-
   end
 end
 

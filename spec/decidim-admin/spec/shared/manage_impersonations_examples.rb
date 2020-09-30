@@ -97,8 +97,8 @@ shared_examples "manage impersonations examples" do
 
         it "shows popup to require verification" do
           expect(page).to have_content(
-                            /In order to perform this action, you need to be authorized with "Another example authorization"/
-                          )
+            /In order to perform this action, you need to be authorized with "Another example authorization"/
+          )
         end
       end
     end

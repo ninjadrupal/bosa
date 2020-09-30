@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module UpdateInitiativeExtend
   extend ActiveSupport::Concern
 
   included do
-
     def initialize(initiative, form, current_user)
       @form = form
       @initiative = initiative
@@ -70,10 +70,9 @@ module UpdateInitiativeExtend
 
       if initiative.published?
         @notify_extended = true if form.signature_end_date != initiative.signature_end_date &&
-          form.signature_end_date > initiative.signature_end_date
+                                   form.signature_end_date > initiative.signature_end_date
       end
     end
-
   end
 end
 

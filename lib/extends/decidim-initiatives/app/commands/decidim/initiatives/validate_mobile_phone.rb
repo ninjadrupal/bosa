@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module ValidateMobilePhoneExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def authorizer
@@ -13,7 +13,6 @@ module ValidateMobilePhoneExtend
 
       Decidim::Verifications::Adapter.from_element(authorization_name).authorize(authorization, {}, nil, nil, nil)
     end
-
   end
 end
 

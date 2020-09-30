@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module CreateAreaExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def create_area
@@ -19,7 +19,6 @@ module CreateAreaExtend
         logo: form.logo
       )
     end
-
   end
 end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativesApplicationHelperExtend
@@ -38,7 +39,6 @@ module InitiativesApplicationHelperExtend
         )
       end
     end
-
   end
 end
 

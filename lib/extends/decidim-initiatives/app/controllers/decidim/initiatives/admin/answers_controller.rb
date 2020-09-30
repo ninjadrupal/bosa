@@ -1,18 +1,18 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module AdminAnswersControllerExtend
   extend ActiveSupport::Concern
 
   included do
-
     # PUT /admin/initiatives/:id/answer
     def update
       enforce_permission_to :answer, :initiative, initiative: current_initiative
 
       params[:id] = params[:slug]
       @form = form(Decidim::Initiatives::Admin::InitiativeAnswerForm)
-                .from_params(params, initiative: current_initiative)
+              .from_params(params, initiative: current_initiative)
 
       Decidim::Initiatives::Admin::UpdateInitiativeAnswer.call(current_initiative, @form, current_user) do
         on(:ok) do
@@ -26,7 +26,6 @@ module AdminAnswersControllerExtend
         end
       end
     end
-
   end
 end
 

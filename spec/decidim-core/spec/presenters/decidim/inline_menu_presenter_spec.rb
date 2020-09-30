@@ -20,8 +20,8 @@ module Decidim
         expect(subject.render).not_to have_selector("ul")
         expect(subject.render).to \
           have_selector("li", count: 2) &
-                                              have_link("Foo", href: "/foo") &
-                                              have_link("Bar", href: "/bar")
+          have_link("Foo", href: "/foo") &
+          have_link("Bar", href: "/bar")
       end
     end
 
@@ -37,7 +37,7 @@ module Decidim
         expect(subject.render).not_to have_selector("ul")
         expect(subject.render).to \
           have_selector("li:first-child", text: "Bar") &
-                                              have_selector("li:last-child", text: "Foo")
+          have_selector("li:last-child", text: "Foo")
       end
     end
 
@@ -53,7 +53,7 @@ module Decidim
         expect(subject.render).not_to have_selector("ul")
         expect(subject.render).to \
           have_selector("li", count: 1) &
-                                              have_link("Bar", href: "/bar")
+          have_link("Bar", href: "/bar")
       end
     end
   end

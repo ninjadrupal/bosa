@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module UpdateAreaExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def attributes
@@ -17,7 +17,6 @@ module UpdateAreaExtend
         remove_logo: form.remove_logo
       }
     end
-
   end
 end
 

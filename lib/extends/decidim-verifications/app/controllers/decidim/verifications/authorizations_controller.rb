@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module VerificationsAuthorizationsControllerExtend
   extend ActiveSupport::Concern
 
   included do
-
     helper_method :handler, :unauthorized_methods, :disabled_methods, :authorization_anti_affinity
 
     include Decidim::Verifications::MetadataHelper
@@ -29,8 +29,6 @@ module VerificationsAuthorizationsControllerExtend
         Decidim::Verifications.find_workflow_manifest(handler).anti_affinity
       end.flatten.compact
     end
-
-
   end
 end
 

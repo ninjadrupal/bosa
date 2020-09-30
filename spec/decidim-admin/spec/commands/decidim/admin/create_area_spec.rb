@@ -47,8 +47,8 @@ module Decidim::Admin
       it "traces the action", versioning: true do
         expect(Decidim.traceability)
           .to receive(:create!)
-                .with(Decidim::Area, user, hash_including(:name, :organization, :area_type, :color, :logo))
-                .and_call_original
+          .with(Decidim::Area, user, hash_including(:name, :organization, :area_type, :color, :logo))
+          .and_call_original
 
         expect { subject.call }.to change(Decidim::ActionLog, :count)
         action_log = Decidim::ActionLog.last

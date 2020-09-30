@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module CardMCellExtend
   extend ActiveSupport::Concern
 
   included do
-
     include Decidim::DeeplHelper
     include Decidim::LanguageChooserHelper
 
@@ -22,7 +22,6 @@ module CardMCellExtend
     def translatable?
       false
     end
-
   end
 end
 

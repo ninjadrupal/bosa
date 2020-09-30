@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module InitiativeSignaturesControllerExtend
   extend ActiveSupport::Concern
 
   included do
-
     helper_method :initiative_type, :extra_data_legal_information, :user_scopes
 
     # GET /initiatives/:initiative_id/initiative_signatures/:step
@@ -25,11 +25,11 @@ module InitiativeSignaturesControllerExtend
       enforce_permission_to :vote, :initiative, initiative: current_initiative, group_id: group_id
 
       @form = form(Decidim::Initiatives::VoteForm)
-        .from_params(
-          initiative: current_initiative,
-          signer: current_user,
-          group_id: group_id
-      )
+              .from_params(
+                initiative: current_initiative,
+                signer: current_user,
+                group_id: group_id
+              )
 
       Decidim::Initiatives::VoteInitiative.call(@form) do
         on(:ok) do
@@ -49,11 +49,11 @@ module InitiativeSignaturesControllerExtend
 
     def fill_personal_data_step(_unused)
       @form = form(Decidim::Initiatives::VoteForm)
-        .from_params(
-          initiative: current_initiative,
-          signer: current_user,
-          group_id: params[:group_id]
-      )
+              .from_params(
+                initiative: current_initiative,
+                signer: current_user,
+                group_id: params[:group_id]
+              )
 
       session[:initiative_vote_form] = { group_id: @form.group_id }
       skip_step unless initiative_type.collect_user_extra_fields
@@ -108,7 +108,6 @@ module InitiativeSignaturesControllerExtend
     def user_scopes
       @user_scopes ||= current_organization.scopes
     end
-
   end
 end
 

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module ActionAuthorizationExtend
   extend ActiveSupport::Concern
 
   included do
-
     def action_authorization_cache_key(action, resource, permissions_holder = nil)
       if resource && resource.try(:component) && !resource.permissions.nil?
         "#{action}-#{resource.component.id}-#{resource.resource_manifest.name}-#{resource.id}"
@@ -17,7 +17,6 @@ module ActionAuthorizationExtend
         "#{action}-#{current_component.id}"
       end
     end
-
   end
 end
 

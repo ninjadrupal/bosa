@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 require "active_support/concern"
 
 module UpdateInitiativeAnswerExtend
   extend ActiveSupport::Concern
 
   included do
-
     private
 
     def attributes
@@ -24,7 +24,7 @@ module UpdateInitiativeAnswerExtend
 
         if initiative.published?
           @notify_extended = true if form.signature_end_date != initiative.signature_end_date &&
-            form.signature_end_date > initiative.signature_end_date
+                                     form.signature_end_date > initiative.signature_end_date
         end
       end
 
@@ -36,7 +36,6 @@ module UpdateInitiativeAnswerExtend
 
       form.answer_date
     end
-
   end
 end
 
