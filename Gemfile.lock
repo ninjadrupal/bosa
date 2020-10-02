@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:belighted/decidim-module-verifications_omniauth.git
-  revision: 7cdfb79cce5549ba30ca3dc30c6a81bfa863ccc9
+  revision: 79e8ffb95f1115b0ce9feae16ddc362206820bcd
   branch: master
   specs:
     decidim-verifications_omniauth (0.22.0.rc1)
@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
-  revision: 9876111e1b246443720e18d827c40f312072dc73
+  revision: c8c9a798ee611869a797a7e67f51331a1dae23dc
   specs:
     decidim-initiatives_no_signature_allowed (0.22.0.rc1)
       decidim-core (= 0.22.0.rc1)
@@ -519,7 +519,7 @@ GEM
     graphiql-rails (1.4.11)
       railties
       sprockets-rails
-    graphql (1.11.4)
+    graphql (1.11.5)
     gyoku (1.3.1)
       builder (>= 2.1.2)
     hashdiff (1.0.1)
@@ -935,7 +935,7 @@ GEM
       activesupport
     wisper (2.0.1)
     wisper-rspec (1.1.0)
-    wkhtmltopdf-binary (0.12.6.3)
+    wkhtmltopdf-binary (0.12.6.4)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
