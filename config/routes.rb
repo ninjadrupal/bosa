@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/admin_sign_in', to: "decidim/devise/sessions#new"
-    post "omniauth_registrations" => "devise/omniauth_registrations#create"
+    post "omniauth_registrations" => "decidim/devise/omniauth_registrations#create"
     match "users/auth/:provider/logout",
           to: "devise/omniauth_registrations#logout",
           as: :user_omniauth_logout,
