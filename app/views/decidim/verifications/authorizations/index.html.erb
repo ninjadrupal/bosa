@@ -4,7 +4,7 @@
       <div class="card card--list">
         <% @granted_authorizations.each do |authorization| %>
           <% if authorization.expired? %>
-            <%= link_to authorization_method(authorization).root_path, title: t(".expired_verification"), class: "card--list__item" do %>
+            <%= link_to decidim.send("user_#{authorization.name}_omniauth_authorize_path"), title: t(".expired_verification"), class: "card--list__item", method: :post do %>
               <% render partial: "granted_authorization", locals: { authorization: authorization } %>
             <% end %>
           <% elsif authorization.renewable? %>
