@@ -4,7 +4,10 @@
       <div class="card card--list">
         <% @granted_authorizations.each do |authorization| %>
           <% if authorization.expired? %>
-            <%= link_to decidim.send("user_#{authorization.name}_omniauth_authorize_path"), title: t(".expired_verification"), class: "card--list__item", method: :post do %>
+            <%# Probably this is wrong way to handle it here, but it.. just works :/ %>
+            <% is_omniauth = %w(saml csam).include?(authorization.metadata&.try(:[], :provider)) %>
+            <% url = is_omniauth ? decidim.send("user_#{authorization.key}_omniauth_authorize_path") : authorization_method(authorization).root_path %>
+            <%= link_to url, method: (is_omniauth ? :post : :get), title: t(".expired_verification"), class: "card--list__item" do %>
               <% render partial: "granted_authorization", locals: { authorization: authorization } %>
             <% end %>
           <% elsif authorization.renewable? %>
@@ -52,7 +55,10 @@
     <% if unauthorized_methods.any? %>
       <div class="card card--list">
         <% unauthorized_methods.each do |unauthorized_method| %>
-          <%= link_to unauthorized_method.root_path do %>
+          <%# Probably this is wrong way to handle it here, but it.. just works :/ %>
+          <% is_omniauth = %w(saml csam).include?(unauthorized_method.key) %>
+          <% url = is_omniauth ? decidim.send("user_#{unauthorized_method.key}_omniauth_authorize_path") : unauthorized_method.root_path %>
+          <%= link_to url, method: (is_omniauth ? :post : :get) do %>
             <div class="card--list__item">
               <div class="card--list__text">
                 <%= icon "lock-unlocked", class: "card--list__icon", role: "img" %>
