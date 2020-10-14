@@ -14,6 +14,12 @@ module CreateInitiativeControllerExtend
       send("#{step}_step", initiative: session_initiative, type_id: params[:type_id])
     end
 
+    def user_has_no_permission
+      flash[:alert] = t("actions.unauthorized", scope: "decidim.core")
+      # redirect_to(request.referer || user_has_no_permission_path)
+      redirect_to(user_has_no_permission_path)
+    end
+
     private
 
     def previous_form_step(parameters)
