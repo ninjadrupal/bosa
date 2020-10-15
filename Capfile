@@ -31,6 +31,10 @@ require "capistrano/rails"
 require "capistrano/puma"
 # require 'capistrano/sidekiq'
 
+require 'capistrano/bundler'
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
+
 install_plugin Capistrano::Puma
 install_plugin Capistrano::Puma::Workers
 
