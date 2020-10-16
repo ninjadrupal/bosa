@@ -9,7 +9,7 @@ server '51.178.58.235', user: 'webuser', roles: %w{app db web}, primary: true
 set :application, 'bosa'
 set :deploy_to, "/home/webuser/bosa"
 set :rails_env, 'production'
-set :branch, ENV.fetch('BRANCH', 'master')
+set :branch, ENV.fetch('BRANCH', 'production')
 
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
 set sidekiq_default_hooks: false
