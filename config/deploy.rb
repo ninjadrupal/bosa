@@ -1,6 +1,8 @@
 # config valid for current version and patch releases of Capistrano
 lock '~> 3.14.1'
 
+require 'capistrano-db-tasks'
+
 set :application, 'bosa-app-petition'
 set :branch, ENV.fetch('BRANCH', 'master')
 set :repo_url, 'git@github.com:belighted/bosa-app-petition.git'

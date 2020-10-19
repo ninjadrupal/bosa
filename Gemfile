@@ -10,6 +10,7 @@ gem 'decidim', DECIDIM_VERSION
 gem 'decidim-initiatives', DECIDIM_VERSION
 gem 'decidim-verifications_omniauth', git: 'git@github.com:belighted/decidim-module-verifications_omniauth.git', branch: 'master'
 gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed'
+# gem 'decidim-suggestions', git: 'git@github.com:belighted/decidim-module-suggestions.git', branch: 'master'
 
 # gem 'decidim-term_customizer', git: 'https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git', branch: '0.dev'
 # --------
@@ -65,6 +66,7 @@ group :development do
   gem 'capistrano-rbenv', '~> 2.2', require: false
   gem 'capistrano-sidekiq', '2.0.0.beta5', require: false
   gem 'capistrano3-puma', require: false
+  gem "capistrano-db-tasks", require: false
   gem 'letter_opener_web', '~> 1.3'
   gem 'listen', '~> 3.1'
   gem 'spring', '~> 2.0'
