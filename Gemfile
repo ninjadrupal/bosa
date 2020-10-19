@@ -50,6 +50,7 @@ gem 'sidekiq-scheduler'
 gem 'uglifier'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'faker', '~> 1.9'
 
 # Faker is required to run the seed.
 gem 'faker', '~> 1.9'
