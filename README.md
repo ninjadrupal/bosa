@@ -94,3 +94,13 @@ The procedure will be:
 * set the environment as development
 * run `bundle exec rake db:setup`
 * set the environment back to production
+
+Create a systemd service at user level to control sidekiq
+In `/home/[YOUR_USER]/.config/systemd/user`, create a file called for example `sidekiq.service`
+Setup the service
+Then:
+* Enable the service `systemctl --user enable sidekiq.service`
+* Reload the daemon `systemctl --user daemon-reload`
+
+Now you are able to start the service with `systemctl --user start sidekiq.service`.
+
