@@ -72,7 +72,7 @@ set :local_assets_dir, %w(public/assets public/att)
 # set :locals_rails_env, "production"
 
 # if you are highly paranoid and want to prevent any push operation to the server
-set :disallow_pushing, true
+set :disallow_pushing, false
 
 # if you prefer bzip2/unbzip2 instead of gzip
 # set :compressor, :bzip2

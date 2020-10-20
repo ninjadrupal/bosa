@@ -1,8 +1,11 @@
-# BOSA - Petition app
+# BOSA
 
 Free Open-Source participatory democracy, citizen participation and open government for cities and organizations
 
-This is the repository for Petition app, based on [Decidim](https://github.com/decidim/decidim).
+This is the repository for the main application for BOSA, based on [Decidim](https://github.com/decidim/decidim).
+
+It includes specificities for Belgian Federal Government, Regions and Citizen. 
+
 
 ## Development setup
 
@@ -58,7 +61,7 @@ REDIS_URL=redis://redis:6379/1
 * Open a Rails console in the server: `bundle exec rails console`
 * Create a System Admin user:
 ```ruby
-user = Decidim::System::Admin.new(email: <email>, password: <password>, password_confirmation: <password>)
+user.
 user.save!
 ```
 *. Visit `<your app url>/system` and login with your system admin credentials
@@ -82,3 +85,12 @@ Commands:
 * `bundle exec cap -T` - list of available capistrano tasks
 * `bundle exec cap staging deploy` - deploy app to staging
 * `BRANCH=master bundle exec cap staging deploy` - deploy specific branch to staging(default: master)
+
+### Notes about for first deployment
+
+If you intend to seed the database in production, it won't run in the production environment. It relies on Decidim::Faker that is available only on
+development.
+The procedure will be:
+* set the environment as development
+* run `bundle exec rake db:setup`
+* set the environment back to production

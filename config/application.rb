@@ -25,6 +25,11 @@ module DecidimAws
       Rails.application.config.session_store :active_record_store, key: '_decidim_session'
     end
 
+    Raven.configure do |config|
+      config.dsn = ENV["SENTRY_DSN"]
+      config.environments = %w[staging production]
+    end
+
     # config.action_mailer.asset_host = "https://broom.osp.cat"
 
     # Settings in config/environments/* take precedence over those specified here.
