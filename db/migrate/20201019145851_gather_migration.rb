@@ -1,5 +1,6 @@
 class GatherMigration < ActiveRecord::Migration[5.2]
   def change
+    return unless Rails.env.production?
 
     # These are extensions that must be enabled in order to support this database
     enable_extension "ltree"
