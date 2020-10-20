@@ -51,11 +51,12 @@ gem 'uglifier'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
+gem 'dotenv-rails'
+
 group :development, :test do
   gem 'faker', '~> 1.9'
   gem 'byebug', '~> 11.0', platform: :mri
   gem 'decidim-dev', git: 'https://github.com/decidim/decidim', branch: 'release/0.22-stable'
-  gem 'dotenv-rails'
   gem 'pry-rails'
   gem 'webdrivers'
 end
