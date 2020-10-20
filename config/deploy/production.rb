@@ -2,19 +2,17 @@
 # ======================
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
+web_server = ENV['WEB_SERVER']
+user= ENV['USER']
+deploy_path= ENV['DEPLOY_PATH']
+set :branch, ENV.fetch('BRANCH', 'production')
 
-server '51.178.58.235', user: 'webuser', roles: %w{app db web}, primary: true
+server web_server, user: user, roles: %w{app db web}, primary: true
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 set :application, 'bosa'
-set :deploy_to, "/home/webuser/bosa"
+set :deploy_to, deploy_path
 set :rails_env, 'production'
-set :branch, ENV.fetch('BRANCH', 'production')
-
-
-sidekiq_server = '51.178.58.235'
-set :sidekiq_roles, :sidekiq
-server sidekiq_server, user: 'webuser', roles: [:sidekiq]
 
 # role-based syntax
 # ==================
