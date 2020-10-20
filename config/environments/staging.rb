@@ -79,26 +79,6 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    :user_name => '7a5656ff076dc3',
-    :password => '0b5f01509a51c8',
-    :address => 'smtp.mailtrap.io',
-    :domain => 'smtp.mailtrap.io',
-    :port => '2525',
-    :authentication => :cram_md5
-  }
-  # overridden by Decidim::Organization settings in Decidim::ApplicationMailer
-  # (see /decidim-core/app/mailers/decidim/application_mailer.rb)
-  # organization.smtp_settings = {
-  #   user_name: '7a5656ff076dc3',
-  #   encrypted_password: Decidim::AttributeEncryptor.encrypt('0b5f01509a51c8'),
-  #   address: 'smtp.mailtrap.io',
-  #   domain: 'smtp.mailtrap.io',
-  #   port: '2525',
-  #   authentication: :cram_md5
-  # }
-
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
