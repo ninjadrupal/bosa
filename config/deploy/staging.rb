@@ -9,10 +9,7 @@ server '3.249.199.229', user: 'webuser', roles: %w{app db web}, primary: true
 
 set :rails_env, 'staging'
 
-set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
-set sidekiq_default_hooks: false
 
-set :puma_env, fetch(:rack_env, fetch(:rails_env))
 
 # role-based syntax
 # ==================

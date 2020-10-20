@@ -11,10 +11,10 @@ set :deploy_to, "/home/webuser/bosa"
 set :rails_env, 'production'
 set :branch, ENV.fetch('BRANCH', 'production')
 
-set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
-set sidekiq_default_hooks: false
 
-set :puma_env, fetch(:rack_env, fetch(:rails_env))
+sidekiq_server = '51.178.58.235'
+set :sidekiq_roles, :sidekiq
+server sidekiq_server, user: 'webuser', roles: [:sidekiq]
 
 # role-based syntax
 # ==================

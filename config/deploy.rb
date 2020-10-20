@@ -19,6 +19,16 @@ set :rbenv_roles, :all # default value
 
 set :puma_init_active_record, true
 set :puma_preload_app, true
+set :puma_env, fetch(:rack_env, fetch(:rails_env))
+
+
+set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
+set sidekiq_default_hooks: false
+# sidekiq systemd options
+set :sidekiq_service_unit_name, 'bosa-sidekiq'
+set :sidekiq_service_unit_user, :user # :system
+set :sidekiq_enable_lingering, true
+set :sidekiq_lingering_user, nil
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
