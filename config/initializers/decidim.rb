@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 Decidim.configure do |config|
-  config.application_name = "opensourcepolitics"
-  config.mailer_sender = "ne-pas-repondre@opensourcepolitics.eu"
-  config.mailer_reply = "reply@opensourcepolitics.eu"
+  config.application_name = "bosa"
+  config.mailer_sender = "no-reply@belighted.com"
+  config.mailer_reply = "no-reply@belighted.com"
 
   # Change these lines to set your preferred locales
   config.default_locale = :en
