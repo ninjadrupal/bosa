@@ -61,7 +61,7 @@ REDIS_URL=redis://redis:6379/1
 * Open a Rails console in the server: `bundle exec rails console`
 * Create a System Admin user:
 ```ruby
-user.
+user = Decidim::System::Admin.new(email: <email>, password: <password>, password_confirmation: <password>)
 user.save!
 ```
 *. Visit `<your app url>/system` and login with your system admin credentials
