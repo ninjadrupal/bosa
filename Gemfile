@@ -10,7 +10,7 @@ gem 'decidim', DECIDIM_VERSION, git: 'https://github.com/decidim/decidim'
 gem 'decidim-initiatives', DECIDIM_VERSION, git: 'https://github.com/decidim/decidim'
 gem 'decidim-verifications_omniauth', git: 'git@github.com:belighted/decidim-module-verifications_omniauth.git', branch: DECIDIM_VERSION
 gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed', branch: DECIDIM_VERSION
-# gem 'decidim-suggestions', git: 'git@github.com:belighted/decidim-module-suggestions.git', branch: 'master'
+gem 'decidim-suggestions', git: 'git@github.com:belighted/decidim-module-suggestions.git', branch: DECIDIM_VERSION
 
 # gem 'decidim-term_customizer', git: 'https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git', branch: '0.dev'
 # --------
