@@ -42,7 +42,7 @@ set :sidekiq_lingering_user, nil
 # set :pty, true
 
 # Default value for :linked_files is []
-append :linked_files, 'config/master.key', '.env', 'config/database.yml', 'config/credentials.yml.enc'
+append :linked_files, 'config/master.key', '.env', 'config/database.yml', 'config/credentials.yml.enc', 'config/newrelic.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle',
