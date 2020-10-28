@@ -26,8 +26,13 @@ module DecidimAws
     end
 
     Raven.configure do |config|
+      config.logger = Raven::Logger.new(STDOUT)
       config.dsn = ENV["SENTRY_DSN"]
-      config.environments = %w[staging production]
+      config.environments = %w[ staging production ]
+
+      config.async = lambda { |event|
+        SentryJob.perform_later(event)
+      }
     end
 
     # config.action_mailer.asset_host = "https://broom.osp.cat"
