@@ -13,6 +13,8 @@ module DecidimAws
     config.time_zone = "Europe/Paris"
     config.i18n.load_path += Dir[Rails.root.join('config/locales/**/*.yml').to_s]
 
+    Redis.exists_returns_integer = false
+
     Decidim.unconfirmed_access_for = 0.days
 
     config.to_prepare do
@@ -27,7 +29,7 @@ module DecidimAws
 
     Raven.configure do |config|
       config.logger = Raven::Logger.new(STDOUT)
-      config.dsn = ENV["SENTRY_DSN"]
+      config.dsn = "https://c3d3d789cfd241db940fcd8c8c2b81eb@o26574.ingest.sentry.io/5471760" # ENV["SENTRY_DSN"]
       config.environments = %w[ staging production ]
 
       config.async = lambda { |event|
