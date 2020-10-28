@@ -1097,7 +1097,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_131402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "decidim_author_type", null: false
-    t.index "decidim_proposal_id, decidim_author_id, COALESCE(decidim_user_group_id, ('-1'::integer)::bigint)", name: "decidim_proposals_proposal_endorsmt_proposal_auth_ugroup_uniq", unique: true
+    t.index "decidim_proposal_id, decidim_author_id, (COALESCE(decidim_user_group_id, ('-1'::integer)::bigint))", name: "decidim_proposals_proposal_endorsmt_proposal_auth_ugroup_uniq", unique: true
     t.index ["decidim_author_id", "decidim_author_type"], name: "index_decidim_proposals_proposal_endorsements_on_decidim_author"
     t.index ["decidim_proposal_id"], name: "decidim_proposals_proposal_endorsement_proposal"
     t.index ["decidim_user_group_id"], name: "decidim_proposals_proposal_endorsement_user_group"
@@ -1330,6 +1330,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_131402) do
     t.index ["answered_at"], name: "index_decidim_suggestions_on_answered_at"
     t.index ["decidim_area_id"], name: "index_decidim_suggestions_on_decidim_area_id"
     t.index ["decidim_author_id", "decidim_author_type"], name: "index_decidim_suggestions_on_decidim_author"
+    t.index ["decidim_organization_id"], name: "index_decidim_suggestions_on_decidim_organization_id"
     t.index ["decidim_user_group_id"], name: "index_decidim_suggestions_on_decidim_user_group_id"
     t.index ["first_progress_notification_at"], name: "index_decidim_suggestions_on_first_progress_notification_at"
     t.index ["published_at"], name: "index_decidim_suggestions_on_published_at"
@@ -1380,7 +1381,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_131402) do
     t.boolean "custom_signature_end_date_enabled", default: false, null: false
     t.boolean "area_enabled", default: false, null: false
     t.boolean "attachments_enabled", default: false, null: false
-    t.index ["decidim_organization_id"], name: "index_decidim_suggestions_on_decidim_organization_id"
+    t.index ["decidim_organization_id"], name: "index_decidim_suggestions_types_on_decidim_organization_id"
   end
 
   create_table "decidim_suggestions_votes", force: :cascade do |t|
