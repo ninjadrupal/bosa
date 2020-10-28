@@ -409,9 +409,6 @@ GEM
     crass (1.0.6)
     css_parser (1.7.1)
       addressable
-    dalli (2.7.10)
-    dalli-elasticache (0.2.0)
-      dalli (>= 1.0.0)
     database_cleaner (1.8.5)
     database_cleaner-active_record (1.8.0)
       activerecord
@@ -953,7 +950,6 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.2)
   capistrano-sidekiq (= 2.0.0.beta5)
   capistrano3-puma
-  dalli-elasticache
   database_cleaner-active_record
   decidim!
   decidim-cookies!
