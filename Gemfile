@@ -76,9 +76,10 @@ group :development do
 end
 
 group :production do
-  gem 'dalli-elasticache'
+  # gem 'dalli-elasticache'
   gem 'fog-aws'
-  gem 'newrelic_rpm'
+  # gem 'newrelic_rpm'
+  # gem 'newrelic-infinite_tracing'
 end
 
 group :test do

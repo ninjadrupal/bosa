@@ -56,9 +56,6 @@ Rails.application.configure do
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
-
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "decidim-aws_#{Rails.env}"
@@ -106,7 +103,12 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :sidekiq
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  # Use a different cache store in production.
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" }
+  }
+
+  if ENV["ELASTICACHE_STORE"].present?
     config.cache_store = :dalli_store, Dalli::ElastiCache.new(ENV["ELASTICACHE_HOST"]).servers, { :expires_in => 1.day, :compress => true }
   end
 end
