@@ -25,4 +25,5 @@ en:
 
   errors:
     messages:
+      must_be_before: must be before %{date}
       taken: Taken

@@ -94,7 +94,7 @@ module Decidim
     scope :order_by_answer_date, -> { order("answered_at DESC nulls last") }
     scope :order_by_most_recent, -> { order(created_at: :desc) }
     scope :order_by_most_recently_published, -> { order(published_at: :desc) }
-    scope :order_by_supports, -> { order("((online_votes->>'total')::int + (offline_votes->>'total')::int) DESC") }
+    scope :order_by_supports, -> { order("(coalesce((online_votes->>'total')::int, 0) + coalesce((offline_votes->>'total')::int, 0)) DESC") }
     scope :order_by_most_commented, lambda {
       select("decidim_initiatives.*")
         .left_joins(:comments)
@@ -153,7 +153,13 @@ module Decidim
     # RETURNS string
     delegate :banner_image, to: :type
     delegate :name, :color, :logo, to: :area, prefix: true, allow_nil: true
-    delegate :attachments_enabled?, :attachments_enabled, :document_number_authorization_handler, :promoting_committee_enabled?, :custom_signature_end_date_enabled?, :area_enabled?, to: :type
+    delegate :attachments_enabled?,
+             :attachments_enabled,
+             :document_number_authorization_handler,
+             :promoting_committee_enabled?,
+             :custom_signature_end_date_enabled?,
+             :area_enabled?,
+             to: :type
     delegate :type, :scope, :scope_name, to: :scoped_type, allow_nil: true
 
     # PUBLIC
@@ -212,8 +218,8 @@ module Decidim
 
     def votes_enabled?
       votes_enabled_state? &&
-        signature_start_date <= Date.current &&
-        signature_end_date >= Date.current
+        signature_start_date.present? && signature_start_date <= Date.current &&
+        signature_end_date.present? && signature_end_date >= Date.current
     end
 
     def votes_enabled_state?

@@ -1,5 +1,14 @@
 ---
 fr:
+  activemodel:
+    attributes:
+      organization:
+        from_email: Adresse de courriel
+        from_label: Nom
+        address: serveur SMTP
+        password: Mot de passe
+        port: Port
+        user_name: Utilisateur
   decidim:
     system:
       models:
@@ -20,3 +29,11 @@ fr:
           twitter:
             api_key: Clé API
             api_secret: Secret de l'API
+        smtp_settings:
+          fieldsets:
+            sender: Expéditeur
+          instructions:
+            sender: "Nom de l'expéditeur <email@example.org>"
+          placeholder:
+            from_email: "email@example.org"
+            from_label: "Nom de l'expéditeur"

@@ -12,7 +12,7 @@ module AdminInitiativeAnswerFormExtend
     validates :state, presence: true
     validate :state_validation
     validates :answer_date, presence: true, if: :answer_date_allowed?
-    validates :answer_date, date: { before: Date.current.advance(days: 1) }, if: :answer_date_allowed?
+    validate :answer_date_restriction, if: :answer_date_allowed?
 
     def signature_dates_required?
       @signature_dates_required ||= check_state
@@ -42,6 +42,10 @@ module AdminInitiativeAnswerFormExtend
     end
 
     private
+
+    def answer_date_restriction
+      errors.add(:answer_date, I18n.t("must_be_before", scope: "errors.messages", date: I18n.localize(Date.current, format: :decidim_short))) unless answer_date <= Date.current
+    end
 
     def check_state
       manual_states.include? context.initiative.state

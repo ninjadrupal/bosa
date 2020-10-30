@@ -126,6 +126,7 @@ en:
       initiative_signatures:
         fill_personal_data:
           select_scope: Select scope
+          select_scope_label: Scope
 
       initiatives:
         author:
@@ -166,8 +167,11 @@ en:
           validating: Technical validation
       state:
         accepted: Accepted
+        classified: Classified
         created: Created
+        debatted: Debatted
         discarded: Discarded
+        examinated: Examinated
         published: Published
         rejected: Rejected
         validating: Technical validation
