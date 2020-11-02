@@ -8,6 +8,8 @@ module ApplicationControllerExtend
   included do
     helper Decidim::DeeplHelper
 
+    private
+
     def skip_store_location?
       # Skip if Devise already handles the redirection
       return true if devise_controller? && redirect_url.blank?

@@ -1316,7 +1316,7 @@ ActiveRecord::Schema.define(version: 2020_10_21_131402) do
     t.string "answer_url"
     t.integer "suggestion_votes_count", default: 0, null: false
     t.integer "decidim_user_group_id"
-    t.integer "hashtag"
+    t.string "hashtag"
     t.integer "suggestion_supports_count", default: 0, null: false
     t.integer "scoped_type_id"
     t.datetime "first_progress_notification_at"

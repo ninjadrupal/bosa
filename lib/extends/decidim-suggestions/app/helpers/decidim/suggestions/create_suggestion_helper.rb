@@ -8,12 +8,12 @@ module CreateSuggestionHelperExtend
   included do
 
     def signature_type_options(suggestion_form)
-      offline_signature_type_options
+      any_signature_type_options
     end
 
     private
 
-    def offline_signature_type_options
+    def any_signature_type_options
       [
         [
           I18n.t(
