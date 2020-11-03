@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:belighted/decidim-module-suggestions.git
-  revision: 7c6d9819dab4a9543f5d576c07b1c49b2ab33e3d
+  revision: a22910a24f4ca0d407ef5c983a5101124cd63f9b
   branch: 0.22.0
   specs:
     decidim-suggestions (0.22.0)
