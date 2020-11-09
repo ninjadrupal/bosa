@@ -23,9 +23,10 @@ module DecidimAws
       end
     end
 
-    initializer "Expire sessions" do
-      Rails.application.config.session_store :active_record_store, key: '_decidim_session'
-    end
+    # Turn off :active_record_store because it fails to handle initiative/suggestion attachments
+    # initializer "Expire sessions" do
+    #   Rails.application.config.session_store :active_record_store, key: '_decidim_session'
+    # end
 
     Raven.configure do |config|
       config.logger = Raven::Logger.new(STDOUT)

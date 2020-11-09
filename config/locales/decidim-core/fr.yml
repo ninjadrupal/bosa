@@ -99,6 +99,7 @@ fr:
   errors:
     messages:
       invalid_time_zone: n'est pas un fuseau horaire valide
+      must_be_before: doit être avant le %{date}
       taken: Pris
   time:
     formats:

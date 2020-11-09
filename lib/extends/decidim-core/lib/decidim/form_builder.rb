@@ -30,6 +30,39 @@ module FormBuilderExtend
       select(name, selectables, options, html_options)
     end
 
+    def date_field(attribute, options = {})
+      value = object.send(attribute)
+      data = { datepicker: "" }
+      data[:startdate] = I18n.localize(value, format: :decidim_short) if value.present? && value.is_a?(Date)
+      datepicker_format = ruby_format_to_datepicker(I18n.t("date.formats.decidim_short"))
+      data[:"date-format"] = datepicker_format
+
+      template = text_field(
+        attribute,
+        options.merge(data: data)
+      )
+      help_text = I18n.t("decidim.datepicker.help_text", datepicker_format: datepicker_format)
+      template += content_tag(:p, help_text, class: "help-text") if help_text.present?
+      template.html_safe
+    end
+
+    def datetime_field(attribute, options = {})
+      value = object.send(attribute)
+      data = { datepicker: "", timepicker: "" }
+      data[:startdate] = I18n.localize(value, format: :decidim_short) if value.present? && value.is_a?(ActiveSupport::TimeWithZone)
+      datepicker_format = ruby_format_to_datepicker(I18n.t("time.formats.decidim_short"))
+      data[:"date-format"] = datepicker_format
+
+      template = text_field(
+        attribute,
+        options.merge(data: data)
+      )
+      help_text = I18n.t("decidim.datepicker.help_text", datepicker_format: datepicker_format)
+      template += content_tag(:p, help_text, class: "help-text") if help_text.present?
+      template.html_safe
+    end
+
+    # rubocop:disable Metrics/PerceivedComplexity
     def upload(attribute, options = {})
       self.multipart = true
       options[:optional] = options[:optional].nil? ? true : options[:optional]
@@ -37,11 +70,11 @@ module FormBuilderExtend
       file = object.send attribute
       template = ""
       template += label(attribute, label_for(attribute) + required_for_attribute(attribute))
-      if options[:accept].present?
-        template += @template.file_field @object_name, attribute, accept: options.delete(:accept)
-      else
-        template += @template.file_field @object_name, attribute
-      end
+      template += if options[:accept].present?
+                    @template.file_field @object_name, attribute, accept: options.delete(:accept)
+                  else
+                    @template.file_field @object_name, attribute
+                  end
 
       if file_is_image?(file)
         template += if file.present?
@@ -74,6 +107,8 @@ module FormBuilderExtend
 
       template.html_safe
     end
+    # rubocop:enable Metrics/PerceivedComplexity
+
   end
 end
 

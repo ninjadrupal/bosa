@@ -36,14 +36,6 @@ module InitiativeSearchExtend
         )
     end
 
-    def search_state
-      states
-    end
-
-    def search_custom_state
-      states
-    end
-
     def search_type_id
       return query if type_ids.include?("all")
 
@@ -141,7 +133,6 @@ module InitiativeSearchExtend
     # rubocop:enable Metrics/PerceivedComplexity
 
     # Private: Returns an array with checked type ids.
-    # rubocop:enable Metrics/CyclomaticComplexity
     def type_ids
       [type_id].flatten
     end

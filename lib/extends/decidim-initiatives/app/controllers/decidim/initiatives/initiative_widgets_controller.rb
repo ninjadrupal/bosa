@@ -7,7 +7,7 @@ module InitiativeWidgetsControllerExtend
 
   included do
     def show
-      redirect_to "/404" unless visible?
+      return redirect_to "/404" unless visible?
 
       super
     end
