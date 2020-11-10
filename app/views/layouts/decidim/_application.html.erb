@@ -26,8 +26,10 @@
       <%= yield %>
     <% end %>
 
-    <%= render partial: "decidim/shared/login_modal" %>
+    <%= render partial: "decidim/shared/confirm_modal" %>
+    <%= render partial: "decidim/shared/login_modal" unless current_user %>
     <%= render partial: "decidim/shared/authorization_modal" %>
+    <%= render partial: "layouts/decidim/js_configuration" %>
 
     <script type="text/javascript">
       window.Decidim.locale = "<%= I18n.locale.to_s.html_safe %>";
