@@ -80,6 +80,17 @@ module PermissionsExtend
       toggle_allow(can_request)
     end
 
+    def access_request_membership?
+      !initiative.published? &&
+        initiative.promoting_committee_enabled? &&
+        !initiative.has_authorship?(user) &&
+        (
+        Decidim::Initiatives.do_not_require_authorization ||
+          ActionAuthorizer.new(user, :create, initiative_type, initiative_type).authorize.ok? ||
+          Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
+        )
+    end
+
     def creation_authorized?
       return true if Decidim::Initiatives.do_not_require_authorization
       return true if available_verification_workflows.empty?
