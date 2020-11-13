@@ -8,7 +8,7 @@ module AttachmentUploaderExtend
   included do
     protected
 
-    def extension_white_list
+    def extension_whitelist
       return %w(jpg jpeg pdf) unless Rails.env.production? # To fix default seeds in non-prod env
 
       %w(pdf)

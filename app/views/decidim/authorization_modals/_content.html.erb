@@ -10,7 +10,7 @@
     </div>
   </div>
 <% else %>
-  <% base_code = authorizations.global_code || :missing %>
+  <% base_code = authorizations&.global_code || :missing %>
   <div class="reveal__header <%= base_code %>-authorization">
     <h3 class="reveal__title"><%= t ".#{base_code}.title" %></h3>
   </div>
