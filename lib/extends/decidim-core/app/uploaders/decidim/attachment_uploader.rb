@@ -9,20 +9,9 @@ module AttachmentUploaderExtend
     protected
 
     def extension_whitelist
-      return %w(jpg jpeg pdf) unless Rails.env.production? # To fix default seeds in non-prod env
-
-      %w(pdf)
+      %w(jpg jpeg png pdf doc docx xls xlsx rtf odt)
     end
 
-    # CarrierWave automatically calls this method and validates the content
-    # type fo the temp file to match against any of these options.
-    def content_type_whitelist
-      return [%r{image\/}, %r{application\/pdf}] unless Rails.env.production? # To fix default seeds in non-prod env
-
-      [
-        %r{application\/pdf}
-      ]
-    end
   end
 end
 

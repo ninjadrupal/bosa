@@ -96,7 +96,7 @@
                     </div>
 
                     <div class="field">
-                      <%= nested_form.upload :file, optional: false, accept: "application/pdf" %>
+                      <%= nested_form.upload :file, optional: false %>
                     </div>
 
                     <% if @form.errors[:attachment].present? %>
