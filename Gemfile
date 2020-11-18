@@ -12,11 +12,7 @@ gem 'decidim-verifications_omniauth', git: 'git@github.com:belighted/decidim-mod
 gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed', branch: DECIDIM_VERSION
 gem 'decidim-suggestions', git: 'git@github.com:belighted/decidim-module-suggestions.git', branch: DECIDIM_VERSION
 
-# gem 'decidim-term_customizer', git: 'https://github.com/OpenSourcePolitics/decidim-module-term_customizer.git', branch: '0.dev'
-# --------
-# Fake update to 0.22
-# It is using decidim v0.20 inside
-# TODO: get back to original https://github.com/mainio/decidim-module-term_customizer AFTER they upgrade it to official decidim 0.22 (otherwise can't properly bundle install because of dependency versions resolution)
+# Is a fork of original gem: https://github.com/mainio/decidim-module-term_customizer
 gem 'decidim-term_customizer', git: 'https://github.com/belighted/decidim-module-term_customizer.git', branch: DECIDIM_VERSION
 
 # gem 'decidim-cookies', git:'https://github.com/OpenSourcePolitics/decidim-module_cookies', branch: 'feature/orejime'

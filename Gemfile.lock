@@ -54,12 +54,12 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-term_customizer.git
-  revision: fd3578b0b1261c8123d0713044ad5c5e36fc2021
+  revision: 0a6d1716d4ea12d6d3959d64db07a23671a41147
   branch: 0.22.0
   specs:
     decidim-term_customizer (0.22.0)
-      decidim-admin (= 0.22.0)
-      decidim-core (= 0.22.0)
+      decidim-admin (~> 0.22.0)
+      decidim-core (~> 0.22.0)
 
 GIT
   remote: https://github.com/decidim/decidim
