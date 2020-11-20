@@ -12,9 +12,9 @@ Decidim::Verifications.register_workflow(:dummy_authorization_handler) do |workf
   # workflow.action_authorizer = "DummyActionAuthorizer"
 end
 
-Decidim::Verifications.register_workflow(:another_dummy_authorization_handler) do |workflow|
-  workflow.form = "AnotherDummyAuthorizationHandler"
-end
+# Decidim::Verifications.register_workflow(:another_dummy_authorization_handler) do |workflow|
+#   workflow.form = "AnotherDummyAuthorizationHandler"
+# end
 
 Decidim::Verifications.register_workflow(:csam) do |workflow|
   workflow.engine = Decidim::Verifications::Omniauth::Engine
