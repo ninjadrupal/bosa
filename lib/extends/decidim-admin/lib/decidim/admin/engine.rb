@@ -97,6 +97,12 @@
                   active: [%w(decidim/admin/organization_homepage), []],
                   if: allowed_to?(:update, :organization, organization: current_organization)
 
+        menu.item I18n.t("admin.menu.navbar_links", scope: "decidim_navbar_links"),
+                  decidim_admin_navbar_links.navbar_links_path,
+                  position: 3.1,
+                  active: [%w(decidim/admin/navbar_links), []],
+                  if: allowed_to?(:update, :organization, organization: current_organization)
+
         menu.item I18n.t("menu.scopes", scope: "decidim.admin"),
                   decidim_admin.scopes_path,
                   position: 4,
