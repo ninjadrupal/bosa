@@ -3,9 +3,9 @@ lock '~> 3.14.1'
 
 require 'capistrano-db-tasks'
 
-set :application, 'bosa-app-petition'
+set :application, 'bosa'
 set :branch, ENV.fetch('BRANCH', 'master')
-set :repo_url, 'git@github.com:belighted/bosa-app-petition.git'
+set :repo_url, 'git@github.com:belighted/bosa.git'
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/webuser/#{fetch(:application)}"
