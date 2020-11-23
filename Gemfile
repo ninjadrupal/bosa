@@ -11,26 +11,11 @@ gem 'decidim-initiatives', DECIDIM_VERSION, git: 'https://github.com/decidim/dec
 gem 'decidim-verifications_omniauth', git: 'git@github.com:belighted/decidim-module-verifications_omniauth.git', branch: DECIDIM_VERSION
 gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed', branch: DECIDIM_VERSION
 gem 'decidim-suggestions', git: 'git@github.com:belighted/decidim-module-suggestions.git', branch: DECIDIM_VERSION
-
-# Is a fork of original gem: https://github.com/mainio/decidim-module-term_customizer
 gem 'decidim-term_customizer', git: 'https://github.com/belighted/decidim-module-term_customizer.git', branch: DECIDIM_VERSION
-
-# gem 'decidim-cookies', git:'https://github.com/OpenSourcePolitics/decidim-module_cookies', branch: 'feature/orejime'
 gem 'decidim-cookies', git: 'https://github.com/belighted/decidim-module-cookies', branch: DECIDIM_VERSION
-
-# gem 'decidim-navbar_links', git: 'https://github.com/OpenSourcePolitics/decidim-module-navbar_links', branch: '0.22.0.dev'
-# --------
-# Fake update to 0.22
-# It is using decidim v0.19 inside
-# TODO: Update to latest 0.22 if needed (and after it is officially released, otherwise can't properly bundle install because of dependency versions resolution)
 gem 'decidim-navbar_links', git: 'https://github.com/belighted/decidim-module-navbar_links', branch: DECIDIM_VERSION
 
 # ----------------------------------------------------------------------------------------------------------------------
-# Avoid wicked_pdf require error
-# gem 'akami', git: 'https://github.com/OpenSourcePolitics/akami', branch: 'fix-timestamp'
-# gem 'akami', path: '../_lib/akami'
-# gem 'omniauth-oauth2', '>= 1.4.0', '< 2.0'
-# gem 'omniauth_openid_connect', '0.3.1'
 gem 'activerecord-session_store'
 gem 'bootsnap'
 gem 'deepl-rb'
