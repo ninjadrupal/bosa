@@ -16,3 +16,4 @@
 //= require decidim/date_picker.js
 //= require decidim/translations.js
 //= require decidim/initiatives/similar_initiatives.js
+//= require decidim/suggestions/similar_suggestions.js
