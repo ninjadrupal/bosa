@@ -17,10 +17,12 @@ Decidim.configure do |config|
   # config.system_whitelist_ips = ["127.0.0.1"]
 
   # Geocoder configuration
-  config.geocoder = {
-    static_map_url: "https://image.maps.ls.hereapi.com/mia/1.6/mapview",
-    here_api_key: Rails.application.secrets.geocoder[:here_api_key]
-  }
+  if Rails.application.secrets.geocoder[:here_api_key].present?
+    config.geocoder = {
+      static_map_url: "https://image.maps.ls.hereapi.com/mia/1.6/mapview",
+      here_api_key: Rails.application.secrets.geocoder[:here_api_key]
+    }
+  end
 
   if defined?(Decidim::Initiatives) && defined?(Decidim::Initiatives.do_not_require_authorization)
     Decidim::Initiatives.minimum_committee_members = 0
