@@ -1,6 +1,31 @@
 GIT
-  remote: git@github.com:belighted/decidim-module-suggestions.git
-  revision: 73d4063f0a5104b18952a3ba045d684feb4e3f67
+  remote: https://github.com/belighted/decidim-module-cookies
+  revision: dbb528ec5ac2eab0be9fa390f25cb7b379daf486
+  branch: 0.22.0
+  specs:
+    decidim-cookies (0.22.0)
+      decidim-core (= 0.22.0)
+
+GIT
+  remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
+  revision: 1158332b3be4edf8d7dc9314f3f6a0beb1d9fe75
+  branch: 0.22.0
+  specs:
+    decidim-initiatives_no_signature_allowed (0.22.0)
+      decidim-core (= 0.22.0)
+      decidim-initiatives (= 0.22.0)
+
+GIT
+  remote: https://github.com/belighted/decidim-module-navbar_links
+  revision: feb5f778004b2e1f003ff1de4f84e0f4667dbe46
+  branch: 0.22.0
+  specs:
+    decidim-navbar_links (0.22.0)
+      decidim-core (= 0.22.0)
+
+GIT
+  remote: https://github.com/belighted/decidim-module-suggestions
+  revision: b3439a51c17036b4b7c7a8a20c5f2b5c18faa33c
   branch: 0.22.0
   specs:
     decidim-suggestions (0.22.0)
@@ -16,8 +41,17 @@ GIT
       wkhtmltopdf-binary (~> 0.12)
 
 GIT
-  remote: git@github.com:belighted/decidim-module-verifications_omniauth.git
-  revision: 04571dd918596c9d5d7ad50f783eb4ae2c2b979a
+  remote: https://github.com/belighted/decidim-module-term_customizer
+  revision: 64112ab58387b38074724edf4eb9195482fc9aad
+  branch: 0.22.0
+  specs:
+    decidim-term_customizer (0.22.0)
+      decidim-admin (~> 0.22.0)
+      decidim-core (~> 0.22.0)
+
+GIT
+  remote: https://github.com/belighted/decidim-module-verifications_omniauth
+  revision: 732c46354b631c874455ff3028c15f8d81aea5bd
   branch: 0.22.0
   specs:
     decidim-verifications_omniauth (0.22.0)
@@ -26,40 +60,6 @@ GIT
       omniauth-saml (~> 1.10)
       savon (~> 2.12.0)
       signer
-
-GIT
-  remote: https://github.com/belighted/decidim-module-cookies
-  revision: d4130eb90df0ee6639389db2b9ed93fd5680142b
-  branch: 0.22.0
-  specs:
-    decidim-cookies (0.22.0)
-      decidim-core (= 0.22.0)
-
-GIT
-  remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
-  revision: 16052405ec72bc6d1f2b76b35107c6f163550531
-  branch: 0.22.0
-  specs:
-    decidim-initiatives_no_signature_allowed (0.22.0)
-      decidim-core (= 0.22.0)
-      decidim-initiatives (= 0.22.0)
-
-GIT
-  remote: https://github.com/belighted/decidim-module-navbar_links
-  revision: 71ea36bc9574fdbdc462d089e603f7bc51b734e8
-  branch: 0.22.0
-  specs:
-    decidim-navbar_links (0.22.0)
-      decidim-core (= 0.22.0)
-
-GIT
-  remote: https://github.com/belighted/decidim-module-term_customizer.git
-  revision: 0a6d1716d4ea12d6d3959d64db07a23671a41147
-  branch: 0.22.0
-  specs:
-    decidim-term_customizer (0.22.0)
-      decidim-admin (~> 0.22.0)
-      decidim-core (~> 0.22.0)
 
 GIT
   remote: https://github.com/decidim/decidim
