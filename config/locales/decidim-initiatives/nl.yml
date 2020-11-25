@@ -30,6 +30,7 @@ nl:
       initiatives_committee_member:
         user: Commissielid
       initiatives_type:
+        area_enabled: Stel beheerders in staat het gebied voor suggestie te kiezen
         banner_image: Banner afbeelding
         child_scope_threshold_enabled: Enable child scope signatures
         collect_user_extra_fields: Persoonlijke gebruikersgegevens verzamelen bij ondertekening

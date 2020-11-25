@@ -34,7 +34,8 @@ fr:
       initiatives_committee_member:
         user: Membre du Comité de promotion
       initiatives_type:
-        area_enabled: Enable authors to choose the area for their initiative
+        #area_enabled: Enable authors to choose the area for their initiative
+        area_enabled: Permettre aux administrateurs de choisir la zone de suggestion
         attachments_enabled: Enable attachments
         banner_image: Image d'en-tête
         child_scope_threshold_enabled: Activer les signatures des sous-périmètres
