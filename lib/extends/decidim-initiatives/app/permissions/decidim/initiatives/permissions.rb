@@ -86,7 +86,7 @@ module PermissionsExtend
         !initiative.has_authorship?(user) &&
         (
         Decidim::Initiatives.do_not_require_authorization ||
-          ActionAuthorizer.new(user, :create, initiative_type, initiative_type).authorize.ok? ||
+          Decidim::ActionAuthorizer.new(user, :create, initiative_type, initiative_type).authorize.ok? ||
           Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
         )
     end
