@@ -21,7 +21,7 @@ gem 'bootsnap'
 gem 'deepl-rb'
 gem 'http_logger'
 gem 'omniauth-rails_csrf_protection'
-gem 'puma'
+gem "puma", "~> 4.3"
 gem 'pry'
 gem 'ruby-progressbar'
 gem 'rubyzip', require: 'zip'
