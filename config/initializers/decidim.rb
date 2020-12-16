@@ -26,7 +26,7 @@ Decidim.configure do |config|
 
   if defined?(Decidim::Initiatives) && defined?(Decidim::Initiatives.do_not_require_authorization)
     Decidim::Initiatives.minimum_committee_members = 0
-    Decidim::Initiatives.default_signature_time_period_length = 6.months
+    Decidim::Initiatives.default_signature_time_period_length = 1.year
     Decidim::Initiatives.print_enabled = false
     Decidim::Initiatives.default_components = []
     Decidim::Initiatives.timestamp_service = "Decidim::Initiatives::UtcTimestamp"
