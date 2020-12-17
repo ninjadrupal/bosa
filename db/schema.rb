@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_01_080008) do
+ActiveRecord::Schema.define(version: 2020_12_14_074315) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "btree_gin"
   enable_extension "ltree"
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
@@ -313,6 +314,27 @@ ActiveRecord::Schema.define(version: 2020_12_01_080008) do
     t.index ["decidim_scope_id"], name: "index_decidim_budgets_projects_on_decidim_scope_id"
   end
 
+  create_table "decidim_casting_data_rows", force: :cascade do |t|
+    t.bigint "decidim_casting_id", null: false
+    t.jsonb "attrs", default: {}, null: false
+    t.text "raw_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_casting_id", "id", "attrs"], name: "index_decidim_casting_data_rows_on_attrs", using: :gin
+  end
+
+  create_table "decidim_casting_results", force: :cascade do |t|
+    t.bigint "decidim_casting_id", null: false
+    t.integer "run_number", default: 1, null: false
+    t.integer "number_of_trials"
+    t.jsonb "statistics"
+    t.string "candidates_file"
+    t.string "substitutes_file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["decidim_casting_id"], name: "index_decidim_casting_results_on_decidim_casting_id"
+  end
+
   create_table "decidim_castings", force: :cascade do |t|
     t.bigint "decidim_organization_id", null: false
     t.bigint "decidim_author_id", null: false
@@ -328,10 +350,9 @@ ActiveRecord::Schema.define(version: 2020_12_01_080008) do
     t.string "file_size", null: false
     t.boolean "file_first_row_is_a_header", default: true, null: false
     t.jsonb "data_source_statistics"
-    t.jsonb "attributes_mapping"
+    t.jsonb "attrs_mapping"
     t.integer "amount_of_candidates", default: 0, null: false
     t.jsonb "selection_criteria"
-    t.integer "number_of_trials"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["decidim_author_id", "decidim_author_type"], name: "index_decidim_castings_on_decidim_author"
