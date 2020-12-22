@@ -349,6 +349,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_074315) do
     t.string "file_content_type", null: false
     t.string "file_size", null: false
     t.boolean "file_first_row_is_a_header", default: true, null: false
+    t.string "file_columns_separator", default: ",", null: false
     t.jsonb "data_source_statistics"
     t.jsonb "attrs_mapping"
     t.integer "amount_of_candidates", default: 0, null: false
