@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/belighted/decidim-module-castings
-  revision: c53785db073b9e136772acee42e430eac31d1a07
+  revision: 44038c2f4fd72cbd74025452130834177ea45b12
   branch: master
   specs:
     decidim-castings (0.22.0)
