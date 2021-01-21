@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_14_074315) do
+ActiveRecord::Schema.define(version: 2021_01_20_085047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -1373,6 +1373,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_074315) do
     t.bigint "decidim_area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "answer_date"
     t.index "md5((description)::text)", name: "decidim_suggestions_description_search"
     t.index ["answered_at"], name: "index_decidim_suggestions_on_answered_at"
     t.index ["decidim_area_id"], name: "index_decidim_suggestions_on_decidim_area_id"
