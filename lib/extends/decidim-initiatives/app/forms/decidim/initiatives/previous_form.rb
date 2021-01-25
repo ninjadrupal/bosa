@@ -9,6 +9,7 @@ module InitiativesPreviousFormExtend
 
     clear_validators!
     validates :title, :description, presence: true
+    validates :description, length: {maximum: 4000}
     validates :type_id, presence: true
 
   end

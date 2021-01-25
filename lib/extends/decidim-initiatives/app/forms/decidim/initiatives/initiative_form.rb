@@ -6,6 +6,9 @@ module InitiativeFormExtend
   extend ActiveSupport::Concern
 
   included do
+
+    validates :description, length: {maximum: 4000}
+
     def scope_id
       return nil if initiative_type.only_global_scope_enabled?
 
