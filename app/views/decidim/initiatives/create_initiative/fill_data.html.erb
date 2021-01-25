@@ -40,7 +40,7 @@
               <%= f.editor :description, lines: 8, toolbar: :full, required: true %>
             </div>
 
-            <% if initiative_type.no_signature_allowed? %>
+            <% if initiative_type.no_signature_allowed? && initiative_type.no_signature_allowed_visible_for?(current_user) %>
               <div class="field">
                 <%= f.check_box :no_signature, help_text: t(".help_text") %>
               </div>
