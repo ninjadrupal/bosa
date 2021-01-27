@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1.0.0-experimental
-
 ARG RUBY_VERSION=2.6.3
 FROM ruby:$RUBY_VERSION-slim-buster
 ARG PG_MAJOR=12
@@ -52,4 +50,4 @@ RUN mkdir -p ~/.ssh && \
     touch ~/.ssh/known_hosts && \
     ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
-RUN --mount=type=ssh bundle check || bundle install
+RUN bundle check || bundle install

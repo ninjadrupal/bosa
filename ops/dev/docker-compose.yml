@@ -3,8 +3,6 @@ x-app_common: &app_common
   build:
     context: ../..
     dockerfile: ops/dev/Dockerfile
-    args:
-      GITHUB_TOKEN: ${BOSA_GITHUB_TOKEN}
   tmpfs:
     - /tmp
 

@@ -1,14 +1,10 @@
 FROM bosa-base:latest
 
-ARG GITHUB_TOKEN
-
 # Configure locale, bundler, define app dir
 ENV BUNDLE_WITHOUT=production:test
 ENV BUNDLE_WITH=development
 ENV RAILS_ENV=development
 ENV NODE_ENV=development
-
-RUN git config --global url."https://$GITHUB_TOKEN:x-oauth-basic@github.com/".insteadOf git@github.com:
 
 COPY Gemfile* /app/
 
