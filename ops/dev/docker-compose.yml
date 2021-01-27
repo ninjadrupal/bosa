@@ -1,46 +1,38 @@
 version: '3.8'
+x-app_common: &app_common
+  build:
+    context: ../..
+    dockerfile: ops/dev/Dockerfile
+    args:
+      GITHUB_TOKEN: ${BOSA_GITHUB_TOKEN}
+  tmpfs:
+    - /tmp
+
+x-backend: &backend
+  <<: *app_common
+  stdin_open: true
+  tty: true
+  volumes:
+    - ../..:/app/:cached
+    - node_modules:/app/node_modules
+  env_file:
+    - app_env
+    - app_env.secrets
+  environment:
+    - WEB_CONCURRENCY=1
+    - EDITOR=vi
+  depends_on:
+    - postgres
+    - redis
+
 services:
-  app: &app
-    build:
-      context: ../..
-      dockerfile: ops/dev/Dockerfile
-      args:
-        RUBY_VERSION: '2.6.3'
-        PG_MAJOR: '12'
-        NODE_MAJOR: '12'
-        BUNDLER_VERSION: '2.1.4'
-    tmpfs:
-      - /tmp
-
-  backend: &backend
-    <<: *app
-    stdin_open: true
-    tty: true
-    user: app
-    volumes:
-      - ../..:/home/app/web:cached
-      - bundle:/home/app/bundle
-      - node_modules:/home/app/web/node_modules
-    env_file:
-      - app_env
-      - app_env.secrets
-    environment:
-      - NODE_ENV=development
-      - RAILS_ENV=${RAILS_ENV:-development}
-      - REDIS_URL=redis://redis:6379/
-      - WEB_CONCURRENCY=1
-      - EDITOR=vi
-    depends_on:
-      - postgres
-      - redis
-
-  rails:
+  app:
     <<: *backend
     command: bin/rails server -b 0.0.0.0
     ports:
       - '3000:3000'
 
-  sidekiq:
+  jobs:
     <<: *backend
     command: bundle exec sidekiq -C config/sidekiq.yml
 
