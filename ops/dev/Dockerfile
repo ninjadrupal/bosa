@@ -1,4 +1,4 @@
-FROM bosa-base:latest
+FROM nexus.bosa.belighted.com:8084/bosa-base:0.1.0
 
 # Configure locale, bundler, define app dir
 ENV BUNDLE_WITHOUT=production:test
