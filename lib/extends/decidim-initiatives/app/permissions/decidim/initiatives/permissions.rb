@@ -125,10 +125,31 @@ module PermissionsExtend
 
       initiative.votes_enabled? &&
         initiative.organization&.id == user.organization&.id &&
+        organization_initiatives_settings_allow_to_vote? &&
         initiative.votes.where(author: user).empty? &&
         (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
         authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
     end
+
+    def organization_initiatives_settings_allow_to_vote?
+      settings = initiative.organization&.initiatives_settings
+      return true if settings.blank?
+
+      authorization = Decidim::Initiatives::UserAuthorizations.for(user).first #{|auth| auth.metadata[:official_birth_date].present?}
+      return true unless authorization
+
+      minimum_age = settings["sign_initiative_minimum_age"]
+      return false if minimum_age.present? && authorization.metadata[:official_birth_date].present? &&
+        (((Time.zone.now - authorization.metadata[:official_birth_date].in_time_zone) / 1.year.seconds).floor < minimum_age)
+
+      # authorization = UserAuthorizations.for(user).first {|auth| auth.metadata[:postal_code].present?}
+      allowed_postal_codes = settings["sign_initiative_allowed_postal_codes"]
+      return false if allowed_postal_codes.present? && authorization.metadata[:postal_code].present? &&
+        !allowed_postal_codes.member?(authorization.metadata[:postal_code])
+
+      true
+    end
+
   end
 end
 

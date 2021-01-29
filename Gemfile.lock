@@ -17,7 +17,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
-  revision: 837bbd67a3453cca71ee285a4f5b2306013f306a
+  revision: 8793c1374f4a5f53a36ab2c29f4061ccc46ecc4c
   branch: 0.22.0
   specs:
     decidim-initiatives_no_signature_allowed (0.22.0)
@@ -34,7 +34,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-suggestions
-  revision: 9e0218615ec4a25cbd883da099bef0ff56ad6d07
+  revision: 1c17bea4e617e2295f72c1611fa42b1177c63947
   branch: 0.22.0
   specs:
     decidim-suggestions (0.22.0)

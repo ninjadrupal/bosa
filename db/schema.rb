@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_22_095232) do
+ActiveRecord::Schema.define(version: 2021_01_28_145301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -982,7 +982,8 @@ ActiveRecord::Schema.define(version: 2021_01_22_095232) do
     t.jsonb "admin_terms_of_use_body"
     t.string "time_zone", limit: 255, default: "UTC"
     t.string "deepl_api_key"
-    t.boolean "allow_users_to_see_initiatives_no_signature_option", default: true
+    t.jsonb "initiatives_settings"
+    t.jsonb "suggestions_settings"
     t.index ["host"], name: "index_decidim_organizations_on_host", unique: true
     t.index ["name"], name: "index_decidim_organizations_on_name", unique: true
   end
