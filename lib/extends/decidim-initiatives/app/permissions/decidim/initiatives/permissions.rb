@@ -46,9 +46,9 @@ module PermissionsExtend
     end
 
     def creation_enabled?
-      Decidim::Initiatives.creation_enabled && (
-      creation_authorized? || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?
-    )
+      Decidim::Initiatives.creation_enabled &&
+        organization_initiatives_settings_allow_to_create? &&
+        (creation_authorized? || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?)
     end
 
     def create_initiative_with_type?
@@ -109,13 +109,14 @@ module PermissionsExtend
 
     def unvote_initiative?
       return unless permission_action.action == :unvote &&
-                    permission_action.subject == :initiative
+        permission_action.subject == :initiative
 
       can_unvote = initiative.accepts_online_unvotes? &&
-                   initiative.organization&.id == user.organization&.id &&
-                   initiative.votes.where(author: user).any? &&
-                   (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
-                   authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
+        initiative.organization&.id == user.organization&.id &&
+        organization_initiatives_settings_allow_to_vote? &&
+        initiative.votes.where(author: user).any? &&
+        (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
+        authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
 
       toggle_allow(can_unvote)
     end
@@ -131,19 +132,28 @@ module PermissionsExtend
         authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
     end
 
+    def organization_initiatives_settings_allow_to_create?
+      organization_initiatives_settings_allow_to?('create')
+    end
+
     def organization_initiatives_settings_allow_to_vote?
-      settings = initiative.organization&.initiatives_settings
+      organization_initiatives_settings_allow_to?('sign')
+    end
+
+    def organization_initiatives_settings_allow_to?(action)
+      organization = initiative&.organization || user&.organization
+      settings = organization&.initiatives_settings
       return true if settings.blank?
 
       authorization = Decidim::Initiatives::UserAuthorizations.for(user).first #{|auth| auth.metadata[:official_birth_date].present?}
       return true unless authorization
 
-      minimum_age = settings["sign_initiative_minimum_age"]
+      minimum_age = settings["#{action}_initiative_minimum_age"]
       return false if minimum_age.present? && authorization.metadata[:official_birth_date].present? &&
         (((Time.zone.now - authorization.metadata[:official_birth_date].in_time_zone) / 1.year.seconds).floor < minimum_age)
 
       # authorization = UserAuthorizations.for(user).first {|auth| auth.metadata[:postal_code].present?}
-      allowed_postal_codes = settings["sign_initiative_allowed_postal_codes"]
+      allowed_postal_codes = settings["#{action}_initiative_allowed_postal_codes"]
       return false if allowed_postal_codes.present? && authorization.metadata[:postal_code].present? &&
         !allowed_postal_codes.member?(authorization.metadata[:postal_code])
 
