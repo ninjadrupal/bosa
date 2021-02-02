@@ -11,6 +11,8 @@ module AdminPermissionsExtend
       return permission_action if permission_action.scope != :admin
       return permission_action unless user
 
+      disallow! and return permission_action unless user.admin?
+
       user_can_enter_space_area?
       return permission_action if initiative && !initiative.is_a?(Decidim::Initiative)
 
