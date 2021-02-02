@@ -8,7 +8,22 @@ module AdminInitiativeFormExtend
   included do
     attribute :offline_votes, Hash
 
+    clear_validators!
+    validates :title, :description, presence: true
     validate :title, :title_max_length
+    validates :area, presence: true, if: ->(form) { form.area_id.present? }
+    validates :signature_type, presence: true, if: :signature_type_updatable?
+    validates :signature_start_date, presence: true, if: ->(form) { form.context.initiative.published? }
+    validates :signature_end_date, presence: true, if: ->(form) { form.context.initiative.published? }
+    validates :signature_end_date, date: { after: :signature_start_date }, if: lambda { |form|
+      form.signature_start_date.present? && form.signature_end_date.present?
+    }
+    validates :signature_end_date, date: { after: Date.current }, if: lambda { |form|
+      form.signature_start_date.blank? && form.signature_end_date.present?
+    }
+
+    validate :notify_missing_attachment_if_errored
+    validate :area_is_not_removed
 
     def map_model(model)
       self.type_id = model.type.id
