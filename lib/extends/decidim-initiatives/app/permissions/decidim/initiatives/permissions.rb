@@ -141,6 +141,8 @@ module PermissionsExtend
     end
 
     def organization_initiatives_settings_allow_to?(action)
+      return true if user.admin?
+
       organization = initiative&.organization || user&.organization
       settings = organization&.initiatives_settings
       return true if settings.blank?
