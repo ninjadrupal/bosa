@@ -594,6 +594,16 @@ fr:
           offline_method: Cette pétition ne recueille que des soutiens en présentiel.
           see_other_versions: voir les autres versions
           version: Version %{number}
+        organization_initiatives_settings:
+          create:
+            modal_title: Désolé, vous n'êtes pas autorisé à effectuer cette action
+            minimum_age_not_valid: Vous devez avoir minimum %{minimum_age} ans pour créer la pétition
+            postal_code_not_valid: Vous devez être domicilié en région de Bruxelles-Capitale pour créer la pétition
+            minimum_age_and_postal_code_not_valid: Vous devez avoir minimum %{minimum_age} ans et vivre dans la région de Bruxelles-Capital pour créer la pétition
+          sign:
+            minimum_age_not_valid: Vous devez avoir minimum %{minimum_age} ans pour signer la pétition
+            postal_code_not_valid: Vous devez être domicilié en région de Bruxelles-Capitale pour signer la pétition
+            minimum_age_and_postal_code_not_valid: Vous devez avoir minimum %{minimum_age} ans et vivre dans la région de Bruxelles-Capital pour signer la pétition
         signature_identities:
           select_identity: Sélectionner l'identifiant de l'utilisateur
         signatures_count:

@@ -7,7 +7,7 @@ module SuggestionsEngineExtend
 
   included do
     routes do
-      get "authorization_creation_modal", to: "authorization_creation_modals#show"
+      get "suggestions_authorization_creation_modal", to: "authorization_creation_modals#show"
     end
   end
 end

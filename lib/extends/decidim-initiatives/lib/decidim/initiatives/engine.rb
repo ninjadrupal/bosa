@@ -10,8 +10,7 @@ module InitiativesEngineExtend
       resources :initiatives, param: :slug, only: [:index, :show], path: "initiatives" do
         resources :versions, only: [:show, :index]
       end
-
-      get "authorization_creation_modal", to: "authorization_creation_modals#show"
+      get "initiatives_authorization_creation_modal", to: "authorization_creation_modals#show"
 
       resources :initiative_types, only: [:show], path: "initiatives_types" do
         member do

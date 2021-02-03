@@ -154,6 +154,16 @@ en:
           of_versions: "(of %{number})"
           see_other_versions: see other versions
           version: Version %{number}
+        organization_initiatives_settings:
+          create:
+            modal_title: Sorry, you are not allowed to perfom this action
+            minimum_age_not_valid: You must be at least %{minimum_age} years old to create the initiative
+            postal_code_not_valid: You must be domiciled in Brussels-Capital region to create the initiative
+            minimum_age_and_postal_code_not_valid: You must be at least %{minimum_age} years old and domiciled in Brussels-Capital region to create the initiative
+          sign:
+            minimum_age_not_valid: You must be at least %{minimum_age} years old to sign the initiative
+            postal_code_not_valid: You must be domiciled in Brussels-Capital region to sign the initiative
+            minimum_age_and_postal_code_not_valid: You must be at least %{minimum_age} years old and domiciled in Brussels-Capital region to sign the initiative
 
       show:
         badge_name:

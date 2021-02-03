@@ -6,11 +6,16 @@ module Decidim
       include Decidim::UserProfile
       include Decidim::Initiatives::NeedsInitiative
 
+      helper InitiativeHelper
       helper Decidim::Verifications::AntiAffinityHelper
       helper_method :authorizations, :authorize_action_path
 
       def show
-        render template: "decidim/authorization_modals/show", layout: false
+        if current_organization.initiatives_settings_allow_to?(current_user, 'create')
+          render template: "decidim/authorization_modals/show", layout: false
+        else
+          render template: "decidim/initiatives/initiatives/_organization_initiatives_settings_validation_message", layout: false
+        end
       end
 
       private

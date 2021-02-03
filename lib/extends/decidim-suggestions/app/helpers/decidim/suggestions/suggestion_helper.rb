@@ -17,7 +17,7 @@ module SuggestionHelperExtend
         request.env[:available_authorizations] = merged_permissions_for(:create)
       else
         html_options["data-open"] = "authorizationModal"
-        html_options["data-open-url"] = authorization_creation_modal_path(redirect: action)
+        html_options["data-open-url"] = suggestions_authorization_creation_modal_path(redirect: action)
       end
 
       html_options["onclick"] = "event.preventDefault();"

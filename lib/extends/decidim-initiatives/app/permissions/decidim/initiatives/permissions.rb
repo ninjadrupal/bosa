@@ -141,25 +141,8 @@ module PermissionsExtend
     end
 
     def organization_initiatives_settings_allow_to?(action)
-      return true if user.admin?
-
       organization = initiative&.organization || user&.organization
-      settings = organization&.initiatives_settings
-      return true if settings.blank?
-
-      authorization = Decidim::Initiatives::UserAuthorizations.for(user).first #{|auth| auth.metadata[:official_birth_date].present?}
-      return true unless authorization
-
-      minimum_age = settings["#{action}_initiative_minimum_age"]
-      return false if minimum_age.present? && authorization.metadata[:official_birth_date].present? &&
-        (((Time.zone.now - authorization.metadata[:official_birth_date].in_time_zone) / 1.year.seconds).floor < minimum_age)
-
-      # authorization = UserAuthorizations.for(user).first {|auth| auth.metadata[:postal_code].present?}
-      allowed_postal_codes = settings["#{action}_initiative_allowed_postal_codes"]
-      return false if allowed_postal_codes.present? && authorization.metadata[:postal_code].present? &&
-        !allowed_postal_codes.member?(authorization.metadata[:postal_code])
-
-      true
+      organization.initiatives_settings_allow_to?(user, action)
     end
 
   end
