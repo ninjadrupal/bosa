@@ -21,7 +21,7 @@ module AdminInitiativeFormExtend
     validates :signature_end_date, date: { after: Date.current }, if: lambda { |form|
       form.signature_start_date.blank? && form.signature_end_date.present?
     }
-
+    validate :hashtag_uniqueness, if: ->(form) {form.hashtag.present?}
     validate :notify_missing_attachment_if_errored
     validate :area_is_not_removed
 
@@ -60,6 +60,11 @@ module AdminInitiativeFormExtend
 
       type.scopes.find_by(decidim_scopes_id: decidim_scope_id.presence).id
     end
+
+    def hashtag_uniqueness
+      errors.add(:hashtag, :taken) if Decidim::Initiative.where(hashtag: hashtag).exists?
+    end
+
   end
 end
 
