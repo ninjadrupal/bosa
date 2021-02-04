@@ -115,7 +115,7 @@ module PermissionsExtend
         initiative.organization&.id == user.organization&.id &&
         organization_initiatives_settings_allow_to_vote? &&
         initiative.votes.where(author: user).any? &&
-        (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
+        # (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
         authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
 
       toggle_allow(can_unvote)
@@ -128,7 +128,7 @@ module PermissionsExtend
         initiative.organization&.id == user.organization&.id &&
         organization_initiatives_settings_allow_to_vote? &&
         initiative.votes.where(author: user).empty? &&
-        (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
+        # (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
         authorized?(:vote, resource: initiative, permissions_holder: initiative.type)
     end
 
