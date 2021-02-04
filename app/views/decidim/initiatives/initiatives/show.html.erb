@@ -97,7 +97,9 @@ edit_link(
       <%= render partial: "result", locals: { initiative: current_initiative } %>
     </div>
 
-    <%= attachments_for current_initiative %>
+    <%# if current_initiative.type.attachments_enabled? %>
+      <%#= attachments_for current_initiative %>
+    <%# end %>
   </div>
 </div>
 
