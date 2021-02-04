@@ -62,7 +62,7 @@ module AdminInitiativeFormExtend
     end
 
     def hashtag_uniqueness
-      errors.add(:hashtag, :taken) if Decidim::Initiative.where(hashtag: hashtag).exists?
+      errors.add(:hashtag, :taken) if Decidim::Initiative.where(hashtag: hashtag).where.not(id: context.initiative.id).exists?
     end
 
   end
