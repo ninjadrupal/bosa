@@ -11,18 +11,19 @@ module AdminPermissionsExtend
       return permission_action if permission_action.scope != :admin
       return permission_action unless user
 
-      disallow! and return permission_action unless user.admin?
-
       user_can_enter_space_area?
       return permission_action if initiative && !initiative.is_a?(Decidim::Initiative)
 
       user_can_read_participatory_space?
       if !user.admin? && initiative&.has_authorship?(user)
         initiative_committee_action?
-        initiative_user_action?
+        initiative_user_action? if permission_action.action == :send_to_technical_validation # allow regular user to send initiative to tech validation
         attachment_action?
         return permission_action
       end
+
+      disallow! and return permission_action unless user.admin? # disallow regular users to see initiatives on admin panel
+
       if !user.admin? && has_initiatives?
         read_initiative_list_action?
         return permission_action
