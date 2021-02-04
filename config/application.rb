@@ -31,7 +31,6 @@ module DecidimAws
       list.each {|override| require_dependency override}
     end
 
-    # Turn off :active_record_store because it fails to handle initiative/suggestion attachments
     initializer "Expire sessions" do
       Rails.application.config.session_store :active_record_store, key: '_decidim_session'
       ActiveRecord::SessionStore::Session.serializer = :json
