@@ -52,5 +52,10 @@ module DecidimAws
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # Basic auth
+    config.basic_auth_required = ENV.fetch('BASIC_AUTH_REQUIRED', 0).to_i == 1
+    config.basic_auth_username = ENV['BASIC_AUTH_USERNAME']
+    config.basic_auth_password = ENV['BASIC_AUTH_PASSWORD']
   end
 end

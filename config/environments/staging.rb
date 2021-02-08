@@ -114,9 +114,4 @@ Rails.application.configure do
     config.cache_store = :dalli_store, Dalli::ElastiCache.new(ENV["ELASTICACHE_HOST"]).servers, { :expires_in => 1.day, :compress => true }
   end
 
-  # Basic auth
-  config.basic_auth_required = true
-  config.basic_auth_username = ENV['BASIC_AUTH_USERNAME']
-  config.basic_auth_password = ENV['BASIC_AUTH_PASSWORD']
-
 end
