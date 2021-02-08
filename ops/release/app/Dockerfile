@@ -1,4 +1,4 @@
-FROM nexus.bosa.belighted.com:8084/bosa-base:0.1.0
+FROM nexus-group.bosa.belighted.com/bosa-base:0.1.0
 LABEL maintainer="Dominique Lebrun <dominique.lebrun@belighted.com>"
 ENV BUNDLE_WITHOUT=test:development
 ENV BUNDLE_WITH=production

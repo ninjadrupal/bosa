@@ -2,7 +2,7 @@
 
 set -e
 
-IMAGE_NAME="nexus.bosa.belighted.com:8085/bosa"
+IMAGE_NAME="docker-registry.bosa.belighted.com:8085/bosa"
 TAG=${TAG:-"latest"}
 
 runpath="$( cd "$(dirname "$0")" ; pwd -P )"
