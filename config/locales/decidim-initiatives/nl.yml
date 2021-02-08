@@ -132,11 +132,22 @@ nl:
         initiatives_types: Initiatieftypes
     events:
       initiatives:
+        admin:
+          initiative_created:
+            email_intro: Het initiatief "%{resource_title}" is gemaakt. Bekijk het via <a href="%{admin_initiative_url}">het beheerpaneel</a>
+            email_outro: Je hebt deze melding ontvangen omdat je beheerder bent van het platform.
+            email_subject: Initiatief "%{resource_title}" is gemaakt.
+            notification_title: Het initiatief "%{resource_title}" is gemaakt. Bekijk het via <a href="%{admin_initiative_path}">het beheerpaneel</a>
         initiative_extended:
           email_intro: De einddatum voor de handtekeningen van initiatief %{resource_title} is verlengd!
           email_outro: U hebt deze melding ontvangen omdat u %{resource_title} volgt. Je kunt de meldingen stoppen door de vorige link te volgen.
           email_subject: Einddatum handtekeningen voor het initiatief verlengd!
           notification_title: De einddatum van de ondertekening van het <a href="%{resource_path}">%{resource_title}</a> initiatief is verlengd.
+        initiative_sent_to_technical_validation:
+          email_intro: De initiatief "%{resource_title}" is verzonden naar technische validatie.
+          email_outro: Je hebt deze melding ontvangen omdat u de auteur van de initiatief bent.
+          email_subject: Initiatief "%{resource_title}" werd verzonden naar technische validatie.
+          notification_title: De initiatief <a href="%{resourse_path}">"%{resource_title}"</a> is verzonden naar technische validatie.
         milestone_completed:
           affected_user:
             email_intro: Uw initiatief %{resource_title} heeft %{percentage}% handtekeningen bereikt!

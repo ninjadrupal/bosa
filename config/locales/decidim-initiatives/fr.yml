@@ -166,6 +166,12 @@ fr:
         initiatives_types: Types de pétition
     events:
       initiatives:
+        admin:
+          initiative_created:
+            email_intro: L'initiative "%{resource_title}" a été créée. Consultez-la sur <a href="%{admin_initiative_url}">le panneau d'administration,</a>
+            email_outro: Vous avez reçu cette notification parce que vous êtes un administrateur de la plateforme.
+            email_subject: L'initiative "%{resource_title}" a été créée.
+            notification_title: L'initiative "%{resource_title}" a été créée. Consultez-la sur <a href="%{admin_initiative_path}">le panneau d'administration,</a>
         initiative_extended:
           email_intro: La date de fin du recueil des signatures pour la pétition
             %{resource_title} a été prolongée !
@@ -175,6 +181,11 @@ fr:
             est prolongée !
           notification_title: La date de fin de recueil des signatures pour la pétition
             <a href="%{resource_path}">%{resource_title}</a> a été prolongée.
+        initiative_sent_to_technical_validation:
+          email_intro: La pétition "%{resource_title}" a été envoyée pour validation technique.
+          email_outro: Vous avez reçu cette notification parce que vous êtes l'auteur de la pétition.
+          email_subject: La pétition "%{resource_title}" a été envoyée pour validation technique.
+          notification_title: La pétition <a href="%{resource_path}">%{resource_title}</a> a été envoyée pour validation technique.
         milestone_completed:
           affected_user:
             email_intro: Votre pétition "%{resource_title}" a atteint %{percentage}%

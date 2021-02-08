@@ -53,7 +53,7 @@ module StatusChangeNotifierExtend
 
         Decidim::Initiatives::InitiativesMailer
           .notify_state_change(initiative, committee_member.user)
-          .deliver_later
+          .deliver_later(wait: 10.seconds)
       end
     end
 
@@ -63,14 +63,14 @@ module StatusChangeNotifierExtend
 
         Decidim::Initiatives::InitiativesMailer
           .notify_state_change(initiative, follower)
-          .deliver_later
+          .deliver_later(wait: 10.seconds)
       end
     end
 
     def notify_author
       Decidim::Initiatives::InitiativesMailer
         .notify_state_change(initiative, initiative.author)
-        .deliver_later
+        .deliver_later(wait: 10.seconds)
     end
   end
 end
