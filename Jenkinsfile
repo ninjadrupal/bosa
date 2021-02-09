@@ -45,15 +45,9 @@ podTemplate(
             container('docker') {
                 dir("app/${project_name}"){
                     stage('Build test_runner') {
-                        withCredentials([usernamePassword(credentialsId: "${nexus_credentials_id}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                            sh """
-                              docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD base.bosa.belighted.com
-                              docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD assets.bosa.belighted.com
-                              docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD app.bosa.belighted.com
-                            """
+                        withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
                             sh "$code_path/ops/release/test_runner/build"
                         }
-
                     }
                     stage("Compile assets"){
                         sh "docker run -e RAILS_ENV=production --env-file $PWD/ops/release/test_runner/app_env -v $PWD/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean"
