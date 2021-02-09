@@ -2,6 +2,7 @@ import groovy.transform.Field
 
 @Field def app_branch_name = "master"
 @Field def devops_branch_name = "master"
+@Field def project_name         = "bosa"
 
 podTemplate(
         namespace: "devops-tools",
