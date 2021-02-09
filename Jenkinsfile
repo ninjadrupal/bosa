@@ -65,13 +65,14 @@ podTemplate(
                                 }
                                 break
                             default:
-                                withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: "https://${nexus_app_registry_url}/${project_name}-base/" ]) {
-                                    withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: "https://${nexus_app_registry_url}/${project_name}/"]) {
-                                        sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
-                                    }
-                                    withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: "https://${nexus_assets_registry_url}/${project_name}-assets/"]) {
-                                        sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
-                                    }
+                                withCredentials([usernamePassword(credentialsId: "${nexus_credentials_id}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                                    sh """
+                                        docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD base.bosa.belighted.com
+                                        docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD assets.bosa.belighted.com
+                                        docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD app.bosa.belighted.com
+                                        """
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
                                 }
                                 break
                         }
