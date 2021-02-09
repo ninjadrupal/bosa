@@ -46,6 +46,7 @@ podTemplate(
                 dir("app/${project_name}"){
                     stage('Build test_runner') {
                         withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
+                            sh "docker info"
                             sh "$code_path/ops/release/test_runner/build"
                         }
                     }
