@@ -14,7 +14,7 @@ podTemplate(
                 containerTemplate(name: 'docker', image: 'docker:dind', ttyEnabled: true, privileged: true)
         ],
         envVars: [
-                envVar(key: 'DOCKER_OPTS', value: '--storage-driver=aufs -H unix:// -H tcp://0.0.0.0:2375')
+                envVar(key: 'DOCKER_OPTS', value: '--storage-driver=zfs -H unix:// -H tcp://0.0.0.0:2375')
         ]
 
 ) {
