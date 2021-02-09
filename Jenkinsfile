@@ -1,8 +1,11 @@
 import groovy.transform.Field
 
-@Field def app_branch_name = "master"
-@Field def devops_branch_name = "master"
-@Field def project_name         = "bosa"
+@Field def app_branch_name           = "master"
+@Field def devops_branch_name        = "master"
+@Field def project_name              = "bosa"
+@Field def nexus_assets_registry_url = "assets.bosa.belighted.com"
+@Field def nexus_app_registry_url    = "app.bosa.belighted.com"
+
 
 podTemplate(
         namespace: "devops-tools",
@@ -50,12 +53,20 @@ podTemplate(
                     stage("Build&Push images"){
                         switch (job_base_name){
                             case ~/^\d+\.\d+\.\d+$/:
-                                sh "TAG=$job_base_name $code_path/ops/release/app/build"
-                                sh "TAG=$job_base_name $code_path/ops/release/assets/build"
+                                docker.withRegistry("https://${nexus_app_registry_url}/${project_name }", "nexus-docker-registry") {
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
+                                }
+                                docker.withRegistry("https://${nexus_assets_registry_url}/${project_name }-assets", "nexus-docker-registry") {
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
+                                }
                                 break
                             default:
-                                sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
-                                sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
+                                docker.withRegistry("https://${nexus_app_registry_url}/${project_name }", "nexus-docker-registry") {
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
+                                }
+                                docker.withRegistry("https://${nexus_assets_registry_url}/${project_name }-assets", "nexus-docker-registry") {
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
+                                }
                                 break
                         }
                     }
