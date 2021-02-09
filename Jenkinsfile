@@ -39,11 +39,28 @@ podTemplate(
             }
 
             container('docker') {
-                stage('Build a Docker project') {
-                    dir("app/${project_name}"){
-                        sh "ls -lth"
-                        sh "pwd"
-                        echo "Hello vlad!"
+                dir("app/${project_name}"){
+                    stage('Build test_runner') {
+                        sh "./ops/release/test_runner/build"
+                    }
+                    stage("Compile assets"){
+                        sh "docker run -e RAILS_ENV=production --env-file $PWD/ops/release/test_runner/app_env -v $PWD/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean"
+                        sh "docker run -e RAILS_ENV=production --env-file $PWD/ops/release/test_runner/app_env -v $PWD/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile"
+                    }
+                    stage("Build&Push images"){
+                        switch (job_base_name){
+                            case ~/^\d+\.\d+\.\d+$/:
+                                sh "TAG=$job_base_name $code_path/ops/release/app/build"
+                                sh "TAG=$job_base_name $code_path/ops/release/assets/build"
+                                break
+                            default:
+                                sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
+                                sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
+                                break
+                        }
+                    }
+                    stage("Deploy to K8s"){
+                        echo "TBD"
                     }
                 }
             }
