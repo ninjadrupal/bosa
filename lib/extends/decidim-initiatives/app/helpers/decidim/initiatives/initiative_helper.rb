@@ -142,6 +142,7 @@ module InitiativeHelperExtend
         result + list
       end&.uniq
     end
+
     # rubocop:enable Style/MultilineBlockChain
 
     def authorizations
@@ -185,17 +186,21 @@ module InitiativeHelperExtend
     def organization_initiatives_settings_validation_message(initiative, action)
       org = initiative&.organization || current_organization
       minimum_age_allow = org.initiatives_settings_minimum_age_allow_to?(current_user, action)
-      postal_code_allow = org.initiatives_settings_allowed_postal_codes_allow_to?(current_user, action)
+      allowed_region_allow = org.initiatives_settings_allowed_region_allow_to?(current_user, action)
       message = ''
       t_scope = "decidim.initiatives.initiatives.organization_initiatives_settings.#{action}"
       unless minimum_age_allow
         message = t("minimum_age_not_valid", scope: t_scope, minimum_age: org.initiatives_settings_minimum_age(action))
       end
-      unless postal_code_allow
-        message = t("postal_code_not_valid", scope: t_scope)
+      unless allowed_region_allow
+        region_name = t(org.initiatives_settings_allowed_region(action), scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions")
+        message = t("allowed_region_not_valid", scope: t_scope, region_name: region_name)
       end
-      if !minimum_age_allow && !postal_code_allow
-        message = t("minimum_age_and_postal_code_not_valid", scope: t_scope, minimum_age: org.initiatives_settings_minimum_age(action))
+      if !minimum_age_allow && !allowed_region_allow
+        region_name = t(org.initiatives_settings_allowed_region(action), scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions")
+        message = t("minimum_age_and_allowed_region_not_valid", scope: t_scope,
+                    minimum_age: org.initiatives_settings_minimum_age(action),
+                    region_name: region_name)
       end
       message
     end

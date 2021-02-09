@@ -362,6 +362,13 @@ nl:
           notification_title: Het <a href="%{resource_path}">%{resource_title}</a> initiatief werd goedgekeurd door <a href="%{author_path}">%{author_name} %{author_nickname}</a>.
       index:
         title: initiatieven
+
+      organization_initiatives_settings:
+        allowed_regions:
+          brussels: Brussel
+          flemish: Vlaams
+          walloon: Waals
+
       initiative_signatures:
         fill_personal_data:
           continue: Doorgaan met
@@ -447,12 +454,13 @@ nl:
           create:
             modal_title: Sorry, je mag deze actie niet uitvoeren
             minimum_age_not_valid: Je moet minstens %{minimum_age} jaar oud zijn om de initiatief te creëren
-            postal_code_not_valid: U moet gedomicilieerd zijn in het Brussels Hoofdstedelijk Gewest om de initiatief te creëren
-            minimum_age_and_postal_code_not_valid: Je moet minstens %{minimum_age} jaar oud zijn en gedomicilieerd in het Brussels Hoofdstedelijk Gewest om de initiatief te creëren
+            allowed_region_not_valid: U moet gedomicilieerd zijn in het %{region_name} Gewest om de initiatief te creëren
+            minimum_age_and_allowed_region_not_valid: Je moet minstens %{minimum_age} jaar oud zijn en gedomicilieerd in het %{region_name} Gewest om de initiatief te creëren
           sign:
             minimum_age_not_valid: Je moet minstens %{minimum_age} jaar oud zijn om de initiatief te ondertekenen
-            postal_code_not_valid: U moet gedomicilieerd zijn in het Brussels Hoofdstedelijk Gewest om de initiatief te ondertekenen
-            minimum_age_and_postal_code_not_valid: Je moet minstens %{minimum_age} jaar oud zijn en gedomicilieerd in het Brussels Hoofdstedelijk Gewest om de initiatief te ondertekenen
+            allowed_region_not_valid: U moet gedomicilieerd zijn in het %{region_name} Gewest om de initiatief te ondertekenen
+            minimum_age_and_allowed_region_not_valid: Je moet minstens %{minimum_age} jaar oud zijn en gedomicilieerd in het %{region_name} Gewest om de initiatief te ondertekenen
+
         signature_identities:
           select_identity: Selecteer gebruikers-ID
         signatures_count:

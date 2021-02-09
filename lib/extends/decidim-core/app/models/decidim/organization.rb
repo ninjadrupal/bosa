@@ -17,13 +17,12 @@ module OrganizationExtend
     #
     def initiatives_settings_allow_to?(user, action)
       initiatives_settings_minimum_age_allow_to?(user, action) &&
-        initiatives_settings_allowed_postal_codes_allow_to?(user, action)
+        initiatives_settings_allowed_region_allow_to?(user, action)
     end
 
     def initiatives_settings_minimum_age_allow_to?(user, action)
       return true if !user || user.admin?
-      return true if self.initiatives_settings.blank?
-      minimum_age = self.initiatives_settings["#{action}_initiative_minimum_age"]
+      minimum_age = initiatives_settings_minimum_age(action)
       return true if minimum_age.blank?
 
       authorization = Decidim::Initiatives::UserAuthorizations.for(user).first
@@ -34,16 +33,17 @@ module OrganizationExtend
       true
     end
 
-    def initiatives_settings_allowed_postal_codes_allow_to?(user, action)
+    def initiatives_settings_allowed_region_allow_to?(user, action)
       return true if !user || user.admin?
-      return true if self.initiatives_settings.blank?
-      allowed_postal_codes = self.initiatives_settings["#{action}_initiative_allowed_postal_codes"]
-      return true if allowed_postal_codes.blank?
+      allowed_region = initiatives_settings_allowed_region(action)
+      return true if allowed_region.blank?
+      region_codes = (Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.dig(allowed_region, :municipalities) || []).map{|m| m[:idM]}.uniq
+      return true if region_codes.blank?
 
       authorization = Decidim::Initiatives::UserAuthorizations.for(user).first
       return false if !authorization || authorization.metadata[:postal_code].blank?
 
-      return false unless allowed_postal_codes.member?(authorization.metadata[:postal_code])
+      return false unless region_codes.member?(authorization.metadata[:postal_code])
 
       true
     end
@@ -51,6 +51,11 @@ module OrganizationExtend
     def initiatives_settings_minimum_age(action)
       return if self.initiatives_settings.blank?
       self.initiatives_settings["#{action}_initiative_minimum_age"]
+    end
+
+    def initiatives_settings_allowed_region(action)
+      return if self.initiatives_settings.blank?
+      self.initiatives_settings["#{action}_initiative_allowed_region"]
     end
 
   end

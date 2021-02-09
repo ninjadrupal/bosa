@@ -135,6 +135,12 @@ en:
           edit_my_initiative: Edit my initiatives
           send_my_initiative: Send my initiative
 
+      organization_initiatives_settings:
+        allowed_regions:
+          brussels: Brussels
+          flemish: Flemish
+          walloon: Walloon
+
       initiative_signatures:
         fill_personal_data:
           select_scope: Select scope
@@ -169,12 +175,12 @@ en:
           create:
             modal_title: Sorry, you are not allowed to perfom this action
             minimum_age_not_valid: You must be at least %{minimum_age} years old to create the initiative
-            postal_code_not_valid: You must be domiciled in Brussels-Capital region to create the initiative
-            minimum_age_and_postal_code_not_valid: You must be at least %{minimum_age} years old and domiciled in Brussels-Capital region to create the initiative
+            allowed_region_not_valid: You must be domiciled in %{region_name} region to create the initiative
+            minimum_age_and_allowed_region_not_valid: You must be at least %{minimum_age} years old and domiciled in %{region_name} region to create the initiative
           sign:
             minimum_age_not_valid: You must be at least %{minimum_age} years old to sign the initiative
-            postal_code_not_valid: You must be domiciled in Brussels-Capital region to sign the initiative
-            minimum_age_and_postal_code_not_valid: You must be at least %{minimum_age} years old and domiciled in Brussels-Capital region to sign the initiative
+            allowed_region_not_valid: You must be domiciled in %{region_name} region to sign the initiative
+            minimum_age_and_allowed_region_not_valid: You must be at least %{minimum_age} years old and domiciled in %{region_name} region to sign the initiative
 
       show:
         badge_name:
@@ -237,9 +243,9 @@ en:
         initiatives_settings:
           fieldset_title: Initiatives settings
           create_initiative_minimum_age_hint: Leave blank to skip minimum age validation.
-          create_initiative_allowed_postal_codes_hint: Enter each one of them in a new line. Leave blank to skip postal codes validation.
+          create_initiative_allowed_region_hint: Leave blank to skip postal codes validation.
           sign_initiative_minimum_age_hint: Leave blank to skip minimum age validation.
-          sign_initiative_allowed_postal_codes_hint: Enter each one of them in a new line. Leave blank to skip postal codes validation.
+          sign_initiative_allowed_region_hint: Leave blank to skip postal codes validation.
 
 
   layouts:
