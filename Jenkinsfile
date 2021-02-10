@@ -50,6 +50,7 @@ podTemplate(
                                 echo {"storage-driver": "vfs"} > /etc/docker/daemon.json
                                 rm -rf /var/lib/docker/aufs
                                 rm -rf /var/lib/docke/*
+                                docker info
                                 """
                             sh "$code_path/ops/release/test_runner/build"
                         }
