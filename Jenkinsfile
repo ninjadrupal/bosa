@@ -15,6 +15,12 @@ podTemplate(
         ],
         envVars: [
                 envVar(key: 'DOCKER_OPTS', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375')
+        ],
+        volumes: [
+                hostPathVolume(
+                        hostPath: '/var/run/docker.sock',
+                        mountPath: '/var/run/docker.sock'
+                )
         ]
 
 ) {
@@ -48,8 +54,7 @@ podTemplate(
                         withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
                             sh """
                                 echo {"storage-driver": "vfs"} > /etc/docker/daemon.json
-                                rm -rf /var/lib/docker/aufs
-                                rm -rf /var/lib/docke/*
+                               
                                 docker info
                                 """
                             sh "$code_path/ops/release/test_runner/build"
