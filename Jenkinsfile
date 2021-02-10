@@ -48,7 +48,7 @@ podTemplate(
                         withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
                             sh """
                                 echo {"storage-driver": "vfs"} > /etc/docker/daemon.json
-                                
+                                rm -rf /var/lib/docker/aufs
                                 """
                             sh "$code_path/ops/release/test_runner/build"
                         }
