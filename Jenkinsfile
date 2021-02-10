@@ -11,11 +11,10 @@ import groovy.transform.Field
 podTemplate(
         namespace: "devops-tools",
         containers: [
-                containerTemplate(name: 'docker', image: 'docker:dind', ttyEnabled: true, privileged: true)
+                containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, privileged: true)
         ],
         envVars: [
-                envVar(key: 'DOCKER_OPTS', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375'),
-                envVar(key: 'DOCKER_HOST', value: 'tcp://127.0.0.1:2375')
+                envVar(key: 'DOCKER_OPTS', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375')
         ]
 
 ) {
