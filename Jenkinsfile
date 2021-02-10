@@ -15,7 +15,7 @@ podTemplate(
         ],
         envVars: [
                 envVar(key: 'DOCKER_OPTS', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375'),
-                envVar(key: 'DOCKER_HOST', value: 'tcp://0.0.0.0:2375')
+                envVar(key: 'DOCKER_HOST', value: 'tcp://127.0.0.1:2375')
         ]
 
 ) {
