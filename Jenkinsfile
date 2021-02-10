@@ -49,6 +49,7 @@ podTemplate(
                             sh """
                                 echo {"storage-driver": "vfs"} > /etc/docker/daemon.json
                                 rm -rf /var/lib/docker/aufs
+                                systemctl restart docker
                                 """
                             sh "$code_path/ops/release/test_runner/build"
                         }
