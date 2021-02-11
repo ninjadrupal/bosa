@@ -7,7 +7,9 @@ import groovy.transform.Field
 @Field def nexus_app_registry_url    = "app.bosa.belighted.com"
 @Field def nexus_credentials_id      = "nexus-docker-registry"
 
-podTemplate(yaml: '''
+podTemplate(
+        defaultContainer: 'jnlp',
+        yaml: '''
 apiVersion: v1
 kind: Pod
 spec:
@@ -21,16 +23,26 @@ spec:
     - sleep
     args:
     - 99d
+  - name: docker
+    image: docker:latest
+    command:
+    - cat
+    tty: true
     volumeMounts:
-    - name: docker-socket
-      mountPath: /var/run
+    - mountPath: /var/run/docker.sock
+      name: docker-sock
+
   - name: docker-daemon
     image: docker:19.03.1-dind
     securityContext:
       privileged: true
     volumeMounts:
     - name: docker-socket
-      mountPath: /var/run
+      mountPath: /var/run/docker.sock
+  volumes:
+    - name: docker-sock
+      hostPath:
+        path: /var/run/docker.sock
 ''') {
     node(POD_LABEL) {
         stage('Git Clone') {
