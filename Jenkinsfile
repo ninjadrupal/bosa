@@ -7,19 +7,22 @@ import groovy.transform.Field
 @Field def nexus_app_registry_url    = "app.bosa.belighted.com"
 @Field def nexus_credentials_id      = "nexus-docker-registry"
 
-podTemplate(label: 'jenkins-pipeline', containers: [
-        containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:4.3-4', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '500m', resourceLimitCpu: '500m', resourceRequestMemory: '1024Mi', resourceLimitMemory: '1024Mi'),
-        containerTemplate(name: 'docker', image: 'docker:stable-dind', command: 'cat', ttyEnabled: true),
-        containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.8.3', command: 'cat', ttyEnabled: true)
-        ],
-        volumes:[
-                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+
+podTemplate(
+        namespace: "devops-tools",
+        containers: [
+                containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, privileged: true)
+        ]
+
+        ,
+        envVars: [
+                envVar(key: 'DOCKER_HOST', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375')
         ]
 ) {
-    node('jenkins-pipeline') {
+
+    node(POD_LABEL) {
         stage('Git Clone') {
-            container('docker') {
-                dir("app/${project_name}") {
+            dir("app/${project_name}") {
                 //checking out the app code
                 echo 'Checkout the code..'
                 checkout scm
@@ -31,7 +34,7 @@ podTemplate(label: 'jenkins-pipeline', containers: [
                 echo "Running job ${job_base_name} on jenkins server ${jenkins_server_name}"
                 code_path = pwd()
             }
-                dir("devops"){
+            dir("devops"){
                 git(
                         poll: true,
                         url: 'git@github.com:belighted/bosa-infrastructure-core.git',
@@ -39,12 +42,15 @@ podTemplate(label: 'jenkins-pipeline', containers: [
                         branch: "master"
                 )
             }
+
+            container('docker') {
                 dir("app/${project_name}"){
                     stage('Build test_runner') {
                         withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
                             sh """
-                          
-                                DOCKER_HOST=tcp://127.0.0.1:2375 docker info
+                                echo {"storage-driver": "vfs"} > /etc/docker/daemon.json
+                               
+                                docker info
                                 """
                             sh "$code_path/ops/release/test_runner/build"
                         }
