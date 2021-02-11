@@ -22,8 +22,7 @@ podTemplate(
                 envVar(key: 'DOCKER_OPTS', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375')
         ],
         volumes:[
-                configMapVolume(mountPath: '/etc/docker/daemon.json', configMapName: 'docker-jenkins'),
-                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+                configMapVolume(mountPath: '/etc/docker/daemon.json', configMapName: 'docker-jenkins')
         ]
 ) {
 
