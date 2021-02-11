@@ -11,18 +11,28 @@ podTemplate(yaml: """
 apiVersion: v1
 kind: Pod
 spec:
-  containers:
-  - name: docker
-    image: docker:1.11
-    command: ['cat']
-    tty: true
-    volumeMounts:
-    - name: dockersock
-      mountPath: /var/run/docker.sock
-  volumes:
-  - name: dockersock
+containers:
+- name: docker
+  image: docker:19.03.1
+  command: ['sleep', '99d']
+  env:
+    - name: DOCKER_HOST
+      value: tcp://localhost:2375
+- name: docker-daemon
+  image: docker:19.03.1-dind
+  env:
+    - name: DOCKER_TLS_CERTDIR
+      value: ""
+  securityContext:
+    privileged: true
+  volumeMounts:
+      - name: cache
+        mountPath: /var/lib/docker
+volumes:
+  - name: cache
     hostPath:
-      path: /var/run/docker.sock
+      path: /tmp
+      type: Directory
 """
 ) {
     def image = "jenkins/jnlp-slave"
