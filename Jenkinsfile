@@ -14,8 +14,7 @@ spec:
   volumes:
   - name: docker-socket
     hostPath:
-      path: /var/run/docker.sock
-      type: File
+      path: /var/run
   containers:
   - name: docker
     image: docker:19.03.1
