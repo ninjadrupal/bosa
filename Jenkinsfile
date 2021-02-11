@@ -11,20 +11,24 @@ import groovy.transform.Field
 podTemplate(
         namespace: "devops-tools",
         containers: [
-                containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, privileged: true)
-        ],
+                containerTemplate(
+                        name: 'docker',
+                        image: 'docker:stable-dind',
+                        command: 'cat',
+                        ttyEnabled: true,
+                        privileged: true
+                )
+        ]
+        ,
         envVars: [
                 envVar(key: 'DOCKER_OPTS', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375')
-        ],
-        volumes: [
-                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
         ]
-
 ) {
 
     node(POD_LABEL) {
         stage('Git Clone') {
-            dir("app/${project_name}") {
+            container('docker') {
+                dir("app/${project_name}") {
                 //checking out the app code
                 echo 'Checkout the code..'
                 checkout scm
@@ -36,7 +40,7 @@ podTemplate(
                 echo "Running job ${job_base_name} on jenkins server ${jenkins_server_name}"
                 code_path = pwd()
             }
-            dir("devops"){
+                dir("devops"){
                 git(
                         poll: true,
                         url: 'git@github.com:belighted/bosa-infrastructure-core.git',
@@ -44,8 +48,6 @@ podTemplate(
                         branch: "master"
                 )
             }
-
-            container('docker') {
                 dir("app/${project_name}"){
                     stage('Build test_runner') {
                         withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
