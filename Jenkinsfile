@@ -50,7 +50,7 @@ podTemplate(
                             sh """
                                 echo {"storage-driver": "vfs"} > /etc/docker/daemon.json
                                 docker info
-                                docker build -t test:0.1 -f Dockerfile-test
+                                docker build -t test:0.1 -f Dockerfile-test .
                                 """
                             sh "$code_path/ops/release/test_runner/build"
                         }
