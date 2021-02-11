@@ -45,6 +45,16 @@ module PermissionsExtend
       @initiative_type ||= context.fetch(:initiative_type, nil) || initiative.type
     end
 
+    def read_public_initiative?
+      return unless [:initiative, :participatory_space].include?(permission_action.subject) &&
+        permission_action.action == :read
+
+      return allow! if readable?(initiative)
+      return allow! if user && (initiative.has_authorship?(user) || user.admin?)
+
+      disallow!
+    end
+
     def creation_enabled?
       Decidim::Initiatives.creation_enabled &&
         organization_initiatives_settings_allow_to_create? &&
@@ -143,6 +153,13 @@ module PermissionsExtend
     def organization_initiatives_settings_allow_to?(action)
       organization = initiative&.organization || user&.organization
       organization.initiatives_settings_allow_to?(user, action)
+    end
+
+    def readable?(initiative)
+      return false if initiative.blank?
+
+      initiative.published? || initiative.rejected? || initiative.accepted? ||
+        initiative.debatted? || initiative.examinated? || initiative.classified?
     end
 
   end
