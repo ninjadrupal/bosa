@@ -13,7 +13,7 @@ podTemplate(
         containers: [
                 containerTemplate(
                         name: 'docker',
-                        image: 'docker:stable-dind',
+                        image: 'docker:19.03-dind',
                         command: 'cat',
                         ttyEnabled: true,
                         privileged: true
