@@ -13,8 +13,7 @@ kind: Pod
 spec:
   volumes:
   - name: docker-socket
-    hostPath:
-      path: /var/run
+    emptyDir: {}
   containers:
   - name: docker
     image: docker:19.03.1
