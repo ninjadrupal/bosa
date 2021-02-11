@@ -11,10 +11,13 @@ import groovy.transform.Field
 podTemplate(
         namespace: "devops-tools",
         containers: [
-                containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, privileged: true)
-        ]
-
-        ,
+                containerTemplate(
+                        name: 'docker',
+                        image: 'docker:stable-dind',
+                        ttyEnabled: true,
+                        privileged: true
+                )
+        ],
         envVars: [
                 envVar(key: 'DOCKER_HOST', value: '--storage-driver=devicemapper -H unix:// -H tcp://0.0.0.0:2375')
         ]
@@ -49,7 +52,6 @@ podTemplate(
                         withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
                             sh """
                                 echo {"storage-driver": "vfs"} > /etc/docker/daemon.json
-                               
                                 docker info
                                 """
                             sh "$code_path/ops/release/test_runner/build"
