@@ -7,23 +7,13 @@ import groovy.transform.Field
 @Field def nexus_app_registry_url    = "app.bosa.belighted.com"
 @Field def nexus_credentials_id      = "nexus-docker-registry"
 
-podTemplate(
-        containers: [
-                containerTemplate(
-                        name: 'jnlp',
-                        image: 'jenkins/inbound-agent:4.3-4',
-                        args: '${computer.jnlpmac} ${computer.name}'
-                ),
-                containerTemplate(
-                        name: 'docker',
-                        image: 'docker:stable-dind',
-                        command: 'cat',
-                        ttyEnabled: true,
-                        privileged: true
-                ),
+podTemplate(label: 'jenkins-pipeline', containers: [
+        containerTemplate(name: 'jnlp', image: 'jenkins/inbound-agent:4.3-4', args: '${computer.jnlpmac} ${computer.name}', workingDir: '/home/jenkins', resourceRequestCpu: '500m', resourceLimitCpu: '500m', resourceRequestMemory: '1024Mi', resourceLimitMemory: '1024Mi'),
+        containerTemplate(name: 'docker', image: 'docker:stable-dind', command: 'cat', ttyEnabled: true),
+        containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.8.3', command: 'cat', ttyEnabled: true)
         ],
-        volumes: [ // See 2
-                   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'), // See 3
+        volumes:[
+                hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
         ]
 ) {
     node(POD_LABEL) {
