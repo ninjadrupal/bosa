@@ -16,7 +16,7 @@ podTemplate(label: 'jenkins-pipeline', containers: [
                 hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
         ]
 ) {
-    node(POD_LABEL) {
+    node('jenkins-pipeline') {
         stage('Git Clone') {
             container('docker') {
                 dir("app/${project_name}") {
