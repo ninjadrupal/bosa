@@ -44,7 +44,7 @@ podTemplate(label: 'jenkins-pipeline', containers: [
                         withDockerRegistry([credentialsId: "${nexus_credentials_id}", url: 'https://nexus-group.bosa.belighted.com/']) {
                             sh """
                           
-                                DOCKER_HOST=tcp://127.0.0.1:2376 docker info
+                                DOCKER_HOST=tcp://127.0.0.1:2375 docker info
                                 """
                             sh "$code_path/ops/release/test_runner/build"
                         }
