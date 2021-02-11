@@ -86,9 +86,6 @@ nl:
       filters:
         search_placeholder:
           title_or_description_cont: Search %{collection} by title or description.
-        state_eq:
-          values:
-            validating: Technical validation
       menu:
         initiatives: initiatieven
         initiatives_types: Initiatieftypes

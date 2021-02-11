@@ -102,25 +102,25 @@ fr:
         publish: Publish
         unpublish: Unpublish
       filters:
-        decidim_area_id_eq:
-          label: "Zones d'application"
-        search_placeholder:
-          title_or_description_cont: Recherche %{collection} par titre ou description.
-          title_or_description_or_id_string_or_author_name_or_author_nickname_cont: Recherche
-            %{collection} par titre, description, ID ou nom d'auteur.
-        state_eq:
-          values:
-            accepted: Accepté
-            classified: Classée
-            created: Créée
-            debatted: Débattue
-            discarded: Retirée
-            examinated: Examinée
-            published: Publié
-            rejected: Rejeté
-            validating: Validation technique
-        type_id_eq:
-          label: Type
+        initiatives:
+          decidim_area_id_eq:
+            label: "Zones d'application"
+          search_placeholder:
+            title_or_description_cont: Recherche %{collection} par titre ou description.
+            title_or_description_or_id_string_or_author_name_or_author_nickname_cont: Recherche %{collection} par titre, description, ID ou nom d'auteur.
+          state_eq:
+            values:
+              accepted: Accepté
+              classified: Classée
+              created: Créée
+              debatted: Débattue
+              discarded: Retirée
+              examinated: Examinée
+              published: Publié
+              rejected: Rejeté
+              validating: Validation technique
+          type_id_eq:
+            label: Type
       menu:
         initiatives: Pétitions
         initiatives_types: Types de pétition
@@ -393,8 +393,11 @@ fr:
         filter_state_values:
           accepted: Assez de signatures
           all: Tous
-          answered: 'Réponse '
+          answered: Réponse
+          classified: Classée
           closed: Fermé
+          debatted: Débattue
+          examinated: Examinée
           open: Ouvrez
           rejected: Pas assez de signatures
         filter_type_values:
@@ -685,8 +688,11 @@ fr:
           validating: Validation technique
       state:
         accepted: Acceptée
+        classified: Classée
         created: Créée
+        debatted: Débattue
         discarded: Retirée
+        examinated: Examinée
         published: Publiée
         rejected: Rejetée
         validating: Validation technique
