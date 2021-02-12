@@ -42,7 +42,6 @@ podTemplate(
     catch (e) {
         // If there was an exception thrown, the build failed
         currentBuild.result = "FAILED"
-        slackNotifyBuild("PIPELINE FAILED")
         throw e
     }
 }
