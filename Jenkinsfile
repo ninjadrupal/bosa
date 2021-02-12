@@ -1,3 +1,12 @@
+import groovy.transform.Field
+
+@Field def job_base_name        = ""
+@Field def project_name         = "bosa"
+@Field def code_path            = ""
+@Field def build_number         = ""
+@Field def jenkins_server_name  = ""
+@Field def branch_name          = ""
+
 podTemplate(
         label: 'docker-slave',
         containers: [
@@ -62,12 +71,12 @@ podTemplate(
                     stage("Build app image"){
                         switch (job_base_name){
                             case ~/^\d+\.\d+\.\d+$/:
-                                    sh "TAG=$job_base_name $code_path/ops/release/app/build"
-                                    sh "TAG=$job_base_name $code_path/ops/release/assets/build"
+                                    sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
+                                    sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
                                 break
                             default:
-                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
-                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
+                                    sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
+                                    sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
                                 break
                         }
                     }
