@@ -19,25 +19,26 @@ podTemplate(
         node("docker-slave") {
             container("docker") {
                 //sh "sleep 5m"
-                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
-                    stage('Project setup') {
+                stage('Project setup') {
 
-                        //checking out the app code
-                        echo 'Checkout the code..'
-                        checkout scm
-                        branchName = env.BRANCH_NAME
-                        buildNumber = env.BUILD_NUMBER
-                        jobBaseName = "${env.JOB_NAME}".split('/').last() // We want to get the name of the branch/tag
-                        jenkinsSrvName = env.BUILD_URL.split('/')[2].split(':')[0]
-                        echo "Jenkins checkout from branch: $branchName && $buildNumber"
-                        echo "Running job ${jobBaseName} on jenkins server ${jenkinsSrvName}"
-                        codePath = pwd()
-                        sh "ls -lth"
-                        sh """
+                    //checking out the app code
+                    echo 'Checkout the code..'
+                    checkout scm
+                    branchName = env.BRANCH_NAME
+                    buildNumber = env.BUILD_NUMBER
+                    jobBaseName = "${env.JOB_NAME}".split('/').last() // We want to get the name of the branch/tag
+                    jenkinsSrvName = env.BUILD_URL.split('/')[2].split(':')[0]
+                    echo "Jenkins checkout from branch: $branchName && $buildNumber"
+                    echo "Running job ${jobBaseName} on jenkins server ${jenkinsSrvName}"
+                    codePath = pwd()
+                    sh "ls -lth"
+                    sh """
                                 echo \"nameserver 1.1.1.1\" >> /etc/resolv.conf
                                 """
 
-                    }
+                }
+                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
+
                     stage("Build test_runner") {
                         sh "docker login -u jenkins -p 'LB4AVhxy3^#JazJK' https://nexus-group.bosa.belighted.com/"
                         dir("ops/release/test_runner") {
