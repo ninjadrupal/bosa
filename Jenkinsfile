@@ -13,7 +13,7 @@ podTemplate(
         containers: [
                 containerTemplate(
                         name: 'docker',
-                        image: 'nexus-group.bosa.belighted.com/dind:0.1.0',
+                        image: 'dind.bosa.belighted.com/dind:0.1.0',
                         ttyEnabled: true,
                         privileged: true
                 )
