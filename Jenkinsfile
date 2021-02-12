@@ -1,5 +1,5 @@
 podTemplate(label: 'mypod', containers: [
-        containerTemplate(name: 'docker', image: 'docker:dind', ttyEnabled: true, alwaysPullImage: true, privileged: true,
+        containerTemplate(name: 'docker', image: 'docker:stable-dind', ttyEnabled: true, alwaysPullImage: true, privileged: true,
                 command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2')
 ],
         volumes: [emptyDirVolume(memory: false, mountPath: '/var/lib/docker')]) {
@@ -14,7 +14,6 @@ podTemplate(label: 'mypod', containers: [
                 echo "RUN apk add vim zip" >> Dockerfile
                 ls -lth
                 docker build -t test:0.1.0 .
-       
             """
         }
 
