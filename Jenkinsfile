@@ -16,7 +16,7 @@ podTemplate(
                     ttyEnabled: true,
                     alwaysPullImage: true,
                     privileged: true,
-                    command: 'ip link set dev eth0 mtu 1300 && dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2'
+                    command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2'
             )
         ],
         volumes: [
