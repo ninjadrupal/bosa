@@ -18,7 +18,7 @@ podTemplate(
     try {
         node("docker-slave") {
             container("docker") {
-                sh "sleep 5m"
+                //sh "sleep 5m"
                 withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
                     stage('Project setup') {
 
@@ -33,6 +33,9 @@ podTemplate(
                         echo "Running job ${jobBaseName} on jenkins server ${jenkinsSrvName}"
                         codePath = pwd()
                         sh "ls -lth"
+                        sh """
+                                echo \"nameserver 1.1.1.1\" >> /etc/resolv.conf
+                                """
 
                     }
                     stage("Build test_runner") {
