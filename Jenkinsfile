@@ -18,7 +18,7 @@ podTemplate(
         node("docker-slave") {
 
             stage('Project setup') {
-                dir("app/bosa") {
+
                     //checking out the app code
                     echo 'Checkout the code..'
                     checkout scm
@@ -30,15 +30,15 @@ podTemplate(
                     echo "Running job ${jobBaseName} on jenkins server ${jenkinsSrvName}"
                     codePath = pwd()
                     sh "ls -lth"
-                }
+
             }
             stage("Build test_runner"){
-                dir("app/bosa"){
+
                     sh "chmod +x ops/release/test_runner/build"
                     sh "which docker"
                     sh "./ops/release/test_runner/build"
 
-                }
+
             }
         }
     }
