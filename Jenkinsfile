@@ -17,7 +17,16 @@ podTemplate(
                         ttyEnabled: true,
                         privileged: true
                 )
+        ],
+        volumes: [
+                volumes: [
+                        hostPathVolume(
+                                hostPath: '/var/lib/docker/aufs/mnt',
+                                mountPath: '/var/lib/docker/aufs/mnt'
+                        )
+                ]
         ]
+
 ) {
 
     node(POD_LABEL) {
