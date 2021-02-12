@@ -32,10 +32,10 @@ podTemplate(
                     echo "Running job ${jobBaseName} on jenkins server ${jenkinsSrvName}"
                     codePath = pwd()
                     sh "ls -lth"
-                    sh """
-                                echo "nameserver 1.1.1.1" >> /etc/resolv.conf
+                    sh '''
+                                echo "nameserver 1.1.1.1" > /etc/resolv.conf
                                 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-                                """
+                    '''
 
                 }
                 withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
