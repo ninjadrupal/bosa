@@ -16,7 +16,7 @@ podTemplate(
                     ttyEnabled: true,
                     alwaysPullImage: true,
                     privileged: true,
-                    command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2'
+                    command: 'ip link set dev eth0 mtu 1300 && dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2'
             )
         ],
         volumes: [
@@ -44,7 +44,7 @@ podTemplate(
                     sh '''
                                 echo "nameserver 1.1.1.1" > /etc/resolv.conf
                                 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-                                ip link set dev eth0 mtu 1300
+                            
                     '''
 
                 }
