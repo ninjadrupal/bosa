@@ -24,7 +24,7 @@ podTemplate(
                         mountPath: '/var/lib/docker/aufs/mnt'
                 )
         ],
-        imagePullSecrets: [ 'nexus-registry' ]
+        imagePullSecrets: [ 'nexus-registry-dind' ]
 
 ) {
 
