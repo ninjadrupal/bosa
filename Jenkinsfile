@@ -35,6 +35,7 @@ podTemplate(
             stage("Build test_runner"){
                 dir("ops/release/test_runner") {
                     echo "Start!"
+                    sh "set -e && which docker"
                     sh "./build"
                     echo "Done!"
                 }
