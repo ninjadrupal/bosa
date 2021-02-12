@@ -18,6 +18,7 @@ podTemplate(
     try {
         node("docker-slave") {
             container("docker") {
+                sh "sleep 5m"
                 withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
                     stage('Project setup') {
 
