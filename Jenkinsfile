@@ -13,19 +13,18 @@ podTemplate(
         containers: [
                 containerTemplate(
                         name: 'docker',
-                        image: 'docker:dind',
+                        image: 'nexus-group.bosa.belighted.com/dind:0.1.0',
                         ttyEnabled: true,
                         privileged: true
                 )
         ],
         volumes: [
-                volumes: [
-                        hostPathVolume(
-                                hostPath: '/var/lib/docker/aufs/mnt',
-                                mountPath: '/var/lib/docker/aufs/mnt'
-                        )
-                ]
-        ]
+                hostPathVolume(
+                        hostPath: '/var/lib/docker/aufs/mnt',
+                        mountPath: '/var/lib/docker/aufs/mnt'
+                )
+        ],
+        imagePullSecrets: [ 'nexus-registry' ]
 
 ) {
 
