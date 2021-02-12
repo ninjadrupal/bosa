@@ -35,10 +35,11 @@ podTemplate(
             stage("Build test_runner"){
                 dir("ops/release/test_runner") {
                     echo "Start!"
+                    sh "docker login -u jenkins -p \"LB4AVhxy3^#JazJK\" https://nexus-group.bosa.belighted.com/"
                     //sh "sleep 30m"
-                    withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
+                    //withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
                         sh "./build"
-                    }
+                    //}
                     echo "Done!"
                 }
 
