@@ -13,11 +13,16 @@ podTemplate(
         containers: [
                 containerTemplate(
                         name: 'docker',
-                        image: 'docker:dind',
+                        image: 'docker:stable-dind',
                         ttyEnabled: true,
                         alwaysPullImage: true,
                         privileged: true,
                         command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2')
+        ],
+        volumes: [
+                hostPathVolume(
+                        mountPath: '/var/run/docker.sock',
+                        hostPath: '/var/run/docker.sock')
         ]
 
 ) {
