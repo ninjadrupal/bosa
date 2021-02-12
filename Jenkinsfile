@@ -16,8 +16,8 @@ podTemplate(
 ) {
     try {
         node("docker-slave") {
-
-            stage('Project setup') {
+            container("docker") {
+                stage('Project setup') {
 
                     //checking out the app code
                     echo 'Checkout the code..'
@@ -31,18 +31,19 @@ podTemplate(
                     codePath = pwd()
                     sh "ls -lth"
 
-            }
-            stage("Build test_runner"){
-                sh "docker login -u jenkins -p 'LB4AVhxy3^#JazJK' https://nexus-group.bosa.belighted.com/"
-                dir("ops/release/test_runner") {
-                    echo "Start!"
-                    //sh "sleep 30m"
-                    //withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
-                        sh "./build"
-                    //}
-                    echo "Done!"
                 }
+                stage("Build test_runner") {
+                    sh "docker login -u jenkins -p 'LB4AVhxy3^#JazJK' https://nexus-group.bosa.belighted.com/"
+                    dir("ops/release/test_runner") {
+                        echo "Start!"
+                        //sh "sleep 30m"
+                        //withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
+                        sh "./build"
+                        //}
+                        echo "Done!"
+                    }
 
+                }
             }
         }
     }
