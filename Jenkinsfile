@@ -57,6 +57,18 @@ podTemplate(
                         """
 
                     }
+                    stage("Build app image"){
+                        switch (job_base_name){
+                            case ~/^\d+\.\d+\.\d+$/:
+                                    sh "TAG=$job_base_name $code_path/ops/release/app/build"
+                                    sh "TAG=$job_base_name $code_path/ops/release/assets/build"
+                                break
+                            default:
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/app/build"
+                                    sh "TAG=$job_base_name-$build_number $code_path/ops/release/assets/build"
+                                break
+                        }
+                    }
                 }
             }
         }
