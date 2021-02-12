@@ -14,21 +14,6 @@ podTemplate(
                 emptyDirVolume(memory: false, mountPath: '/var/lib/docker')
         ]
 ) {
-    node ('docker-slave') {
-        stage 'Run a docker thing'
-        container('docker') {
-            stage 'Docker thing1'
-            sh 'docker pull redis'
-            sh """
-                echo "FROM alpine:3.12" > Dockerfile
-                echo "RUN apk add vim zip" >> Dockerfile
-                ls -lth
-                docker build -t test:0.1.0 .
-            """
-        }
-
-    }
-
     try {
         node("docker-slave") {
 
@@ -45,6 +30,11 @@ podTemplate(
                     echo "Running job ${jobBaseName} on jenkins server ${jenkinsSrvName}"
                     codePath = pwd()
                     sh "ls -lth"
+                }
+            }
+            stage("Build test_runner"){
+                dir("app/bosa"){
+                    sh "${codePath}/ops/release/test_runner/build"
                 }
             }
         }
