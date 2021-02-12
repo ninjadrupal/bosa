@@ -33,11 +33,11 @@ podTemplate(
 
             }
             stage("Build test_runner"){
-
-                    sh "chmod +x ops/release/test_runner/build"
-                    sh "which docker"
-                    sh "./ops/release/test_runner/build"
-
+                dir("ops/release/test_runner") {
+                    echo "Start!"
+                    sh "./build"
+                    echo "Done!"
+                }
 
             }
         }
