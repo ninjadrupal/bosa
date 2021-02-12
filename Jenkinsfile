@@ -11,8 +11,8 @@ podTemplate(
             )
         ],
         volumes: [
-                emptyDirVolume(memory: false, mountPath: '/var/lib/docker'),
-                configMapVolume(mountPath: '/etc/docker', configMapName: 'docker-daemon-config')
+                emptyDirVolume(memory: false, mountPath: '/var/lib/docker')
+                //configMapVolume(mountPath: '/etc/docker', configMapName: 'docker-daemon-config')
         ]
 ) {
     try {
@@ -38,7 +38,7 @@ podTemplate(
                         sh "docker login -u jenkins -p 'LB4AVhxy3^#JazJK' https://nexus-group.bosa.belighted.com/"
                         dir("ops/release/test_runner") {
                             echo "Start!"
-                            //sh "sleep 30m"
+                            sh "sleep 5m"
                             //withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
                             sh "./build"
                             //}
