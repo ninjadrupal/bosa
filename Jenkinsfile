@@ -13,18 +13,12 @@ podTemplate(
         containers: [
                 containerTemplate(
                         name: 'docker',
-                        image: 'docker:stable-dind',
+                        image: 'docker:dind',
                         ttyEnabled: true,
-                        privileged: true
-                )
-        ],
-        volumes: [
-                hostPathVolume(
-                        hostPath: '/var/lib/docker/aufs/mnt',
-                        mountPath: '/var/lib/docker/aufs/mnt'
-                )
-        ],
-        imagePullSecrets: [ 'nexus-registry-dind' ]
+                        alwaysPullImage: true,
+                        privileged: true,
+                        command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay')
+        ]
 
 ) {
 
