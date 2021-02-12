@@ -11,8 +11,7 @@ podTemplate(label: 'mypod', containers: [
             sh 'docker pull redis'
             sh """
                 echo "FROM alpine:3.12" > Dockerfile
-                echo "RUN apk add update" >> Dockerfile
-                echo "RUN apk add vim" >> Dockerfile
+                echo "RUN apk add vim zip" >> Dockerfile
                 ls -lth
                 docker build -t test:0.1.0 .
        
