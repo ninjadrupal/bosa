@@ -34,7 +34,10 @@ podTemplate(
             }
             stage("Build test_runner"){
                 dir("app/bosa"){
-                    sh "${codePath}/ops/release/test_runner/build"
+                    sh "chmod +x ops/release/test_runner/build"
+                    sh "which docker"
+                    sh "./ops/release/test_runner/build"
+
                 }
             }
         }
