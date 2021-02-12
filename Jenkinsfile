@@ -9,6 +9,14 @@ podTemplate(label: 'mypod', containers: [
         container('docker') {
             stage 'Docker thing1'
             sh 'docker pull redis'
+            sh """
+                echo "FROM alpine:3.12" > Dockerfile
+                echo "RUN apk add update" >> Dockerfile
+                echo "RUN apk add vim" >> Dockerfile
+                ls -lth
+                docker build -t test:0.1.0 .
+       
+            """
         }
 
     }
