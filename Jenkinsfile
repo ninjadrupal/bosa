@@ -33,12 +33,12 @@ podTemplate(
                     //checking out the app code
                     echo 'Checkout the code..'
                     checkout scm
-                    branchName = env.BRANCH_NAME
-                    buildNumber = env.BUILD_NUMBER
-                    jobBaseName = "${env.JOB_NAME}".split('/').last() // We want to get the name of the branch/tag
-                    jenkinsSrvName = env.BUILD_URL.split('/')[2].split(':')[0]
-                    echo "Jenkins checkout from branch: $branchName && $buildNumber"
-                    echo "Running job ${jobBaseName} on jenkins server ${jenkinsSrvName}"
+                    branch_name = env.BRANCH_NAME
+                    build_number = env.BUILD_NUMBER
+                    job_base_name = "${env.JOB_NAME}".split('/').last()
+                    jenkins_server_name = env.BUILD_URL.split('/')[2].split(':')[0]
+                    echo "Jenkins checkout from branch: $branch_name && $build_number"
+                    echo "Running job ${job_base_name} on jenkins server ${jenkins_server_name}"
                     codePath = pwd()
                     sh "ls -lth"
                     sh '''
