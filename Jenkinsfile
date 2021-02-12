@@ -18,7 +18,7 @@ podTemplate(
     try {
         node("docker-slave") {
             container("docker") {
-                sh "sleep 5m"
+                //sh "sleep 5m"
                 withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
                     stage('Project setup') {
 
@@ -39,7 +39,7 @@ podTemplate(
                         sh "docker login -u jenkins -p 'LB4AVhxy3^#JazJK' https://nexus-group.bosa.belighted.com/"
                         dir("ops/release/test_runner") {
                             echo "Start!"
-                            sh "sleep 5m"
+                            //sh "sleep 5m"
                             //withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
                             sh "./build"
                             //}
