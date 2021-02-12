@@ -12,7 +12,7 @@ podTemplate(
         ],
         volumes: [
                 emptyDirVolume(memory: false, mountPath: '/var/lib/docker'),
-                configMapVolume(mountPath: '/etc/docker/daemon.json', configMapName: 'docker-daemon-config'),
+                configMapVolume(mountPath: '/etc/docker/daemon.json', configMapName: 'docker-daemon-config')
         ]
 ) {
     try {
