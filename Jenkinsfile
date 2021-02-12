@@ -11,7 +11,8 @@ podTemplate(
             )
         ],
         volumes: [
-                emptyDirVolume(memory: false, mountPath: '/var/lib/docker')
+                emptyDirVolume(memory: false, mountPath: '/var/lib/docker'),
+                configMapVolume(mountPath: '/etc/docker/daemon.json', configMapName: 'docker-daemon-config'),
         ]
 ) {
     try {
@@ -47,9 +48,9 @@ podTemplate(
                     }
                     stage("Compile Assets") {
                         sh """
-                        docker run -e RAILS_ENV=production --env-file $PWD/ops/release/test_runner/app_env -v $PWD/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
-                        docker run -e RAILS_ENV=production --env-file $PWD/ops/release/test_runner/app_env -v $PWD/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile
-                    """
+                            docker run -e RAILS_ENV=production --env-file $PWD/ops/release/test_runner/app_env -v $PWD/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
+                            docker run -e RAILS_ENV=production --env-file $PWD/ops/release/test_runner/app_env -v $PWD/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile
+                        """
 
                     }
                 }
