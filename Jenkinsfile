@@ -82,8 +82,8 @@ podTemplate(
                                     )
                                     pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}:$job_base_name"
+                                            "https://${docker_app_reg}/",
+                                            "${docker_app_reg}:$job_base_name"
                                     )
                                 break
                             default:
@@ -96,8 +96,8 @@ podTemplate(
                                     )
                                     pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}:${job_base_name}-${build_number}"
+                                            "https://${docker_app_reg}/",
+                                            "${docker_app_reg}:${job_base_name}-${build_number}"
                                     )
                                 break
                         }
