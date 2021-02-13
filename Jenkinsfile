@@ -8,7 +8,6 @@ import groovy.transform.Field
 @Field def branch_name          = ""
 @Field def docker_assets_reg    = "assets.bosa.belighted.com"
 @Field def docker_app_reg       = "app.bosa.belighted.com"
-@Field def docker_base_reg      = "base.bosa.belighted.com"
 @Field def docker_img_group     = "nexus-group.bosa.belighted.com"
 
 podTemplate(
@@ -31,7 +30,7 @@ podTemplate(
     try {
         node("docker-slave") {
             container("docker") {
-                //sh "sleep 5m"
+                sh "sleep 5m"
                 stage('Project setup') {
 
                     //checking out the app code
@@ -75,11 +74,13 @@ podTemplate(
                             case ~/^\d+\.\d+\.\d+$/:
                                     sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
-                                    pushToNexus(
+                                // This will push the assets image to registry
+                                pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_assets_reg}/",
                                             "${docker_assets_reg}/bosa-assets:$job_base_name"
                                     )
+                                // This will push the app image to registry
                                     pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_app_reg}/",
@@ -89,12 +90,14 @@ podTemplate(
                             default:
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
-                                    pushToNexus(
+                                // This will push the assets image to registry
+                                pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_assets_reg}/",
                                             "${docker_assets_reg}/bosa-assets:${job_base_name}-${build_number}"
                                     )
-                                    pushToNexus(
+                                // This will push the app image to registry
+                                pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_app_reg}/",
                                             "${docker_app_reg}/bosa:${job_base_name}-${build_number}"
