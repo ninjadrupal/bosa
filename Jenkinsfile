@@ -78,12 +78,12 @@ podTemplate(
                                     pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}:$job_base_name"
+                                            "${docker_assets_reg}/bosa-assets:$job_base_name"
                                     )
                                     pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_app_reg}/",
-                                            "${docker_app_reg}:$job_base_name"
+                                            "${docker_app_reg}/bosa:$job_base_name"
                                     )
                                 break
                             default:
@@ -92,12 +92,12 @@ podTemplate(
                                     pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}:${job_base_name}-${build_number}"
+                                            "${docker_assets_reg}/bosa-assets:${job_base_name}-${build_number}"
                                     )
                                     pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_app_reg}/",
-                                            "${docker_app_reg}:${job_base_name}-${build_number}"
+                                            "${docker_app_reg}/bosa:${job_base_name}-${build_number}"
                                     )
                                 break
                         }
