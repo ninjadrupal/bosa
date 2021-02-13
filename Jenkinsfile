@@ -16,6 +16,7 @@ podTemplate(
             containerTemplate(
                     name: 'docker',
                     image: 'docker:stable-dind',
+                    serviceAccount: 'jenkins-admin',
                     ttyEnabled: true,
                     alwaysPullImage: true,
                     privileged: true,
