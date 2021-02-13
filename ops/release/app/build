@@ -2,7 +2,7 @@
 
 set -e
 
-IMAGE_NAME="nexus-group.bosa.belighted.com/bosa"
+IMAGE_NAME="app.bosa.belighted.com/bosa"
 TAG=${TAG:-"latest"}
 
 runpath="$( cd "$(dirname "$0")" ; pwd -P )"
