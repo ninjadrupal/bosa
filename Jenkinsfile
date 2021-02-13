@@ -6,6 +6,10 @@ import groovy.transform.Field
 @Field def build_number         = ""
 @Field def jenkins_server_name  = ""
 @Field def branch_name          = ""
+@Field def docker_assets_reg    = "assets.bosa.belighted.com"
+@Field def docker_app_reg       = "app.bosa.belighted.com"
+@Field def docker_base_reg      = "base.bosa.belighted.com"
+@Field def docker_img_group     = "nexus-group.bosa.belighted.com"
 
 podTemplate(
         label: 'docker-slave',
@@ -48,16 +52,13 @@ podTemplate(
                     '''
 
                 }
-                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
+                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://${docker_img_group}/"]) {
 
                     stage("Build test_runner") {
-                        sh "docker login -u jenkins -p 'LB4AVhxy3^#JazJK' https://nexus-group.bosa.belighted.com/"
                         dir("ops/release/test_runner") {
                             echo "Start!"
                             //sh "sleep 5m"
-                            //withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://nexus-group.bosa.belighted.com/"]) {
                             sh "./build"
-                            //}
                             echo "Done!"
                         }
 
@@ -74,10 +75,30 @@ podTemplate(
                             case ~/^\d+\.\d+\.\d+$/:
                                     sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
+                                    pushToNexus(
+                                            "nexus-docker-registry",
+                                            "https://${docker_assets_reg}/",
+                                            "${docker_assets_reg}:$job_base_name"
+                                    )
+                                    pushToNexus(
+                                            "nexus-docker-registry",
+                                            "https://${docker_assets_reg}/",
+                                            "${docker_assets_reg}:$job_base_name"
+                                    )
                                 break
                             default:
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
+                                    pushToNexus(
+                                            "nexus-docker-registry",
+                                            "https://${docker_assets_reg}/",
+                                            "${docker_assets_reg}:${job_base_name}-${build_number}"
+                                    )
+                                    pushToNexus(
+                                            "nexus-docker-registry",
+                                            "https://${docker_assets_reg}/",
+                                            "${docker_assets_reg}:${job_base_name}-${build_number}"
+                                    )
                                 break
                         }
                     }
@@ -89,5 +110,11 @@ podTemplate(
         // If there was an exception thrown, the build failed
         currentBuild.result = "FAILED"
         throw e
+    }
+}
+
+def pushToNexus(String registryCredId, String registryUrl, String image){
+    withDockerRegistry([credentialsId: registryCredId, url: registryUrl]) {
+        sh "docker push ${image}"
     }
 }
