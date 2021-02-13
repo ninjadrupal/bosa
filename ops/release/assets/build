@@ -2,10 +2,10 @@
 
 set -e
 
-IMAGE_NAME="assets.bosa.belighted.com/bosa-assets"
+IMAGE_NAME="nexus-group.bosa.belighted.com/bosa-assets"
 TAG=${TAG:-"latest"}
 
 runpath="$( cd "$(dirname "$0")" ; pwd -P )"
 (cd ${runpath} &&
      docker build --file ${runpath}/Dockerfile --pull --tag $IMAGE_NAME:$TAG ../../.. &&
-     docker push $IMAGE_NAME:$TAG)
+     #docker push $IMAGE_NAME:$TAG)
