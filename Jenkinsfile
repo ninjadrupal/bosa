@@ -30,7 +30,7 @@ podTemplate(
     try {
         node("docker-slave") {
             container("docker") {
-                sh "sleep 5m"
+                sh "sleep 20m"
                 stage('Project setup') {
 
                     //checking out the app code
