@@ -9,6 +9,7 @@ import groovy.transform.Field
 @Field def docker_assets_reg    = "assets.bosa.belighted.com"
 @Field def docker_app_reg       = "app.bosa.belighted.com"
 @Field def docker_img_group     = "nexus-group.bosa.belighted.com"
+@Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443"
 
 podTemplate(
         label: 'docker-slave',
@@ -16,7 +17,6 @@ podTemplate(
             containerTemplate(
                     name: 'docker',
                     image: 'docker:stable-dind',
-                    serviceAccountName: 'jenkins-admin',
                     ttyEnabled: true,
                     alwaysPullImage: true,
                     privileged: true,
@@ -105,6 +105,23 @@ podTemplate(
                                     )
                                 break
                         }
+                    }
+                }
+                stage('Deploy') {
+                    withKubeConfig([credentialsId: 'jenkins-admin-kubeconfig', serverUrl: kube_conf_url ]) {
+                        sh """
+                            kubectl set image deployment/bosa-dev \
+                                    bosa-app-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
+                                    bosa-assets-dev=${docker_img_group}/bosa-assets:$job_base_name-$build_number \
+                                    -n bosa-dev \
+                                    --record
+                            kubectl rollout status deployment/bosa-dev --timeout=180s
+                            kubectl set image deployment/bosa-sidekiq-dev \
+                                    bosa-sidekiq-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
+                                    -n bosa-dev \
+                                    --record
+                            kubectl rollout status deployment/bosa-sidekiq-dev --timeout=180s
+                        """
                     }
                 }
             }
