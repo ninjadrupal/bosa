@@ -114,7 +114,7 @@ podTemplate(
                             install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
                             kubectl version --client
                             """
-                    withKubeConfig([credentialsId: 'jenkins-admin-kubeconfig', serverUrl: "${kube_conf_url}" ]) {
+                    withKubeConfig([credentialsId: 'jenkins-admin-kubeconfig' ]) {
                         sh """
                             
                             kubectl set image deployment/bosa-dev \
