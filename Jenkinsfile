@@ -54,7 +54,7 @@ podTemplate(
                 }
                 withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://${docker_img_group}/"]) {
 
-                    stage("Build test_runner") {
+                    /*stage("Build test_runner") {
                         dir("ops/release/test_runner") {
                             echo "Start!"
                             //sh "sleep 5m"
@@ -62,7 +62,7 @@ podTemplate(
                             echo "Done!"
                         }
 
-                    }
+                    }*/
                     stage("Compile Assets") {
                         sh """
                             docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
@@ -116,6 +116,7 @@ podTemplate(
                             """
                     withKubeConfig([credentialsId: 'jenkins-robot-k8s', serverUrl: "${kube_conf_url}" ]) {
                         sh """
+                            sleep 20m
                             kubectl set image deployment/bosa-dev \
                                     bosa-app-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
                                     bosa-assets-dev=${docker_img_group}/bosa-assets:$job_base_name-$build_number \
