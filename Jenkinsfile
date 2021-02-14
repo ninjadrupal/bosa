@@ -108,7 +108,7 @@ podTemplate(
                     }
                 }
                 stage('Deploy') {
-                    withKubeConfig([credentialsId: 'jenkins-admin-kubeconfig', serverUrl: kube_conf_url ]) {
+                    withKubeConfig([credentialsId: 'jenkins-robot-k8s', serverUrl: "${kube_conf_url}" ]) {
                         sh """
                             kubectl set image deployment/bosa-dev \
                                     bosa-app-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
