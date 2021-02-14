@@ -108,13 +108,14 @@ podTemplate(
                     }
                 }
                 stage('Deploy') {
-                    withKubeConfig([credentialsId: 'jenkins-robot-k8s', serverUrl: "${kube_conf_url}" ]) {
                         sh """
                             apk add curl
                             curl -LO https://dl.k8s.io/release/v1.20.0/bin/linux/amd64/kubectl
                             install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
                             kubectl version --client
-
+                            """
+                    withKubeConfig([credentialsId: 'jenkins-robot-k8s', serverUrl: "${kube_conf_url}" ]) {
+                        sh """
                             kubectl set image deployment/bosa-dev \
                                     bosa-app-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
                                     bosa-assets-dev=${docker_img_group}/bosa-assets:$job_base_name-$build_number \
