@@ -115,7 +115,7 @@ podTemplate(
                             kubectl version --client
                             """
                     withKubeConfig([
-                            credentialsId: 'kube-jekins-robot',
+                            credentialsId: 'kube-jenkins-robot',
                             serverUrl: 'https://2483-jier9.k8s.asergo.com:6443/',
                     ]) {
                         sh """
