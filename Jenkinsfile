@@ -9,7 +9,7 @@ import groovy.transform.Field
 @Field def docker_assets_reg    = "assets.bosa.belighted.com"
 @Field def docker_app_reg       = "app.bosa.belighted.com"
 @Field def docker_img_group     = "nexus-group.bosa.belighted.com"
-@Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443"
+@Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443/"
 
 podTemplate(
         label: 'docker-slave',
@@ -114,9 +114,9 @@ podTemplate(
                             install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
                             kubectl version --client
                             """
-                    withKubeConfig([credentialsId: 'jenkins-robot-k8s', serverUrl: "${kube_conf_url}" ]) {
+                    withKubeConfig([credentialsId: 'jenkins-admin-kubeconfig', serverUrl: "${kube_conf_url}" ]) {
                         sh """
-                            sleep 20m
+                            
                             kubectl set image deployment/bosa-dev \
                                     bosa-app-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
                                     bosa-assets-dev=${docker_img_group}/bosa-assets:$job_base_name-$build_number \
