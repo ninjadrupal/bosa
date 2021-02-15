@@ -188,7 +188,7 @@ def kubeDeploy(String kubectlVersion, String credentialsId, String kubeServerUrl
                 serverUrl    : "${kubeServerUrl}"
         ]) {
             // if there are multiple containers in a pod we need to loop and update all.
-            for (int i = 0; i < container.length(); i++) {
+            for (int i = 0; i < container.size() ; i++) {
                 sh """
                    kubectl set image deployment/$deployName \
                                      ${container[i]}=${image[i]} \
