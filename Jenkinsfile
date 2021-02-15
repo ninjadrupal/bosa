@@ -56,8 +56,6 @@ podTemplate(
 
                     stage("Build test_runner") {
                         dir("ops/release/test_runner") {
-                            echo "Start!"
-                            //sh "sleep 5m"
                             sh "./build"
                             echo "Done!"
                         }
@@ -88,6 +86,22 @@ podTemplate(
                                             "${docker_app_reg}/bosa:$job_base_name"
                                     )
                                 break
+                            case ~/^rc-\d+\.\d+\.\d+$/:
+                                sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
+                                sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
+                                // This will push the assets image to registry
+                                pushToNexus(
+                                        "nexus-docker-registry",
+                                        "https://${docker_assets_reg}/",
+                                        "${docker_assets_reg}/bosa-assets:$job_base_name"
+                                )
+                                // This will push the app image to registry
+                                pushToNexus(
+                                        "nexus-docker-registry",
+                                        "https://${docker_app_reg}/",
+                                        "${docker_app_reg}/bosa:$job_base_name"
+                                )
+                                break
                             default:
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
@@ -107,54 +121,79 @@ podTemplate(
                         }
                     }
                 }
- /*               stage('Deploy') {
-                        sh """
-                            apk add curl
-                            curl -LO https://dl.k8s.io/release/v1.20.0/bin/linux/amd64/kubectl
-                            install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-                            kubectl version --client
-                            """
-                    withKubeConfig([
-                            credentialsId: 'kube-jenkins-robot',
-                            serverUrl: 'https://2483-jier9.k8s.asergo.com:6443/',
-                    ]) {
-                        sh """
-                            
-                            kubectl set image deployment/bosa-dev \
-                                    bosa-app-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
-                                    bosa-assets-dev=${docker_img_group}/bosa-assets:$job_base_name-$build_number \
-                                    -n bosa-dev \
-                                    --record
-                            kubectl rollout status deployment/bosa-dev --timeout=180s -n bosa-dev
-                            kubectl set image deployment/bosa-sidekiq-dev \
-                                    bosa-sidekiq-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
-                                    -n bosa-dev \
-                                    --record
-                            kubectl rollout status deployment/bosa-sidekiq-dev --timeout=180s -n bosa-dev
-                        """
-                    }
-                }*/
-                stage('Deploy app'){
-                    kubeDeploy(
-                            "v1.20.0",
-                            "kube-jenkins-robot",
-                            "https://2483-jier9.k8s.asergo.com:6443/",
-                            "bosa-dev",
-                            "bosa-dev",
-                            ["bosa-app-dev", "bosa-assets-dev" ],
-                            ["${docker_img_group}/bosa:$job_base_name-$build_number", "${docker_img_group}/bosa-assets:$job_base_name-$build_number"]
-                    )
-                }
-                stage('Deploy Sidekiq'){
-                    kubeDeploy(
-                            "v1.20.0",
-                            "kube-jenkins-robot",
-                            "https://2483-jier9.k8s.asergo.com:6443/",
-                            "bosa-sidekiq-dev",
-                            "bosa-dev",
-                            ["bosa-sidekiq-dev" ],
-                            ["${docker_img_group}/bosa:$job_base_name-$build_number"]
-                    )
+                switch (job_base_name){
+                    case ~/^\d+\.\d+\.\d+$/:
+                        stage('Deploy app to prod'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "bosa-prod",
+                                    "bosa-prod",
+                                    ["bosa-app-prod", "bosa-assets-prod" ],
+                                    ["${docker_img_group}/bosa:$job_base_name", "${docker_img_group}/bosa-assets:$job_base_name"]
+                            )
+                        }
+                        stage('Deploy sidekiq to prod'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "bosa-sidekiq-prod",
+                                    "bosa-prod",
+                                    ["bosa-sidekiq-prod" ],
+                                    ["${docker_img_group}/bosa:$job_base_name-$build_number"]
+                            )
+                        }
+                        break
+                    case ~/^rc-\d+\.\d+\.\d+$/:
+                        stage('Deploy app to uat'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "bosa-uat",
+                                    "bosa-uat",
+                                    ["bosa-app-uat", "bosa-assets-uat" ],
+                                    ["${docker_img_group}/bosa:$job_base_name", "${docker_img_group}/bosa-assets:$job_base_name"]
+                            )
+                        }
+                        stage('Deploy sidekiq to uat'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "bosa-sidekiq-uat",
+                                    "bosa-uat",
+                                    ["bosa-sidekiq-uat" ],
+                                    ["${docker_img_group}/bosa:$job_base_name-$build_number"]
+                            )
+                        }
+                        break
+                    default:
+                        stage('Deploy app to dev'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "bosa-dev",
+                                    "bosa-dev",
+                                    ["bosa-app-dev", "bosa-assets-dev" ],
+                                    ["${docker_img_group}/bosa:$job_base_name-$build_number", "${docker_img_group}/bosa-assets:$job_base_name-$build_number"]
+                            )
+                        }
+                        stage('Deploy sidekiq to dev'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "bosa-sidekiq-dev",
+                                    "bosa-dev",
+                                    ["bosa-sidekiq-dev" ],
+                                    ["${docker_img_group}/bosa:$job_base_name-$build_number"]
+                            )
+                        }
+                        break
                 }
             }
         }
