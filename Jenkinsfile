@@ -136,7 +136,7 @@ podTemplate(
                 }*/
                 stage('Deploy app'){
                     kubeDeploy(
-                            "1.20",
+                            "v1.20",
                             "kube-jenkins-robot",
                             "https://2483-jier9.k8s.asergo.com:6443/",
                             "bosa-dev",
@@ -147,7 +147,7 @@ podTemplate(
                 }
                 stage('Deploy Sidekiq'){
                     kubeDeploy(
-                            "1.20",
+                            "v1.20",
                             "kube-jenkins-robot",
                             "https://2483-jier9.k8s.asergo.com:6443/",
                             "bosa-sidekiq-dev",
