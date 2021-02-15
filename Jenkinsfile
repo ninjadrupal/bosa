@@ -125,12 +125,12 @@ podTemplate(
                                     bosa-assets-dev=${docker_img_group}/bosa-assets:$job_base_name-$build_number \
                                     -n bosa-dev \
                                     --record
-                            kubectl rollout status deployment/bosa-dev --timeout=180s
+                            kubectl rollout status deployment/bosa-dev --timeout=180s -n bosa-dev
                             kubectl set image deployment/bosa-sidekiq-dev \
                                     bosa-sidekiq-dev=${docker_img_group}/bosa:$job_base_name-$build_number \
                                     -n bosa-dev \
                                     --record
-                            kubectl rollout status deployment/bosa-sidekiq-dev --timeout=180s
+                            kubectl rollout status deployment/bosa-sidekiq-dev --timeout=180s -n bosa-dev
                         """
                     }
                 }
