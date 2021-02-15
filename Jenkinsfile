@@ -205,12 +205,14 @@ podTemplate(
     }
 }
 
+// This method will help us push the docker image to Nexus Sonatype docker private registry
 def pushToNexus(String registryCredId, String registryUrl, String image){
     withDockerRegistry([credentialsId: registryCredId, url: registryUrl]) {
         sh "docker push ${image}"
     }
 }
 
+// This method will help us trigger kubectl for a rolling update - no downtime expected
 def kubeDeploy(String kubectlVersion, String credentialsId, String kubeServerUrl, String deployName, String namespace, List container, List image){
     try {
 
