@@ -49,11 +49,12 @@
             <% if scopes.length == 1 %>
               <%= f.hidden_field :scope_id, value: scopes.first.scope&.id %>
             <% else %>
-              <div class="field">
-                <%= f.select :scope_id,
-                             scopes.map { |scope| [translated_attribute(scope.scope_name), scope&.scope&.id] },
-                             include_blank: t(".select_scope") %>
-              </div>
+              <%= f.hidden_field :scope_id, value: nil %>
+              <!--<div class="field">-->
+                <!--<%#= f.select :scope_id,-->
+                             <!--scopes.map { |scope| [translated_attribute(scope.scope_name), scope&.scope&.id] },-->
+                             <!--include_blank: t(".select_scope") %>-->
+              <!--</div>-->
             <% end %>
 
             <% if suggestion_type.custom_signature_end_date_enabled? %>
