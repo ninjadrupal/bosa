@@ -185,14 +185,14 @@ def kubeDeploy(String kubectlVersion, String credentialsId, String kubeServerUrl
         // Using a Secret text in jenkins credentials see https://plugins.jenkins.io/kubernetes-cli/
         withKubeConfig([
                 credentialsId: "${credentialsId}",
-                serverUrl    : $ { kubeServerUrl },
+                serverUrl    : "${kubeServerUrl}"
         ]) {
             // if there are multiple containers in a pod we need to loop and update all.
             for (int i = 0; i < container.length(); i++) {
                 sh """
-                   kubectl set image deployment/${deployName} \
+                   kubectl set image deployment/$deployName \
                                      ${container[i]}=${image[i]} \
-                                     -n ${namespace} \
+                                     -n $namespace \
                                      --record
                    
                    """
