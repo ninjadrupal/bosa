@@ -107,7 +107,7 @@ podTemplate(
                         }
                     }
                 }
-                stage('Deploy') {
+ /*               stage('Deploy') {
                         sh """
                             apk add curl
                             curl -LO https://dl.k8s.io/release/v1.20.0/bin/linux/amd64/kubectl
@@ -133,6 +133,28 @@ podTemplate(
                             kubectl rollout status deployment/bosa-sidekiq-dev --timeout=180s -n bosa-dev
                         """
                     }
+                }*/
+                stage('Deploy app'){
+                    kubeDeploy(
+                            "1.20",
+                            "kube-jenkins-robot",
+                            "https://2483-jier9.k8s.asergo.com:6443/",
+                            "bosa-dev",
+                            "bosa-dev",
+                            ["bosa-app-dev", "bosa-assets-dev" ],
+                            ["${docker_img_group}/bosa:$job_base_name-$build_number", "${docker_img_group}/bosa-assets:$job_base_name-$build_number"]
+                    )
+                }
+                stage('Deploy Sidekiq'){
+                    kubeDeploy(
+                            "1.20",
+                            "kube-jenkins-robot",
+                            "https://2483-jier9.k8s.asergo.com:6443/",
+                            "bosa-sidekiq-dev",
+                            "bosa-dev",
+                            ["bosa-sidekiq-dev" ],
+                            ["${docker_img_group}/bosa:$job_base_name-$build_number"]
+                    )
                 }
             }
         }
@@ -147,5 +169,42 @@ podTemplate(
 def pushToNexus(String registryCredId, String registryUrl, String image){
     withDockerRegistry([credentialsId: registryCredId, url: registryUrl]) {
         sh "docker push ${image}"
+    }
+}
+
+def kubeDeploy(String kubectlVersion, String credentialsId, String kubeServerUrl, String deployName, String namespace, List container, List image){
+    try {
+
+        // Install kubectl in the docke:stable-dind which is a alpine image, we do not want to bake the image
+        sh """
+           apk add curl
+           curl -LO https://dl.k8s.io/release/${kubectlVersion}/bin/linux/amd64/kubectl
+           install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+           kubectl version --client
+           """
+        // Using a Secret text in jenkins credentials see https://plugins.jenkins.io/kubernetes-cli/
+        withKubeConfig([
+                credentialsId: "${credentialsId}",
+                serverUrl    : $ { kubeServerUrl },
+        ]) {
+            // if there are multiple containers in a pod we need to loop and update all.
+            for (int i = 0; i < container.length(); i++) {
+                sh """
+                   kubectl set image deployment/${deployName} \
+                                     ${container[i]}=${image[i]} \
+                                     -n ${namespace} \
+                                     --record
+                   
+                   """
+            }
+            // Checking how our deployment status is
+            sh """
+               kubectl rollout status deployment/${deployName} --timeout=180s -n ${namespace}
+            """
+
+        }
+    } catch(e){
+        currentBuild.result = "FAILED"
+        throw e
     }
 }
