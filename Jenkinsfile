@@ -139,7 +139,7 @@ podTemplate(
                                     "bosa-sidekiq-prod",
                                     "bosa-prod",
                                     ["bosa-sidekiq-prod" ],
-                                    ["${docker_img_group}/bosa:$job_base_name-$build_number"]
+                                    ["${docker_img_group}/bosa:$job_base_name"]
                             )
                         }
                         break
@@ -163,7 +163,7 @@ podTemplate(
                                     "bosa-sidekiq-uat",
                                     "bosa-uat",
                                     ["bosa-sidekiq-uat" ],
-                                    ["${docker_img_group}/bosa:$job_base_name-$build_number"]
+                                    ["${docker_img_group}/bosa:$job_base_name"]
                             )
                         }
                         break
