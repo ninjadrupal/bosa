@@ -74,14 +74,14 @@ podTemplate(
                                     sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
                                 // This will push the assets image to registry
-                                env.https_proxy = "https://${docker_assets_reg}/"
+                                env.https_proxy = "http://${docker_assets_reg}/"
                                 pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_assets_reg}/",
                                             "${docker_assets_reg}/bosa-assets:$job_base_name"
                                     )
                                 // This will push the app image to registry
-                                env.https_proxy = "https://${docker_app_reg}/"
+                                env.https_proxy = "http://${docker_app_reg}/"
                                     pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_app_reg}/",
@@ -92,14 +92,14 @@ podTemplate(
                                 sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
                                 sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
                                 // This will push the assets image to registry
-                                env.https_proxy = "https://${docker_assets_reg}/"
+                                env.https_proxy = "http://${docker_assets_reg}/"
                                 pushToNexus(
                                         "nexus-docker-registry",
                                         "https://${docker_assets_reg}/",
                                         "${docker_assets_reg}/bosa-assets:$job_base_name"
                                 )
                                 // This will push the app image to registry
-                                env.https_proxy = "https://${docker_app_reg}/"
+                                env.https_proxy = "http://${docker_app_reg}/"
                                 pushToNexus(
                                         "nexus-docker-registry",
                                         "https://${docker_app_reg}/",
@@ -110,14 +110,14 @@ podTemplate(
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
                                 // This will push the assets image to registry
-                                env.https_proxy = "https://${docker_assets_reg}/"
+                                env.https_proxy = "http://${docker_assets_reg}/"
                                 pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_assets_reg}/",
                                             "${docker_assets_reg}/bosa-assets:${job_base_name}-${build_number}"
                                     )
                                 // This will push the app image to registry
-                                env.https_proxy = "https://${docker_app_reg}/"
+                                env.https_proxy = "http://${docker_app_reg}/"
                                 pushToNexus(
                                             "nexus-docker-registry",
                                             "https://${docker_app_reg}/",
