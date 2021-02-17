@@ -107,13 +107,13 @@ podTemplate(
                                 // This will push the assets image to registry
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_int_assets}/",
+                                            "http://${docker_int_assets}/",
                                             "${docker_int_assets}/bosa-assets:${job_base_name}-${build_number}"
                                     )
                                 // This will push the app image to registry
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_int_app}/",
+                                            "http://${docker_int_app}/",
                                             "${docker_int_app}/bosa:${job_base_name}-${build_number}"
                                     )
                                 break
