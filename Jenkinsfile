@@ -48,7 +48,7 @@ podTemplate(
                     sh '''
                                 echo "nameserver 1.1.1.1" > /etc/resolv.conf
                                 echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-                                export https_proxy=https://nexus-group.bosa.belighted.com/
+                                export https_proxy=http://nexus-group.bosa.belighted.com/
                     '''
 
                 }
