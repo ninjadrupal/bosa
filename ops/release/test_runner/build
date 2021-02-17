@@ -2,8 +2,6 @@
 
 set -e
 
-export https_proxy="http://nexus-group.bosa.belighted.com/"
-
 IMAGE_NAME="bosa-testrunner"
 TAG=${TAG:-"latest"}
 

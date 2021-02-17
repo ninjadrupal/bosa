@@ -1,4 +1,4 @@
-FROM nexus-group.bosa.belighted.com/bosa-base:0.2.0
+FROM nexus-server.devops-tools.svc.cluster.local:8084/bosa-base:0.2.0
 LABEL maintainer="Dominique Lebrun <dominique.lebrun@belighted.com>"
 ENV BUNDLE_WITHOUT=production:development
 ENV BUNDLE_WITH=test
