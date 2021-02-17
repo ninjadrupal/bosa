@@ -6,9 +6,11 @@ import groovy.transform.Field
 @Field def build_number         = ""
 @Field def jenkins_server_name  = ""
 @Field def branch_name          = ""
-@Field def docker_assets_reg    = "assets.bosa.belighted.com"
-@Field def docker_app_reg       = "app.bosa.belighted.com"
 @Field def docker_img_group     = "nexus-group.bosa.belighted.com"
+@Field def docker_int_base      = "registry-bosa-docker.bosa.belighted.com"
+@Field def docker_int_assets    = "registry-bosa-assets.bosa.belighted.com"
+@Field def docker_int_app       = "registry-bosa-app.bosa.belighted.com"
+@Field def docker_int_group     = "registry-bosa-docker.bosa.belighted.com"
 @Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443/"
 
 podTemplate(
@@ -20,7 +22,7 @@ podTemplate(
                     ttyEnabled: true,
                     alwaysPullImage: true,
                     privileged: true,
-                    command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2'
+                    command: "dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2 --insecure-registry=${docker_int_group} --insecure-registry=${docker_int_base} --insecure-registry=${docker_int_assets} --insecure-registry=${docker_int_app}"
             )
         ],
         volumes: [
@@ -45,14 +47,9 @@ podTemplate(
                     echo "Running job ${job_base_name} on jenkins server ${jenkins_server_name}"
                     codePath = pwd()
                     sh "ls -lth"
-                    sh '''
-                                echo "nameserver 1.1.1.1" > /etc/resolv.conf
-                                echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-                            
-                    '''
 
                 }
-                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://${docker_img_group}/"]) {
+                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "http://${docker_int_group}/"]) {
 
                     stage("Build test_runner") {
                         dir("ops/release/test_runner") {
@@ -76,14 +73,14 @@ podTemplate(
                                 // This will push the assets image to registry
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}/bosa-assets:$job_base_name"
+                                            "http://${docker_int_assets}/",
+                                            "${docker_int_assets}/bosa-assets:$job_base_name"
                                     )
                                 // This will push the app image to registry
                                     pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_app_reg}/",
-                                            "${docker_app_reg}/bosa:$job_base_name"
+                                            "http://${docker_int_app}/",
+                                            "${docker_int_app}/bosa:$job_base_name"
                                     )
                                 break
                             case ~/^rc-\d+\.\d+\.\d+$/:
@@ -92,14 +89,14 @@ podTemplate(
                                 // This will push the assets image to registry
                                 pushToNexus(
                                         "nexus-docker-registry",
-                                        "https://${docker_assets_reg}/",
-                                        "${docker_assets_reg}/bosa-assets:$job_base_name"
+                                        "http://${docker_int_assets}/",
+                                        "${docker_int_assets}/bosa-assets:$job_base_name"
                                 )
                                 // This will push the app image to registry
                                 pushToNexus(
                                         "nexus-docker-registry",
-                                        "https://${docker_app_reg}/",
-                                        "${docker_app_reg}/bosa:$job_base_name"
+                                        "http://${docker_int_app}/",
+                                        "${docker_int_app}/bosa:$job_base_name"
                                 )
                                 break
                             default:
@@ -108,14 +105,14 @@ podTemplate(
                                 // This will push the assets image to registry
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}/bosa-assets:${job_base_name}-${build_number}"
+                                            "http://${docker_int_assets}/",
+                                            "${docker_int_assets}/bosa-assets:${job_base_name}-${build_number}"
                                     )
                                 // This will push the app image to registry
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_app_reg}/",
-                                            "${docker_app_reg}/bosa:${job_base_name}-${build_number}"
+                                            "http://${docker_int_app}/",
+                                            "${docker_int_app}/bosa:${job_base_name}-${build_number}"
                                     )
                                 break
                         }
@@ -127,7 +124,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-prod",
                                     "bosa-prod",
                                     ["bosa-app-prod", "bosa-assets-prod" ],
@@ -138,7 +135,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-sidekiq-prod",
                                     "bosa-prod",
                                     ["bosa-sidekiq-prod" ],
@@ -151,7 +148,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-uat",
                                     "bosa-uat",
                                     ["bosa-app-uat", "bosa-assets-uat" ],
@@ -162,7 +159,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-sidekiq-uat",
                                     "bosa-uat",
                                     ["bosa-sidekiq-uat" ],
@@ -175,7 +172,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-dev",
                                     "bosa-dev",
                                     ["bosa-app-dev", "bosa-assets-dev" ],
@@ -186,7 +183,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-sidekiq-dev",
                                     "bosa-dev",
                                     ["bosa-sidekiq-dev" ],
