@@ -2,7 +2,7 @@
 
 set -e
 
-IMAGE_NAME="nexus-server.devops-tools.svc.cluster.local:8086/bosa-assets"
+IMAGE_NAME="registry-bosa-assets.bosa.belighted.com/bosa-assets"
 TAG=${TAG:-"latest"}
 
 runpath="$( cd "$(dirname "$0")" ; pwd -P )"

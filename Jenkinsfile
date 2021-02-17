@@ -9,10 +9,10 @@ import groovy.transform.Field
 @Field def docker_assets_reg    = "assets.bosa.belighted.com"
 @Field def docker_app_reg       = "app.bosa.belighted.com"
 @Field def docker_img_group     = "nexus-group.bosa.belighted.com"
-@Field def docker_int_base      = "nexus-server.devops-tools.svc.cluster.local:8084"
-@Field def docker_int_assets    = "nexus-server.devops-tools.svc.cluster.local:8086"
-@Field def docker_int_app       = "nexus-server.devops-tools.svc.cluster.local:8085"
-@Field def docker_int_group     = "nexus-server.devops-tools.svc.cluster.local:8090"
+@Field def docker_int_base      = "registry-bosa-docker.bosa.belighted.com"
+@Field def docker_int_assets    = "registry-bosa-assets.bosa.belighted.com"
+@Field def docker_int_app       = "registry-bosa-app.bosa.belighted.com"
+@Field def docker_int_group     = "registry-bosa-docker.bosa.belighted.com"
 @Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443/"
 
 podTemplate(
