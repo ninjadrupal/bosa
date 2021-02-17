@@ -24,7 +24,7 @@ podTemplate(
                     ttyEnabled: true,
                     alwaysPullImage: true,
                     privileged: true,
-                    command: 'dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2'
+                    command: "dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2 --insecure-registry=${docker_int_group} --insecure-registry=${docker_int_base} --insecure-registry=${docker_int_assets} --insecure-registry=${docker_int_app}"
             )
         ],
         volumes: [
