@@ -9,6 +9,10 @@ import groovy.transform.Field
 @Field def docker_assets_reg    = "assets.bosa.belighted.com"
 @Field def docker_app_reg       = "app.bosa.belighted.com"
 @Field def docker_img_group     = "nexus-group.bosa.belighted.com"
+@Field def docker_int_base      = "nexus-server.devops-tools.svc.cluster.local:8084"
+@Field def docker_int_assets    = "nexus-server.devops-tools.svc.cluster.local:8086"
+@Field def docker_int_app       = "nexus-server.devops-tools.svc.cluster.local:8085"
+@Field def docker_int_group     = "nexus-server.devops-tools.svc.cluster.local:8090"
 @Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443/"
 
 podTemplate(
@@ -45,14 +49,9 @@ podTemplate(
                     echo "Running job ${job_base_name} on jenkins server ${jenkins_server_name}"
                     codePath = pwd()
                     sh "ls -lth"
-                    sh '''
-                                echo "nameserver 1.1.1.1" > /etc/resolv.conf
-                                echo "nameserver 8.8.8.8" >> /etc/resolv.conf
-                                export https_proxy=http://nexus-group.bosa.belighted.com/
-                    '''
 
                 }
-                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "https://${docker_img_group}/"]) {
+                withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "http://${docker_int_group}/"]) {
 
                     stage("Build test_runner") {
                         dir("ops/release/test_runner") {
@@ -74,54 +73,48 @@ podTemplate(
                                     sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
                                 // This will push the assets image to registry
-                                env.https_proxy = "http://${docker_assets_reg}/"
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}/bosa-assets:$job_base_name"
+                                            "http://${docker_int_assets}/",
+                                            "${docker_int_assets}/bosa-assets:$job_base_name"
                                     )
                                 // This will push the app image to registry
-                                env.https_proxy = "http://${docker_app_reg}/"
                                     pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_app_reg}/",
-                                            "${docker_app_reg}/bosa:$job_base_name"
+                                            "http://${docker_int_app}/",
+                                            "${docker_int_app}/bosa:$job_base_name"
                                     )
                                 break
                             case ~/^rc-\d+\.\d+\.\d+$/:
                                 sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
                                 sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
                                 // This will push the assets image to registry
-                                env.https_proxy = "http://${docker_assets_reg}/"
                                 pushToNexus(
                                         "nexus-docker-registry",
-                                        "https://${docker_assets_reg}/",
-                                        "${docker_assets_reg}/bosa-assets:$job_base_name"
+                                        "http://${docker_int_assets}/",
+                                        "${docker_int_assets}/bosa-assets:$job_base_name"
                                 )
                                 // This will push the app image to registry
-                                env.https_proxy = "http://${docker_app_reg}/"
                                 pushToNexus(
                                         "nexus-docker-registry",
-                                        "https://${docker_app_reg}/",
-                                        "${docker_app_reg}/bosa:$job_base_name"
+                                        "http://${docker_int_app}/",
+                                        "${docker_int_app}/bosa:$job_base_name"
                                 )
                                 break
                             default:
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
                                     sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
                                 // This will push the assets image to registry
-                                env.https_proxy = "http://${docker_assets_reg}/"
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_assets_reg}/",
-                                            "${docker_assets_reg}/bosa-assets:${job_base_name}-${build_number}"
+                                            "https://${docker_int_assets}/",
+                                            "${docker_int_assets}/bosa-assets:${job_base_name}-${build_number}"
                                     )
                                 // This will push the app image to registry
-                                env.https_proxy = "http://${docker_app_reg}/"
                                 pushToNexus(
                                             "nexus-docker-registry",
-                                            "https://${docker_app_reg}/",
-                                            "${docker_app_reg}/bosa:${job_base_name}-${build_number}"
+                                            "https://${docker_int_app}/",
+                                            "${docker_int_app}/bosa:${job_base_name}-${build_number}"
                                     )
                                 break
                         }
