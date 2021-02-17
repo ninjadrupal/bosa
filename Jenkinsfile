@@ -6,8 +6,6 @@ import groovy.transform.Field
 @Field def build_number         = ""
 @Field def jenkins_server_name  = ""
 @Field def branch_name          = ""
-@Field def docker_assets_reg    = "assets.bosa.belighted.com"
-@Field def docker_app_reg       = "app.bosa.belighted.com"
 @Field def docker_img_group     = "nexus-group.bosa.belighted.com"
 @Field def docker_int_base      = "registry-bosa-docker.bosa.belighted.com"
 @Field def docker_int_assets    = "registry-bosa-assets.bosa.belighted.com"
@@ -126,7 +124,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-prod",
                                     "bosa-prod",
                                     ["bosa-app-prod", "bosa-assets-prod" ],
@@ -137,7 +135,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-sidekiq-prod",
                                     "bosa-prod",
                                     ["bosa-sidekiq-prod" ],
@@ -150,7 +148,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-uat",
                                     "bosa-uat",
                                     ["bosa-app-uat", "bosa-assets-uat" ],
@@ -161,7 +159,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-sidekiq-uat",
                                     "bosa-uat",
                                     ["bosa-sidekiq-uat" ],
@@ -174,7 +172,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-dev",
                                     "bosa-dev",
                                     ["bosa-app-dev", "bosa-assets-dev" ],
@@ -185,7 +183,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot",
-                                    "https://2483-jier9.k8s.asergo.com:6443/",
+                                    "${kube_conf_url}",
                                     "bosa-sidekiq-dev",
                                     "bosa-dev",
                                     ["bosa-sidekiq-dev" ],
