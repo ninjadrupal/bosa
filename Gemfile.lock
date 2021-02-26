@@ -9,7 +9,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-cookies
-  revision: dbb528ec5ac2eab0be9fa390f25cb7b379daf486
+  revision: 9112f37d0f761e8bce1352cdab5fa9cf2e5fb00d
   branch: 0.22.0
   specs:
     decidim-cookies (0.22.0)
@@ -60,7 +60,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: 265b7d78a3c70c014dbcf4bb62022ca8e5217621
+  revision: f2be9742eb133b29e69b87324129e4509debe8c9
   branch: 0.22.0
   specs:
     decidim-verifications_omniauth (0.22.0)
@@ -369,7 +369,7 @@ GEM
     bootsnap (1.4.6)
       msgpack (~> 1.0)
     browser (2.7.1)
-    bson (4.11.1)
+    bson (4.12.0)
     builder (3.2.4)
     byebug (11.1.1)
     capistrano (3.14.1)
@@ -650,8 +650,8 @@ GEM
       chef-utils
     mongo (2.14.0)
       bson (>= 4.8.2, < 5.0.0)
-    mongoid (7.2.0)
-      activemodel (>= 5.1, < 6.1)
+    mongoid (7.2.1)
+      activemodel (>= 5.1, < 6.2)
       mongo (>= 2.10.5, < 3.0.0)
     msgpack (1.3.3)
     multi_json (1.15.0)
@@ -840,8 +840,9 @@ GEM
       rubocop (>= 0.68.1)
     ruby-ole (1.2.12.2)
     ruby-progressbar (1.10.1)
-    ruby-saml (1.11.0)
-      nokogiri (>= 1.5.10)
+    ruby-saml (1.12.0)
+      nokogiri (>= 1.10.5)
+      rexml
     ruby2_keywords (0.0.2)
     rubyzip (2.0.0)
     rufus-scheduler (3.6.0)
