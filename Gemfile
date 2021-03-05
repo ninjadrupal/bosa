@@ -17,6 +17,7 @@ gem 'decidim-navbar_links', git: 'https://github.com/belighted/decidim-module-na
 gem 'decidim-castings', git: 'https://github.com/belighted/decidim-module-castings', branch: DECIDIM_VERSION
 
 # ----------------------------------------------------------------------------------------------------------------------
+gem 'appsignal'
 gem 'activerecord-session_store'
 gem 'bootsnap'
 gem 'deepl-rb'
