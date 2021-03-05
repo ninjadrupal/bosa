@@ -50,6 +50,14 @@ module InitiativesApplicationHelperExtend
       )
     end
 
+    def filter_areas(areas)
+      areas.map do |area|
+        Decidim::CheckBoxesTreeHelper::TreeNode.new(
+          Decidim::CheckBoxesTreeHelper::TreePoint.new(area.id.to_s, area.name[I18n.locale.to_s])
+        )
+      end.sort_by{|a| a.leaf.label}
+    end
+
   end
 end
 
