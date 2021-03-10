@@ -3,7 +3,7 @@
 require "active_support/concern"
 
 module Decidim
-  module Suggestions
+  module Initiatives
     module HasArea
       extend ActiveSupport::Concern
 
@@ -14,8 +14,8 @@ module Decidim
                    optional: true
 
         # delegate :areas, to: :organization # remove to use has_and_belongs_to_many relation
-        has_and_belongs_to_many :areas, class_name: "Decidim::Area", join_table: "decidim_suggestions_areas",
-                                foreign_key: "decidim_suggestion_id", association_foreign_key: "decidim_area_id"
+        has_and_belongs_to_many :areas, class_name: "Decidim::Area", join_table: "decidim_initiatives_areas",
+                                foreign_key: "decidim_initiative_id", association_foreign_key: "decidim_area_id"
 
         validate :area_belongs_to_organization
       end
