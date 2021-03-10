@@ -66,7 +66,8 @@
         <%= form.areas_select :area_ids,
                               areas_for_select(current_organization),
                               {
-                                  selected: current_suggestion.area_ids
+                                selected: current_suggestion.area_ids,
+                                include_blank: current_suggestion.area_ids.blank? || current_suggestion.created?
                               },
                               multiple: true,
                               disabled: !@form.area_updatable? %>

@@ -2,7 +2,7 @@
 
 require "active_support/concern"
 
-module UpdateInitiativeExtend
+module AdminUpdateInitiativeExtend
   extend ActiveSupport::Concern
 
   included do
@@ -67,6 +67,7 @@ module UpdateInitiativeExtend
       attrs[:offline_votes] = form.offline_votes if form.offline_votes
       attrs[:state] = form.state if form.state
       attrs[:decidim_area_id] = form.area_id
+      attrs[:area_ids] = form.area_ids.reject(&:blank?)
 
       if initiative.published?
         @notify_extended = true if form.signature_end_date != initiative.signature_end_date &&
@@ -76,4 +77,4 @@ module UpdateInitiativeExtend
   end
 end
 
-Decidim::Initiatives::Admin::UpdateInitiative.send(:include, UpdateInitiativeExtend)
+Decidim::Initiatives::Admin::UpdateInitiative.send(:include, AdminUpdateInitiativeExtend)

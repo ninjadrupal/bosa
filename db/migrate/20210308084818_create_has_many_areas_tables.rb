@@ -39,6 +39,7 @@ class CreateHasManyAreasTables < ActiveRecord::Migration[5.2]
       entity.all.each do |s|
         next if s.decidim_area_id.blank?
         s.area_ids = [s.decidim_area_id]
+        s.decidim_area_id = nil
         s.save
       end
     end
@@ -46,6 +47,19 @@ class CreateHasManyAreasTables < ActiveRecord::Migration[5.2]
   end
 
   def down
+    [
+      Decidim::Suggestion,
+      Decidim::Initiative,
+      Decidim::Assembly,
+      Decidim::ParticipatoryProcess
+    ].each do |entity|
+      entity.all.each do |s|
+        next if s.area_ids.blank? || s.decidim_area_id.present?
+        s.decidim_area_id = s.area_ids.first
+        s.save
+      end
+    end
+
     drop_table :decidim_suggestions_areas
     drop_table :decidim_initiatives_areas
     drop_table :decidim_assemblies_areas
