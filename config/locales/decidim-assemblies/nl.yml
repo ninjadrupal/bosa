@@ -4,6 +4,7 @@ nl:
     attributes:
       assembly:
         area_id: Onderwerp
+        area_ids: Gebieden
         assembly_type: Overlegcommissie type
         assembly_type_other: Ander overlegcommissie type
         banner_image: Bannerafbeelding

@@ -5,6 +5,7 @@ nl:
       group:
         avatar: Avatar
       initiative:
+        area_ids: Gebieden
         decidim_user_group_id: Auteur
         description: Beschrijving
         offline_votes: Face-to-face handtekeningen

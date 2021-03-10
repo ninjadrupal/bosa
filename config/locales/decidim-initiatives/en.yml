@@ -3,6 +3,7 @@ en:
   activemodel:
     attributes:
       initiative:
+        area_ids: Areas
         offline_votes_for_scope: In-person signatures for %{scope}
 
       initiatives_type:
