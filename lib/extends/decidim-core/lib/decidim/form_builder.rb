@@ -73,8 +73,9 @@ module FormBuilderExtend
       template += if options[:accept].present?
                     @template.file_field @object_name, attribute, accept: options.delete(:accept)
                   else
-                    @template.file_field @object_name, attribute
+                    @template.file_field @object_name, attribute, style: 'width: 95%'
                   end
+      template += @template.icon_link_to('circle-x', '', I18n.t("actions.destroy", scope: "decidim.admin"), class: 'clear-attachment float-right')
 
       if file_is_image?(file)
         template += if file.present?
