@@ -28,6 +28,15 @@ module InitiativeSearchExtend
         .or(query.where(id: classified))
     end
 
+    def search_area_id
+      return query if area_ids.include?("all")
+
+      query.
+        joins("JOIN decidim_initiatives_areas ON decidim_initiatives.id = decidim_initiatives_areas.decidim_initiative_id").
+        where(decidim_initiatives_areas: {decidim_area_id: area_ids}).
+        group("decidim_initiatives.id")
+    end
+
   end
 end
 

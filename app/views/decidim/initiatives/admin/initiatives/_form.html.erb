@@ -75,12 +75,13 @@
 
     <% if current_initiative.area_enabled? && current_user.admin? %>
       <div class="field">
-        <%= form.areas_select :area_id,
+        <%= form.areas_select :area_ids,
                               areas_for_select(current_organization),
                               {
-                                selected: current_initiative.decidim_area_id,
-                                include_blank: current_initiative.decidim_area_id.blank? || current_initiative.created?
+                                selected: current_initiative.area_ids,
+                                include_blank: current_initiative.area_ids.blank? || current_initiative.created?
                               },
+                              multiple: true,
                               disabled: !@form.area_updatable? %>
       </div>
     <% end %>

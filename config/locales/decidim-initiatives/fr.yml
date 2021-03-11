@@ -6,6 +6,7 @@ fr:
         avatar: Avatar
       initiative:
         area_id: "Zone d'application"
+        area_ids: Zones
         answer: Réponse
         answer_date: Date de réponse
         answer_url: Lien associé

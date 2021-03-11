@@ -9,7 +9,7 @@
 
 <%#= render partial: "decidim/suggestions/suggestions/tags.html", locals: { resource: model } %>
 <ul class="tags tags--suggestion">
-  <% if model.area %>
-    <li><%= link_to translated_attribute(model.area_name), suggestions_path(filter: { area_id: [model.area.id] }) %></li>
+  <% model.areas.each do |area| %>
+    <li><%= link_to translated_attribute(area.name), suggestions_path(filter: {area_id: [area.id]}) %></li>
   <% end %>
 </ul>

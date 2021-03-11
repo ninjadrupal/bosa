@@ -7,6 +7,7 @@ module AdminInitiativeFormExtend
 
   included do
     attribute :offline_votes, Hash
+    attribute :area_ids, Array[Integer]
 
     clear_validators!
     validates :title, :description, presence: true

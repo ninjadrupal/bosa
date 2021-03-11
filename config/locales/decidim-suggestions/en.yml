@@ -2,5 +2,7 @@
 en:
   activemodel:
     attributes:
+      suggestion:
+        area_ids: Areas
       suggestions_type:
         area_enabled: Enable admins to choose the area for suggestion
