@@ -52,7 +52,9 @@ module FormBuilderExtend
                   else
                     @template.file_field @object_name, attribute, style: 'width: 95%'
                   end
-      template += @template.icon_link_to('circle-x', '', I18n.t("actions.destroy", scope: "decidim.admin"), class: 'clear-attachment float-right')
+      if options[:clear_icon]
+        template += @template.icon_link_to('circle-x', '', I18n.t("actions.destroy", scope: "decidim.admin"), class: 'clear-attachment float-right')
+      end
 
       if file_is_image?(file)
         template += if file.present?

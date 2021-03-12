@@ -80,7 +80,7 @@
                   </div>
 
                   <div class="field">
-                    <%= nested_form.upload :file, optional: false %>
+                    <%= nested_form.upload :file, optional: false, clear_icon: true %>
                   </div>
 
                   <% if @form.errors[:attachment].present? %>
