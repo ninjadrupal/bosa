@@ -13,6 +13,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require decidim
+//= require decidim/clear_attachment.js
 //= require decidim/date_picker.js
 //= require decidim/translations.js
 //= require decidim/initiatives/similar_initiatives.js
