@@ -142,6 +142,7 @@ en:
           brussels: Brussels
           flemish: Flemish
           walloon: Walloon
+        or: or
 
       initiative_signatures:
         fill_personal_data:
@@ -245,9 +246,7 @@ en:
         initiatives_settings:
           fieldset_title: Initiatives settings
           create_initiative_minimum_age_hint: Leave blank to skip minimum age validation.
-          create_initiative_allowed_region_hint: Leave blank to skip postal codes validation.
           sign_initiative_minimum_age_hint: Leave blank to skip minimum age validation.
-          sign_initiative_allowed_region_hint: Leave blank to skip postal codes validation.
 
 
   layouts:

@@ -512,6 +512,7 @@ fr:
           brussels: Bruxelles
           flemish: Flamande
           walloon: Wallonne
+        or: ou
 
       initiative_signatures:
         fill_personal_data:
