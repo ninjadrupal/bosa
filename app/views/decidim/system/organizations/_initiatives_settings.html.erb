@@ -2,18 +2,29 @@
   <legend><%= t(".fieldset_title") %></legend>
   <%= f.fields_for :initiatives_settings do %>
     <%= f.check_box :allow_users_to_see_initiative_no_signature_option %>
+
+    <hr/>
+
     <%= f.number_field :create_initiative_minimum_age %>
     <p class="help-text"><%= t(".create_initiative_minimum_age_hint") %></p>
-    <%= f.select :create_initiative_allowed_region,
-                 Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.keys.map {|region| [I18n.t(region, scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions"), region]},
-                 include_blank: true %>
-    <p class="help-text"><%= t(".create_initiative_allowed_region_hint") %></p>
+
+    <%= f.label :create_initiative_allowed_regions %>
+    <%= f.collection_check_boxes :create_initiative_allowed_regions,
+                                 Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.keys,
+                                 :to_s,
+                                 ->(region) {I18n.t(region, scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions")}
+    %>
+
+    <hr/>
 
     <%= f.number_field :sign_initiative_minimum_age %>
     <p class="help-text"><%= t(".sign_initiative_minimum_age_hint") %></p>
-    <%= f.select :sign_initiative_allowed_region,
-                 Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.keys.map {|region| [I18n.t(region, scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions"), region]},
-                 include_blank: true %>
-    <p class="help-text"><%= t(".sign_initiative_allowed_region_hint") %></p>
+
+    <%= f.label :sign_initiative_allowed_regions %>
+    <%= f.collection_check_boxes :sign_initiative_allowed_regions,
+                                 Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.keys,
+                                 :to_s,
+                                 ->(region) {I18n.t(region, scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions")}
+    %>
   <% end %>
 </fieldset>

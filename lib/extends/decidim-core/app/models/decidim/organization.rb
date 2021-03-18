@@ -17,7 +17,7 @@ module OrganizationExtend
     #
     def initiatives_settings_allow_to?(user, action)
       initiatives_settings_minimum_age_allow_to?(user, action) &&
-        initiatives_settings_allowed_region_allow_to?(user, action)
+        initiatives_settings_allowed_regions_allow_to?(user, action)
     end
 
     def initiatives_settings_minimum_age_allow_to?(user, action)
@@ -33,11 +33,11 @@ module OrganizationExtend
       true
     end
 
-    def initiatives_settings_allowed_region_allow_to?(user, action)
+    def initiatives_settings_allowed_regions_allow_to?(user, action)
       return true if !user || user.admin?
-      allowed_region = initiatives_settings_allowed_region(action)
-      return true if allowed_region.blank?
-      region_codes = (Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.dig(allowed_region, :municipalities) || []).map{|m| m[:idM]}.uniq
+      allowed_regions = initiatives_settings_allowed_regions(action)
+      return true if allowed_regions.blank?
+      region_codes = Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.slice(*allowed_regions).values.pluck(:municipalities).flatten.map {|m| m[:idM]}.uniq
       return true if region_codes.blank?
 
       authorization = Decidim::Initiatives::UserAuthorizations.for(user).first
@@ -53,9 +53,9 @@ module OrganizationExtend
       self.initiatives_settings["#{action}_initiative_minimum_age"]
     end
 
-    def initiatives_settings_allowed_region(action)
+    def initiatives_settings_allowed_regions(action)
       return if self.initiatives_settings.blank?
-      self.initiatives_settings["#{action}_initiative_allowed_region"]
+      (self.initiatives_settings["#{action}_initiative_allowed_regions"] || []).reject(&:empty?)
     end
 
   end

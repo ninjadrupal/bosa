@@ -366,6 +366,7 @@ nl:
           brussels: Brussel
           flemish: Vlaams
           walloon: Waals
+        or: of
 
       initiative_signatures:
         fill_personal_data:

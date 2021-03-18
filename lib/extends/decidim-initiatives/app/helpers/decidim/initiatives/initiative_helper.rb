@@ -186,22 +186,26 @@ module InitiativeHelperExtend
     def organization_initiatives_settings_validation_message(initiative, action)
       org = initiative&.organization || current_organization
       minimum_age_allow = org.initiatives_settings_minimum_age_allow_to?(current_user, action)
-      allowed_region_allow = org.initiatives_settings_allowed_region_allow_to?(current_user, action)
+      allowed_region_allow = org.initiatives_settings_allowed_regions_allow_to?(current_user, action)
       message = ''
       t_scope = "decidim.initiatives.initiatives.organization_initiatives_settings.#{action}"
+
       unless minimum_age_allow
         message = t("minimum_age_not_valid", scope: t_scope, minimum_age: org.initiatives_settings_minimum_age(action))
       end
+
       unless allowed_region_allow
-        region_name = t(org.initiatives_settings_allowed_region(action), scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions")
+        region_name = org.initiatives_settings_allowed_regions(action).map {|region| t(region, scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions")}.join(", ")
+        region_name.sub!(/.*\K,/, " #{t("decidim.initiatives.organization_initiatives_settings.or")}")
         message = t("allowed_region_not_valid", scope: t_scope, region_name: region_name)
+
+        unless minimum_age_allow
+          message = t("minimum_age_and_allowed_region_not_valid", scope: t_scope,
+                      minimum_age: org.initiatives_settings_minimum_age(action),
+                      region_name: region_name)
+        end
       end
-      if !minimum_age_allow && !allowed_region_allow
-        region_name = t(org.initiatives_settings_allowed_region(action), scope: "decidim.initiatives.organization_initiatives_settings.allowed_regions")
-        message = t("minimum_age_and_allowed_region_not_valid", scope: t_scope,
-                    minimum_age: org.initiatives_settings_minimum_age(action),
-                    region_name: region_name)
-      end
+
       message
     end
 
