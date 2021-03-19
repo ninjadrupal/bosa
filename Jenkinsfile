@@ -65,7 +65,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot-prod",
-                                    "${kube_conf_url}",
+                                    "${kube_conf_url_prod}",
                                     "bosa",
                                     "bosa-prod",
                                     ["bosa", "bosa-assets" ],
@@ -76,7 +76,7 @@ podTemplate(
                             kubeDeploy(
                                     "v1.20.0",
                                     "kube-jenkins-robot-prod",
-                                    "${kube_conf_url}",
+                                    "${kube_conf_url_prod}",
                                     "bosa-sidekiq",
                                     "bosa-prod",
                                     ["bosa-sidekiq" ],
