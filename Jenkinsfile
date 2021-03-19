@@ -57,10 +57,9 @@ podTemplate(
                                     "nexus-docker-registry",
                                     "asergo-docker-registry",
                                     "${docker_img_group}",
-                                    "${docker_img_asergo}"
-                                    ["bosa","bosa-assets"],
-                                    ["bosa","bosa-assets"]
-                            )
+                                    "${docker_img_asergo}",
+                                    ["bosa", "bosa-assets"],
+                                    ["bosa", "bosa-assets"])
                         }
                         stage('Deploy app to prod'){
                             kubeDeploy(
