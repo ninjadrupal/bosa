@@ -13,6 +13,7 @@ import groovy.transform.Field
 @Field def docker_int_app       = "registry-bosa-app.bosa.belighted.com"
 @Field def docker_int_group     = "registry-bosa-docker.bosa.belighted.com"
 @Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443/"
+@Field def kube_conf_url_prod   = "https://2483-im9eu.k8s.asergo.com:6443/"
 
 podTemplate(
         label: 'docker-slave',
