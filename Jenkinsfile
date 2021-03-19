@@ -69,7 +69,7 @@ podTemplate(
                                     "bosa-prod",
                                     "bosa-prod",
                                     ["bosa-app-prod", "bosa-assets-prod" ],
-                                    ["${docker_img_group}/bosa:$job_base_name", "${docker_img_group}/bosa-assets:$job_base_name"]
+                                    ["${docker_img_asergo}/bosa:$job_base_name", "${docker_img_asergo}/bosa-assets:$job_base_name"]
                             )
                         }
                         stage('Deploy sidekiq to prod'){
