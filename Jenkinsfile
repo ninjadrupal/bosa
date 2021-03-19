@@ -69,7 +69,7 @@ podTemplate(
                                     "${kube_conf_url_prod}",
                                     "bosa",
                                     "bosa-prod",
-                                    ["bosa", "bosa-assets" ],
+                                    ["bosa-app", "bosa-assets" ],
                                     ["${docker_img_asergo}/bosa:$job_base_name", "${docker_img_asergo}/bosa-assets:$job_base_name"]
                             )
                         }
