@@ -66,9 +66,9 @@ podTemplate(
                                     "v1.20.0",
                                     "kube-jenkins-robot-prod",
                                     "${kube_conf_url}",
+                                    "bosa",
                                     "bosa-prod",
-                                    "bosa-prod",
-                                    ["bosa-app-prod", "bosa-assets-prod" ],
+                                    ["bosa", "bosa-assets" ],
                                     ["${docker_img_asergo}/bosa:$job_base_name", "${docker_img_asergo}/bosa-assets:$job_base_name"]
                             )
                         }
@@ -77,9 +77,9 @@ podTemplate(
                                     "v1.20.0",
                                     "kube-jenkins-robot-prod",
                                     "${kube_conf_url}",
-                                    "bosa-sidekiq-prod",
+                                    "bosa-sidekiq",
                                     "bosa-prod",
-                                    ["bosa-sidekiq-prod" ],
+                                    ["bosa-sidekiq" ],
                                     ["${docker_img_group}/bosa:$job_base_name"]
                             )
                         }
