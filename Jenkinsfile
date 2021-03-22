@@ -1,31 +1,27 @@
 import groovy.transform.Field
 
-@Field def job_base_name        = ""
-@Field def project_name         = "bosa"
-@Field def code_path            = ""
-@Field def build_number         = ""
-@Field def jenkins_server_name  = ""
-@Field def branch_name          = ""
-@Field def docker_img_group     = "nexus-group.bosa.belighted.com"
-@Field def docker_img_asergo    = "nexus.asergo.com/2483/prod"
-@Field def docker_int_base      = "registry-bosa-docker.bosa.belighted.com"
-@Field def docker_int_assets    = "registry-bosa-assets.bosa.belighted.com"
-@Field def docker_int_app       = "registry-bosa-app.bosa.belighted.com"
-@Field def docker_int_group     = "registry-bosa-docker.bosa.belighted.com"
-@Field def kube_conf_url        = "https://2483-jier9.k8s.asergo.com:6443/"
-@Field def kube_conf_url_prod   = "https://2483-im9eu.k8s.asergo.com:6443/"
+@Field def job_base_name            = ""
+@Field def build_number             = ""
+@Field def jenkins_server_name      = ""
+@Field def branch_name              = ""
+@Field def codePath                 = ""
+@Field def docker_registry_credId   = "asergo-docker-registry"
+@Field def docker_img_prod          = "nexus.asergo.com/2483/prod"
+@Field def docker_img_apps          = "nexus.asergo.com/2483/apps"
+@Field def kube_conf_url            = "https://2483-jier9.k8s.asergo.com:6443/"
+@Field def kube_conf_url_prod       = "https://2483-im9eu.k8s.asergo.com:6443/"
 
 podTemplate(
         label: 'docker-slave',
         containers: [
-            containerTemplate(
-                    name: 'docker',
-                    image: 'docker:stable-dind',
-                    ttyEnabled: true,
-                    alwaysPullImage: true,
-                    privileged: true,
-                    command: "dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2 --insecure-registry=${docker_int_group} --insecure-registry=${docker_int_base} --insecure-registry=${docker_int_assets} --insecure-registry=${docker_int_app}"
-            )
+                containerTemplate(
+                        name: 'docker',
+                        image: 'docker:stable-dind',
+                        ttyEnabled: true,
+                        alwaysPullImage: true,
+                        privileged: true,
+                        command: "dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay2"
+                )
         ],
         volumes: [
                 emptyDirVolume(memory: false, mountPath: '/var/lib/docker')
@@ -51,16 +47,131 @@ podTemplate(
                     sh "ls -lth"
 
                 }
+
                 switch (job_base_name){
+                    default:
+                        withDockerRegistry([credentialsId: "${docker_registry_credId}", url: "https://${docker_img_apps}/"]) {
+                            stage("Build test_runner") {
+                                dir("ops/release/test_runner") {
+                                    sh "./build"
+                                    echo "Done!"
+                                }
+
+                            }
+                            stage("Compile Assets") {
+                                sh """
+                                    docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
+                                    docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile
+                                """
+
+                            }
+                            stage("Build app image"){
+                                sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
+                                sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
+                                // This will push the assets image to registry
+                                pushToNexus(
+                                        "${docker_registry_credId}",
+                                        "https://${docker_img_apps}/",
+                                        "${docker_img_apps}/bosa-assets:${job_base_name}-${build_number}"
+                                )
+                                // This will push the app image to registry
+                                pushToNexus(
+                                        "${docker_registry_credId}",
+                                        "https://${docker_int_app}/",
+                                        "${docker_int_app}/bosa:${job_base_name}-${build_number}"
+                                )
+                            }
+                        }
+                        stage('Deploy app to dev'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "${kube_conf_url}",
+                                    "bosa",
+                                    "bosa-dev",
+                                    ["bosa", "bosa-assets" ],
+                                    ["${docker_img_apps}/bosa:$job_base_name-$build_number", "${docker_img_apps}/bosa-assets:$job_base_name-$build_number"]
+                            )
+                        }
+                        stage('Deploy sidekiq to dev'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "${kube_conf_url}",
+                                    "bosa-sidekiq",
+                                    "bosa-dev",
+                                    ["bosa-sidekiq" ],
+                                    ["${docker_img_apps}/bosa:$job_base_name-$build_number"]
+                            )
+                        }
+                        break
+
+                    case ~/^rc-\d+\.\d+\.\d+$/:
+                        withDockerRegistry([credentialsId: "${docker_registry_credId}", url: "https://${docker_img_apps}/"]) {
+                            stage("Build test_runner") {
+                                dir("ops/release/test_runner") {
+                                    sh "./build"
+                                    echo "Done!"
+                                }
+
+                            }
+                            stage("Compile Assets") {
+                                sh """
+                                    docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
+                                    docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile
+                                """
+
+                            }
+                            stage("Build app image"){
+                                sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
+                                sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
+                                // This will push the assets image to registry
+                                pushToNexus(
+                                        "${docker_registry_credId}",
+                                        "https://${docker_img_apps}/",
+                                        "${docker_img_apps}/bosa-assets:$job_base_name"
+                                )
+                                // This will push the app image to registry
+                                pushToNexus(
+                                        "${docker_registry_credId}",
+                                        "https://${docker_img_apps}/",
+                                        "${docker_img_apps}/bosa:$job_base_name"
+                                )
+                            }
+                        }
+                        stage('Deploy app to uat'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "${kube_conf_url}",
+                                    "bosa",
+                                    "bosa-uat",
+                                    ["bosa", "bosa-assets" ],
+                                    ["${docker_img_apps}/bosa:$job_base_name", "${docker_img_apps}/bosa-assets:$job_base_name"]
+                            )
+                        }
+                        stage('Deploy sidekiq to uat'){
+                            kubeDeploy(
+                                    "v1.20.0",
+                                    "kube-jenkins-robot",
+                                    "${kube_conf_url}",
+                                    "bosa-sidekiq",
+                                    "bosa-uat",
+                                    ["bosa-sidekiq" ],
+                                    ["${docker_img_apps}/bosa:$job_base_name"]
+                            )
+                        }
+                        break
+
                     case ~/^\d+\.\d+\.\d+$/:
                         stage('Promot image uat->prod'){
                             promoteImages(
-                                    "nexus-docker-registry",
-                                    "asergo-docker-registry",
-                                    "${docker_img_group}",
-                                    "${docker_img_asergo}",
+                                    "${docker_registry_credId}",
+                                    "${docker_img_apps}",
+                                    "${docker_img_prod}",
                                     ["bosa", "bosa-assets"],
-                                    ["bosa", "bosa-assets"])
+                                    ["bosa", "bosa-assets"]
+                            )
                         }
                         stage('Deploy app to prod'){
                             kubeDeploy(
@@ -69,8 +180,8 @@ podTemplate(
                                     "${kube_conf_url_prod}",
                                     "bosa",
                                     "bosa-prod",
-                                    ["bosa-app", "bosa-assets" ],
-                                    ["${docker_img_asergo}/bosa:$job_base_name", "${docker_img_asergo}/bosa-assets:$job_base_name"]
+                                    ["bosa", "bosa-assets" ],
+                                    ["${docker_img_prod}/bosa:${job_base_name}", "${docker_img_prod}/bosa-assets:${job_base_name}"]
                             )
                         }
                         stage('Deploy sidekiq to prod'){
@@ -81,191 +192,7 @@ podTemplate(
                                     "bosa-sidekiq",
                                     "bosa-prod",
                                     ["bosa-sidekiq" ],
-                                    ["${docker_img_asergo}/bosa:$job_base_name"]
-                            )
-                        }
-                        break
-                    case ~/^rc-\d+\.\d+\.\d+$/:
-                        withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "http://${docker_int_group}/"]) {
-                            stage("Build test_runner") {
-                                dir("ops/release/test_runner") {
-                                    sh "./build"
-                                    echo "Done!"
-                                }
-
-                            }
-                            stage("Compile Assets") {
-                                sh """
-                            docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
-                            docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile
-                        """
-
-                            }
-                            stage("Build app image"){
-                                switch (job_base_name){
-                                    case ~/^\d+\.\d+\.\d+$/:
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
-                                        // This will push the assets image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_assets}/",
-                                                "${docker_int_assets}/bosa-assets:$job_base_name"
-                                        )
-                                        // This will push the app image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_app}/",
-                                                "${docker_int_app}/bosa:$job_base_name"
-                                        )
-                                        break
-                                    case ~/^rc-\d+\.\d+\.\d+$/:
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
-                                        // This will push the assets image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_assets}/",
-                                                "${docker_int_assets}/bosa-assets:$job_base_name"
-                                        )
-                                        // This will push the app image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_app}/",
-                                                "${docker_int_app}/bosa:$job_base_name"
-                                        )
-                                        break
-                                    default:
-                                        sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
-                                        sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
-                                        // This will push the assets image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_assets}/",
-                                                "${docker_int_assets}/bosa-assets:${job_base_name}-${build_number}"
-                                        )
-                                        // This will push the app image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_app}/",
-                                                "${docker_int_app}/bosa:${job_base_name}-${build_number}"
-                                        )
-                                        break
-                                }
-                            }
-                        }
-                        stage('Deploy app to uat'){
-                            kubeDeploy(
-                                    "v1.20.0",
-                                    "kube-jenkins-robot",
-                                    "${kube_conf_url}",
-                                    "bosa-uat",
-                                    "bosa-uat",
-                                    ["bosa-app-uat", "bosa-assets-uat" ],
-                                    ["${docker_img_group}/bosa:$job_base_name", "${docker_img_group}/bosa-assets:$job_base_name"]
-                            )
-                        }
-                        stage('Deploy sidekiq to uat'){
-                            kubeDeploy(
-                                    "v1.20.0",
-                                    "kube-jenkins-robot",
-                                    "${kube_conf_url}",
-                                    "bosa-sidekiq-uat",
-                                    "bosa-uat",
-                                    ["bosa-sidekiq-uat" ],
-                                    ["${docker_img_group}/bosa:$job_base_name"]
-                            )
-                        }
-                        break
-                    default:
-                        withDockerRegistry([credentialsId: 'nexus-docker-registry', url: "http://${docker_int_group}/"]) {
-                            stage("Build test_runner") {
-                                dir("ops/release/test_runner") {
-                                    sh "./build"
-                                    echo "Done!"
-                                }
-
-                            }
-                            stage("Compile Assets") {
-                                sh """
-                            docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
-                            docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile
-                        """
-
-                            }
-                            stage("Build app image"){
-                                switch (job_base_name){
-                                    case ~/^\d+\.\d+\.\d+$/:
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
-                                        // This will push the assets image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_assets}/",
-                                                "${docker_int_assets}/bosa-assets:$job_base_name"
-                                        )
-                                        // This will push the app image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_app}/",
-                                                "${docker_int_app}/bosa:$job_base_name"
-                                        )
-                                        break
-                                    case ~/^rc-\d+\.\d+\.\d+$/:
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/app/build"
-                                        sh "TAG=$job_base_name ${codePath}/ops/release/assets/build"
-                                        // This will push the assets image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_assets}/",
-                                                "${docker_int_assets}/bosa-assets:$job_base_name"
-                                        )
-                                        // This will push the app image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_app}/",
-                                                "${docker_int_app}/bosa:$job_base_name"
-                                        )
-                                        break
-                                    default:
-                                        sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
-                                        sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
-                                        // This will push the assets image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_assets}/",
-                                                "${docker_int_assets}/bosa-assets:${job_base_name}-${build_number}"
-                                        )
-                                        // This will push the app image to registry
-                                        pushToNexus(
-                                                "nexus-docker-registry",
-                                                "http://${docker_int_app}/",
-                                                "${docker_int_app}/bosa:${job_base_name}-${build_number}"
-                                        )
-                                        break
-                                }
-                            }
-                        }
-                        stage('Deploy app to dev'){
-                            kubeDeploy(
-                                    "v1.20.0",
-                                    "kube-jenkins-robot",
-                                    "${kube_conf_url}",
-                                    "bosa-dev",
-                                    "bosa-dev",
-                                    ["bosa-app-dev", "bosa-assets-dev" ],
-                                    ["${docker_img_group}/bosa:$job_base_name-$build_number", "${docker_img_group}/bosa-assets:$job_base_name-$build_number"]
-                            )
-                        }
-                        stage('Deploy sidekiq to dev'){
-                            kubeDeploy(
-                                    "v1.20.0",
-                                    "kube-jenkins-robot",
-                                    "${kube_conf_url}",
-                                    "bosa-sidekiq-dev",
-                                    "bosa-dev",
-                                    ["bosa-sidekiq-dev" ],
-                                    ["${docker_img_group}/bosa:$job_base_name-$build_number"]
+                                    ["${docker_img_prod}/bosa:${job_base_name}"]
                             )
                         }
                         break
@@ -288,15 +215,13 @@ def pushToNexus(String registryCredId, String registryUrl, String image){
 }
 
 // This method will allow us to promot images from UAT to PROD
-def promoteImages(String srcRegistryCredId, String dstRegistryCredId, String srcUrl, String dstUrl, List srcImages, List dstImages ){
-    withDockerRegistry([credentialsId: "${srcRegistryCredId}", url: "http://${srcUrl}/"]) {
+def promoteImages(String registryCredId, String srcUrl, String dstUrl, List srcImages, List dstImages ){
+    withDockerRegistry([credentialsId: "${registryCredId}", url: "${registryUrl}"]) {
         for (int i = 0; i < srcImages.size() ; i++) {
             sh "docker pull ${srcUrl}/${srcImages[i]}:rc-${job_base_name}"
             sh "docker tag ${srcUrl}/${srcImages[i]}:rc-${job_base_name} ${dstUrl}/${dstImages[i]}:${job_base_name}"
         }
-    }
-    withDockerRegistry([credentialsId: "${dstRegistryCredId}", url: "https://${dstUrl}/"]){
-        for (int i = 0; i < dstImages.size() ; i++) {
+        for (int i = 0; i < dstImages.size(); i++) {
             sh "docker push ${dstUrl}/${dstImages[i]}:${job_base_name}"
         }
     }
