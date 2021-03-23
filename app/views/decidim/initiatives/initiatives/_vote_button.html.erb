@@ -34,7 +34,11 @@
       </button>
     <% end %>
   <% else %>
-    <% if current_organization.initiatives_settings_allow_to?(current_user, 'sign') %>
+    <% if !current_initiative.accepts_votes_beyond_threshold? %>
+      <button class='button expanded light button--sc' disabled>
+        <%= t('.cannot_accumulate_supports_beyond_threshold') %>
+      </button>
+    <% elsif current_organization.initiatives_settings_allow_to?(current_user, 'sign') %>
       <%= authorized_vote_modal_button(initiative, remote: true, class: "button expanded light button--sc") do %>
         <%= verification_label %>
       <% end %>
