@@ -6,7 +6,7 @@ nl:
         avatar: Avatar
       initiative:
         area_ids: Gebieden
-        cannot_accumulate_supports_beyond_threshold: Kan geen ondersteuningen verzamelen die de drempel overschrijden
+        cannot_accumulate_supports_beyond_threshold: Geen stemmen kunnen verzamelen boven de drempel
         decidim_user_group_id: Auteur
         description: Beschrijving
         offline_votes: Face-to-face handtekeningen

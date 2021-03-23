@@ -10,7 +10,7 @@ fr:
         answer: Réponse
         answer_date: Date de réponse
         answer_url: Lien associé
-        cannot_accumulate_supports_beyond_threshold: Impossible d'accumuler des supports au-delà du seuil
+        cannot_accumulate_supports_beyond_threshold: Ne pas pouvoir accumuler de votes au-delà du seuil
         decidim_user_group_id: Auteur
         description: Description
         offline_votes: Votes en présentiel
@@ -643,7 +643,7 @@ fr:
           vote: Signer
           votes_blocked: Signatures désactivées
         vote_button:
-          cannot_accumulate_supports_beyond_threshold: Le nombre de votes requis a été atteint
+          cannot_accumulate_supports_beyond_threshold: Le nombre de votes requis est atteint
         votes_count:
           count:
             one: SIGNATURE
