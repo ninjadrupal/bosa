@@ -6,6 +6,7 @@ nl:
         avatar: Avatar
       initiative:
         area_ids: Gebieden
+        cannot_accumulate_supports_beyond_threshold: Geen stemmen kunnen verzamelen boven de drempel
         decidim_user_group_id: Auteur
         description: Beschrijving
         offline_votes: Face-to-face handtekeningen
@@ -473,6 +474,8 @@ nl:
           verification_required: Verifieer uw account om het initiatief te ondertekenen
           vote: Teken
           votes_blocked: Ondertekenen uitgeschakeld
+        vote_button:
+          cannot_accumulate_supports_beyond_threshold: Het vereiste aantal stemmen is bereikt
         votes_count:
           count:
             one: HANDTEKENING

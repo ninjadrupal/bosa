@@ -8,6 +8,7 @@ module AdminInitiativeFormExtend
   included do
     attribute :offline_votes, Hash
     attribute :area_ids, Array[Integer]
+    attribute :cannot_accumulate_supports_beyond_threshold, Virtus::Attribute::Boolean
 
     clear_validators!
     validates :title, :description, presence: true

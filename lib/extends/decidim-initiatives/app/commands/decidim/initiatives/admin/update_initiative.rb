@@ -68,6 +68,7 @@ module AdminUpdateInitiativeExtend
       attrs[:state] = form.state if form.state
       attrs[:decidim_area_id] = form.area_id
       attrs[:area_ids] = form.area_ids.reject(&:blank?)
+      attrs[:cannot_accumulate_supports_beyond_threshold] = form.cannot_accumulate_supports_beyond_threshold
 
       if initiative.published?
         @notify_extended = true if form.signature_end_date != initiative.signature_end_date &&

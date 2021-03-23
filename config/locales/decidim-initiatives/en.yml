@@ -4,6 +4,7 @@ en:
     attributes:
       initiative:
         area_ids: Areas
+        cannot_accumulate_supports_beyond_threshold: Cannot accumulate votes beyond threshold
         offline_votes_for_scope: In-person signatures for %{scope}
 
       initiatives_type:
@@ -174,6 +175,8 @@ en:
           of_versions: "(of %{number})"
           see_other_versions: see other versions
           version: Version %{number}
+        vote_button:
+          cannot_accumulate_supports_beyond_threshold: The required amount of votes has been reached
         organization_initiatives_settings:
           create:
             modal_title: Sorry, you are not allowed to perfom this action
@@ -240,6 +243,9 @@ en:
           title: Actions
           vote: Sign
           vote: Sign initiative
+
+    scopes:
+      global: Global
 
     system:
       organizations:

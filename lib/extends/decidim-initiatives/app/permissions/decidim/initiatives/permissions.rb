@@ -136,6 +136,7 @@ module PermissionsExtend
 
       initiative.votes_enabled? &&
         initiative.organization&.id == user.organization&.id &&
+        initiative.accepts_votes_beyond_threshold? &&
         organization_initiatives_settings_allow_to_vote? &&
         initiative.votes.where(author: user).empty? &&
         # (can_user_support?(initiative) || Decidim::UserGroups::ManageableUserGroups.for(user).verified.any?) &&
