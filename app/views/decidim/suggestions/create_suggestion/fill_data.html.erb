@@ -84,7 +84,7 @@
                   </div>
 
                   <% if @form.errors[:attachment].present? %>
-                    <% @form.errors[:attachment].each do |message| %>
+                    <% @form.errors[:attachment].uniq.each do |message| %>
                       <small class="form-error is-visible">
                         <%= message %>
                       </small>
