@@ -4,13 +4,13 @@ en:
     attributes:
       initiative:
         area_ids: Areas
-        cannot_accumulate_supports_beyond_threshold: Cannot accumulate votes beyond threshold
         offline_votes_for_scope: In-person signatures for %{scope_name}
 
       initiatives_type:
         #area_enabled: Enable authors to choose the area for their initiative
         area_enabled: Enable admins to choose the area for suggestion
         attachments_enabled: Enable attachments
+        cannot_accumulate_supports_beyond_threshold: Cannot accumulate votes beyond threshold
         child_scope_threshold_enabled: Enable child scope signatures
         comments_enabled: Enable comments
         custom_signature_end_date_enabled: Enable authors to choose the end of signature collection period

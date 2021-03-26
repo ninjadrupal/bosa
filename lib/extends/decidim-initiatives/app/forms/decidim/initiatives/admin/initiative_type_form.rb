@@ -6,6 +6,7 @@ module InitiativeTypeFormExtend
   extend ActiveSupport::Concern
 
   included do
+    attribute :cannot_accumulate_supports_beyond_threshold, Virtus::Attribute::Boolean
     attribute :attachments_enabled, Virtus::Attribute::Boolean
     attribute :child_scope_threshold_enabled, Virtus::Attribute::Boolean
     attribute :custom_signature_end_date_enabled, Virtus::Attribute::Boolean

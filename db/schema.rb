@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_23_060819) do
+ActiveRecord::Schema.define(version: 2021_03_26_060819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -656,7 +656,6 @@ ActiveRecord::Schema.define(version: 2021_03_23_060819) do
     t.boolean "no_signature", default: false
     t.date "answer_date"
     t.bigint "decidim_area_id"
-    t.boolean "cannot_accumulate_supports_beyond_threshold", default: false, null: false
     t.index "md5((description)::text)", name: "decidim_initiatives_description_search"
     t.index ["answered_at"], name: "index_decidim_initiatives_on_answered_at"
     t.index ["decidim_area_id"], name: "index_decidim_initiatives_on_decidim_area_id"
@@ -720,6 +719,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_060819) do
     t.boolean "custom_signature_end_date_enabled", default: false, null: false
     t.boolean "area_enabled", default: false, null: false
     t.boolean "attachments_enabled", default: false, null: false
+    t.boolean "cannot_accumulate_supports_beyond_threshold", default: false, null: false
     t.index ["decidim_organization_id"], name: "index_decidim_initiative_types_on_decidim_organization_id"
   end
 
@@ -1404,7 +1404,6 @@ ActiveRecord::Schema.define(version: 2021_03_23_060819) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "answer_date"
-    t.boolean "cannot_accumulate_supports_beyond_threshold", default: false, null: false
     t.index "md5((description)::text)", name: "decidim_suggestions_description_search"
     t.index ["answered_at"], name: "index_decidim_suggestions_on_answered_at"
     t.index ["decidim_area_id"], name: "index_decidim_suggestions_on_decidim_area_id"
@@ -1469,6 +1468,7 @@ ActiveRecord::Schema.define(version: 2021_03_23_060819) do
     t.boolean "custom_signature_end_date_enabled", default: false, null: false
     t.boolean "area_enabled", default: false, null: false
     t.boolean "attachments_enabled", default: false, null: false
+    t.boolean "cannot_accumulate_supports_beyond_threshold", default: false, null: false
     t.index ["decidim_organization_id"], name: "index_decidim_suggestions_types_on_decidim_organization_id"
   end
 

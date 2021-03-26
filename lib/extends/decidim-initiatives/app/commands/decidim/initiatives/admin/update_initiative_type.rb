@@ -15,6 +15,7 @@ module UpdateInitiativeTypeExtend
         signature_type: form.signature_type,
         attachments_enabled: form.attachments_enabled,
         undo_online_signatures_enabled: form.undo_online_signatures_enabled,
+        cannot_accumulate_supports_beyond_threshold: form.cannot_accumulate_supports_beyond_threshold,
         custom_signature_end_date_enabled: form.custom_signature_end_date_enabled,
         area_enabled: form.area_enabled,
         promoting_committee_enabled: form.promoting_committee_enabled,
