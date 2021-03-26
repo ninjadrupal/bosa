@@ -6,7 +6,6 @@ nl:
         avatar: Avatar
       initiative:
         area_ids: Gebieden
-        cannot_accumulate_supports_beyond_threshold: Geen stemmen kunnen verzamelen boven de drempel
         decidim_user_group_id: Auteur
         description: Beschrijving
         offline_votes: Face-to-face handtekeningen
@@ -34,6 +33,7 @@ nl:
       initiatives_type:
         area_enabled: Stel beheerders in staat het gebied voor suggestie te kiezen
         banner_image: Banner afbeelding
+        cannot_accumulate_supports_beyond_threshold: Geen stemmen kunnen verzamelen boven de drempel
         child_scope_threshold_enabled: Enable child scope signatures
         collect_user_extra_fields: Persoonlijke gebruikersgegevens verzamelen bij ondertekening
         comments_enabled: Enable comments

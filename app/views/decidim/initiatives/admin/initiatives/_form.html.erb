@@ -121,10 +121,6 @@
       </div>
     <% end %>
 
-    <div class="row column">
-      <%= form.check_box :cannot_accumulate_supports_beyond_threshold %>
-    </div>
-
     <% if allowed_to?(:read, :attachment, initiative: current_participatory_space) %>
       <%= render partial: "initiative_attachments", locals: { current_initiative: current_initiative, current_participatory_space: current_participatory_space } %>
     <% end %>

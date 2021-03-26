@@ -10,7 +10,6 @@ fr:
         answer: Réponse
         answer_date: Date de réponse
         answer_url: Lien associé
-        cannot_accumulate_supports_beyond_threshold: Ne pas pouvoir accumuler de votes au-delà du seuil
         decidim_user_group_id: Auteur
         description: Description
         offline_votes: Votes en présentiel
@@ -40,6 +39,7 @@ fr:
         area_enabled: Permettre aux administrateurs de choisir la zone de suggestion
         attachments_enabled: Enable attachments
         banner_image: Image d'en-tête
+        cannot_accumulate_supports_beyond_threshold: Ne pas pouvoir accumuler de votes au-delà du seuil
         child_scope_threshold_enabled: Activer les signatures des sous-périmètres
         collect_user_extra_fields: Collecter les données personnelles de l'utilisateur
           lors de la signature

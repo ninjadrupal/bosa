@@ -398,7 +398,7 @@ module Decidim
     end
 
     def accepts_votes_beyond_threshold?
-      !cannot_accumulate_supports_beyond_threshold || !supports_goal_reached?
+      !type.cannot_accumulate_supports_beyond_threshold || !supports_goal_reached?
     end
 
     def accepts_offline_votes?
