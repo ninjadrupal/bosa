@@ -31,7 +31,7 @@ module InitiativesControllerExtend
     def default_filter_params
       {
         search_text: "",
-        state: ["open"],
+        state: %w(accepted rejected answered open closed examinated debatted classified),
         type_id: default_filter_type_params,
         author: "any",
         scope_id: default_filter_scope_params,
