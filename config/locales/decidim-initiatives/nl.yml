@@ -287,8 +287,11 @@ nl:
           update: "%{user_name} heeft het initiatief %{resource_name} bijgewerkt"
       admin_states:
         accepted: Aanvaard
-        created: gemaakt
+        classified: Geclassificeerd
+        created: Gemaakt
+        debatted: Gedebatteerd
         discarded: Afgedankte
+        examinated: Examinated
         published: Gepubliceerd
         rejected: Afgewezen
         validating: Technische validatie
