@@ -33,6 +33,13 @@ module CreateInitiativeControllerExtend
       render_wizard
     end
 
+    def fill_data_step(parameters)
+      @form = build_form(Decidim::Initiatives::InitiativeForm, parameters)
+      @form.attachment = form(Decidim::AttachmentForm).from_params({title: parameters.dig(:initiative, :attachment, :title)})
+
+      render_wizard
+    end
+
     def finish_step(_parameters)
       session[:initiative][:description] = nil
       render_wizard
