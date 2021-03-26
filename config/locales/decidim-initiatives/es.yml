@@ -3,7 +3,7 @@ es:
   activemodel:
     attributes:
       initiative:
-        offline_votes_for_scope: Firmas en persona para %{scope}
+        offline_votes_for_scope: Firmas en persona para %{scope_name}
 
       initiatives_type:
         child_scope_threshold_enabled: Activar las firmas del subperímetro

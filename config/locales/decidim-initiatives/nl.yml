@@ -10,7 +10,7 @@ nl:
         decidim_user_group_id: Auteur
         description: Beschrijving
         offline_votes: Face-to-face handtekeningen
-        offline_votes_for_scope: In-person signatures for %{scope}
+        offline_votes_for_scope: In-person signatures for %{scope_name}
         scope_id: Bereik
         signature_end_date: Einde van de periode om handtekeningen te verzamelen
         signature_start_date: Begin van de periode voor het verzamelen van handtekeningen

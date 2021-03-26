@@ -5,7 +5,7 @@ en:
       initiative:
         area_ids: Areas
         cannot_accumulate_supports_beyond_threshold: Cannot accumulate votes beyond threshold
-        offline_votes_for_scope: In-person signatures for %{scope}
+        offline_votes_for_scope: In-person signatures for %{scope_name}
 
       initiatives_type:
         #area_enabled: Enable authors to choose the area for their initiative
