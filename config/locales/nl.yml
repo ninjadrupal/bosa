@@ -63,13 +63,11 @@ nl:
     devise:
       omniauth_registrations:
         new:
+          terms: Terms and conditions
+          tos_agreement: Accept our %{link}
           complete_profile: Complete profile
-          registration_info: |-
-            Registration info (this text supports <code>HTML</code>).
-            <br/><br/>
-            <small>
-              <i>Please change me with translation key <code>decidim.devise.omniauth_registrations.new.registration_info</code><i/>
-            <small/>
+          registration_title: Facultatieve gegevens
+          registration_info: Uw e-mailadres wordt gebruikt om u te informeren over acties en onderwerpen die u interesseren op het platform. Na registratie ontvangt u een e-mail om uw e-mailadres te bevestigen. Als u hier uw e-mailadres niet invult en vervolgens bevestigt, ontvangt u achteraf geen e-mailnotificaties. <a href="%{more_url}" target="_blank" rel="noopener noreferrer">Meer info</a>
           sign_up: Sign up
           subtitle: Subtitle
       sessions:

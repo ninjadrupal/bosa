@@ -84,7 +84,7 @@ end
                         </div>
                       <% end %>
                     <% else %>
-                      <%= link_to (current_user.email.present? ? current_user.name : t("decidim.anonymous_user")), decidim.account_path %>
+                      <%= link_to (current_user.name.present? ? current_user.name : t("decidim.anonymous_user")), decidim.account_path %>
                     <% end %>
                     <ul class="menu is-dropdown-submenu js-append usermenu-off-canvas">
                       <%= render partial: "layouts/decidim/user_menu" %>

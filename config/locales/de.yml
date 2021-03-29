@@ -1,0 +1,8 @@
+---
+de:
+  decidim:
+    devise:
+      omniauth_registrations:
+        new:
+          registration_title: Optionale Daten
+          registration_info:  Ihre E-Mail-Adresse wird verwendet, um Sie über Aktionen und Themen zu informieren, die Sie auf der Plattform interessieren. Nach der Registrierung erhalten Sie eine E-Mail, um Ihre E-Mail-Adresse zu bestätigen. Wenn Sie Ihre E-Mail-Adresse hier nicht eingeben und dann bestätigen, erhalten Sie anschließend keine E-Mail-Benachrichtigung. <a href="%{more_url}" target="_blank" rel="noopener noreferrer">Weitere Informationen</a>

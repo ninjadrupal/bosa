@@ -57,12 +57,11 @@ en:
     devise:
       omniauth_registrations:
         new:
-          registration_info: |-
-            Registration info (this text supports <code>HTML</code>).
-            <br/><br/>
-            <small>
-              <i>Please change me with translation key <code>decidim.devise.omniauth_registrations.new.registration_info</code><i/>
-            <small/>
+          terms: Terms and conditions
+          tos_agreement: Accept our %{link}
+          registration_title: Optional data
+          registration_info:  Your email address is used to inform you of actions and subjects that interest you on the platform. After registering, an email will be sent to you to confirm your email address. If you do not fill in your email address here and then confirm it, you will not receive any email notification afterwards. <a href="%{more_url}" target="_blank" rel="noopener noreferrer">More info</a>
+
     verifications:
       authorizations:
         index:

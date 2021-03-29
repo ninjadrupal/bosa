@@ -10,7 +10,7 @@ module UserExtend
     validates :name, presence: true, unless: -> { deleted? }
     validates :nickname, presence: true, unless: -> { deleted? || managed? }, length: { maximum: Decidim::User.nickname_max_length }
     validates :locale, inclusion: { in: :available_locales }, allow_blank: true
-    validates :tos_agreement, acceptance: true, allow_nil: false, on: :create
+    validates :tos_agreement, acceptance: true, allow_nil: true, on: :create
     validates :tos_agreement, acceptance: true, if: :user_invited?
     validates :email, :nickname, uniqueness: { scope: :organization }, unless: -> { deleted? || managed? || nickname.blank? || email.blank? }
 
@@ -25,6 +25,10 @@ module UserExtend
       # cases where the comparison returns false, but calling `#to_i` returns
       # the same number :/
       accepted_tos_version.to_i >= organization.tos_version.to_i
+    end
+
+    def active_for_authentication?
+      super
     end
 
     def after_confirmation

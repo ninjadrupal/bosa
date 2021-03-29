@@ -51,7 +51,7 @@ public/uploads
 .DS_Store
 .idea
 flamegraph*
-
+Procfile.dev
 
 # Rspec
 .rspec-failures
