@@ -26,8 +26,6 @@ module Decidim
       def store_order_in_session
         _order = params[:order].present? && detect_order(params[:order])
         if _order.present?
-          puts _order
-          puts params[:controller]
           session["#{params[:controller]}_order"] = _order
         end
       end
