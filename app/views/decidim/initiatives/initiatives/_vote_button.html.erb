@@ -39,8 +39,18 @@
         <%= t('.cannot_accumulate_supports_beyond_threshold') %>
       </button>
     <% elsif current_organization.initiatives_settings_allow_to?(current_user, 'sign') %>
-      <%= authorized_vote_modal_button(initiative, remote: true, class: "button expanded light button--sc") do %>
-        <%= verification_label %>
+      <% if current_organization.enabled_omniauth_providers.keys.size === 1 &&
+          action_authorized_to("vote", resource: current_initiative, permissions_holder: current_initiative.type).ok? &&
+          current_organization.enabled_omniauth_providers[:csam] %>
+        <%= link_to decidim.send('user_csam_omniauth_authorize_path',
+                                 redirect_url: initiative_initiative_signatures_path(initiative_slug: current_initiative.slug)),
+          class: "button expanded light button--sc", method: :post do %>
+            <%= verification_label %>
+          <% end %>
+      <% else %>
+        <%= authorized_vote_modal_button(initiative, remote: true, class: "button expanded light button--sc") do %>
+          <%= verification_label %>
+        <% end %>
       <% end %>
     <% else %>
       <% msg = organization_initiatives_settings_validation_message(current_initiative, 'sign') %>
