@@ -146,7 +146,7 @@ nl:
           email_intro: De initiatief "%{resource_title}" is verzonden naar technische validatie.
           email_outro: Je hebt deze melding ontvangen omdat u de auteur van de initiatief bent.
           email_subject: Initiatief "%{resource_title}" werd verzonden naar technische validatie.
-          notification_title: De initiatief <a href="%{resourse_path}">"%{resource_title}"</a> is verzonden naar technische validatie.
+          notification_title: De initiatief <a href="%{resource_path}">"%{resource_title}"</a> is verzonden naar technische validatie.
         milestone_completed:
           affected_user:
             email_intro: Uw initiatief %{resource_title} heeft %{percentage}% handtekeningen bereikt!
