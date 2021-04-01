@@ -6,6 +6,8 @@ module UpdateOrganizationFormExtend
   extend ActiveSupport::Concern
 
   included do
+    attribute :basic_auth_username, String
+    attribute :basic_auth_password, String
     jsonb_attribute :initiatives_settings, [
       [:allow_users_to_see_initiative_no_signature_option, Boolean],
       [:create_initiative_minimum_age, Integer],
