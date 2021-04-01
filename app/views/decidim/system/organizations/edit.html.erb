@@ -30,6 +30,14 @@
     <%= f.collection_check_boxes :available_authorizations, Decidim.authorization_workflows, :name, :description %>
   </div>
 
+  <fieldset class="fieldset">
+    <legend>Basic Auth</legend>
+    <div class="field">
+    <%= f.text_field :basic_auth_username %>
+    </div>
+    <%= f.text_field :basic_auth_password %>
+  </fieldset>
+
   <%= render partial: "initiatives_settings", locals: { f: f } %>
   <%= render partial: "suggestions_settings", locals: { f: f } %>
   <%= render partial: "smtp_settings", locals: { f: f } %>

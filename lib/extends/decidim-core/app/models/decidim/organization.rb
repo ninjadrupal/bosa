@@ -58,6 +58,10 @@ module OrganizationExtend
       (self.initiatives_settings["#{action}_initiative_allowed_regions"] || []).reject(&:empty?)
     end
 
+    def basic_auth_enabled?
+      self.basic_auth_username.present? || self.basic_auth_password.present?
+    end
+
   end
 end
 
