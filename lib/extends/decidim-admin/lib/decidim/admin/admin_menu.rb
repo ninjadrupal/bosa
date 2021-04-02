@@ -54,7 +54,7 @@ Decidim.menu :admin_menu do |menu|
             active: [%w(user_groups users managed_users impersonatable_users authorization_workflows).map {|segment| "/decidim/admin/#{segment}"}, []],
             if: allowed_to?(:read, :admin_user) || allowed_to?(:read, :managed_user)
 
-  unless Rails.env.production?
+  if ENV.fetch("CASTINGS_ENABLED", false)
   menu.item I18n.t("menu.castings", scope: "decidim.castings"),
             decidim_admin_castings.castings_path,
             icon_name: "people",
