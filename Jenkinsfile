@@ -72,13 +72,13 @@ podTemplate(
                                 // This will push the assets image to registry
                                 pushToNexus(
                                         "${docker_registry_credId}",
-                                        "https://${docker_img_apps}/",
+                                        "${docker_img_apps}",
                                         "${docker_img_apps}/bosa-assets:${job_base_name}-${build_number}"
                                 )
                                 // This will push the app image to registry
                                 pushToNexus(
                                         "${docker_registry_credId}",
-                                        "https://${docker_img_apps}/",
+                                        "${docker_img_apps}",
                                         "${docker_img_apps}/bosa:${job_base_name}-${build_number}"
                                 )
                             }
@@ -129,13 +129,13 @@ podTemplate(
                                 // This will push the assets image to registry
                                 pushToNexus(
                                         "${docker_registry_credId}",
-                                        "https://${docker_img_apps}/",
+                                        "${docker_img_apps}",
                                         "${docker_img_apps}/bosa-assets:$job_base_name"
                                 )
                                 // This will push the app image to registry
                                 pushToNexus(
                                         "${docker_registry_credId}",
-                                        "https://${docker_img_apps}/",
+                                        "${docker_img_apps}",
                                         "${docker_img_apps}/bosa:$job_base_name"
                                 )
                             }
