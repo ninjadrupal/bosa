@@ -18,7 +18,8 @@ module InitiativeMCellExtend
       hash = model.author.cache_version +
              model.cache_version +
              model.supports_count.to_s +
-             comments_count.to_s
+             comments_count.to_s +
+             I18n.locale.to_s
 
       hash << current_user.follows?(model).to_s if current_user
 
