@@ -1,9 +1,10 @@
 GIT
   remote: https://github.com/belighted/decidim-module-castings
-  revision: b41f25fcfb608116bd15dca396cd35f13f5bfa45
+  revision: 0a8313ab3d2e4eb44270fd8c35af5125799540e9
   branch: 0.22.0
   specs:
     decidim-castings (0.22.0)
+      caxlsx
       decidim-admin (= 0.22.0)
       decidim-core (= 0.22.0)
 
@@ -410,6 +411,11 @@ GEM
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
       ssrf_filter (~> 1.0)
+    caxlsx (3.0.4)
+      htmlentities (~> 4.3, >= 4.3.4)
+      mimemagic (~> 0.3)
+      nokogiri (~> 1.10, >= 1.10.4)
+      rubyzip (>= 1.3.0, < 3)
     cells (4.1.7)
       declarative-builder (< 0.2.0)
       declarative-option (< 0.2.0)
