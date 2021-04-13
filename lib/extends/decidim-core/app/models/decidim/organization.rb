@@ -58,6 +58,16 @@ module OrganizationExtend
       (self.initiatives_settings["#{action}_initiative_allowed_regions"] || []).reject(&:empty?)
     end
 
+    def initiatives_settings_hide_areas_filter?
+      return if self.initiatives_settings.blank?
+      self.initiatives_settings["hide_areas_filter"]
+    end
+
+    def initiatives_settings_hide_scopes_filter?
+      return if self.initiatives_settings.blank?
+      self.initiatives_settings["hide_scopes_filter"]
+    end
+
     def basic_auth_enabled?
       self.basic_auth_username.present? || self.basic_auth_password.present?
     end
