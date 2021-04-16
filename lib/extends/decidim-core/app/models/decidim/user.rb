@@ -16,17 +16,6 @@ module UserExtend
 
     validate :all_roles_are_valid
 
-    def tos_accepted?
-      return true if managed
-      return true if email.blank?
-      return false if accepted_tos_version.nil?
-
-      # For some reason, if we don't use `#to_i` here we get some
-      # cases where the comparison returns false, but calling `#to_i` returns
-      # the same number :/
-      accepted_tos_version.to_i >= organization.tos_version.to_i
-    end
-
     def active_for_authentication?
       super
     end
