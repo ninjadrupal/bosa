@@ -1,4 +1,4 @@
-FROM base.bosa.belighted.com/bosa-base:0.2.0
+FROM nexus.asergo.com/2483/base/bosa-base:jemalloc
 
 # Configure locale, bundler, define app dir
 ENV BUNDLE_WITHOUT=production:test
