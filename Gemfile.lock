@@ -62,8 +62,8 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: f3bac4a0d7812082058ef992d9a8f3dcad12f022
-  branch: BOSA21Q1-122
+  revision: 27b44ae0774b93f4ba175c7d2bcd214e2c143255
+  branch: BOSA21Q1-121
   specs:
     decidim-verifications_omniauth (0.22.0)
       decidim-core (= 0.22.0)
@@ -72,7 +72,6 @@ GIT
       omniauth-saml (~> 1.10)
       savon (~> 2.12.0)
       signer
-      valid_email2 (~> 2.1)
 
 GIT
   remote: https://github.com/decidim/decidim
