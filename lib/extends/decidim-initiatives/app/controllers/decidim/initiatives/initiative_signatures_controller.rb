@@ -84,6 +84,7 @@ module InitiativeSignaturesControllerExtend
       Decidim::Initiatives::VoteInitiative.call(@vote_form) do
         on(:ok) do
           session[:initiative_vote_form] = {}
+          redirect_to initiative_path(current_initiative) and return
         end
 
         on(:invalid) do |vote|
