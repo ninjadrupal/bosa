@@ -12,7 +12,11 @@ module InitiativeSignaturesControllerExtend
     def show
       group_id = params[:group_id] || (session[:initiative_vote_form] ||= {})["group_id"]
       if params[:id] == "finish"
-        enforce_permission_to :vote, :initiative, initiative: current_initiative, group_id: group_id
+        if current_initiative.votes.where(decidim_author_id: current_user.id).empty?
+          enforce_permission_to :vote, :initiative, initiative: current_initiative, group_id: group_id
+        else
+          redirect_to initiative_path(current_initiative) and return
+        end
       else
         enforce_permission_to :sign_initiative, :initiative, initiative: current_initiative, group_id: group_id, signature_has_steps: signature_has_steps?
       end
