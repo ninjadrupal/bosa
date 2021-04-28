@@ -30,7 +30,7 @@ module OrganizationExtend
       minimum_age = initiatives_settings_minimum_age(action)
       return true if minimum_age.blank?
 
-      authorization = Decidim::Initiatives::UserAuthorizations.for(user).first
+      authorization = Decidim::Initiatives::UserAuthorizations.for(user).where(name: :csam).first
       return false if !authorization || authorization.metadata[:official_birth_date].blank?
 
       return false if (((Time.zone.now - authorization.metadata[:official_birth_date].in_time_zone) / 1.year.seconds).floor < minimum_age)
@@ -45,7 +45,7 @@ module OrganizationExtend
       region_codes = Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.slice(*allowed_regions).values.pluck(:municipalities).flatten.map {|m| m[:idM]}.uniq
       return true if region_codes.blank?
 
-      authorization = Decidim::Initiatives::UserAuthorizations.for(user).first
+      authorization = Decidim::Initiatives::UserAuthorizations.for(user).where(name: :csam).first
       return false if !authorization || authorization.metadata[:postal_code].blank?
 
       return false unless region_codes.member?(authorization.metadata[:postal_code])
