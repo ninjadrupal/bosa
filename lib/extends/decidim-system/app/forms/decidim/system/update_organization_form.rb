@@ -11,6 +11,7 @@ module UpdateOrganizationFormExtend
     attribute :basic_auth_password, String
     jsonb_attribute :initiatives_settings, [
       [:allow_users_to_see_initiative_no_signature_option, Boolean],
+      [:allow_users_to_see_initiative_attachments, Boolean],
       [:hide_areas_filter, Boolean],
       [:hide_scopes_filter, Boolean],
       [:create_initiative_minimum_age, Integer],

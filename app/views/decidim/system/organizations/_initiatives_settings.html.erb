@@ -2,6 +2,7 @@
   <legend><%= t(".fieldset_title") %></legend>
   <%= f.fields_for :initiatives_settings do %>
     <%= f.check_box :allow_users_to_see_initiative_no_signature_option %>
+    <%= f.check_box :allow_users_to_see_initiative_attachments %>
     <%= f.check_box :hide_areas_filter %>
     <%= f.check_box :hide_scopes_filter %>
 

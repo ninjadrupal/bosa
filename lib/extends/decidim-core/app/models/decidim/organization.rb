@@ -10,6 +10,11 @@ module OrganizationExtend
       available_locales & Decidim.config.translatable_locales
     end
 
+    def initiatives_settings_allow_users_to_see_initiative_attachments?
+      return if self.initiatives_settings.blank?
+      self.initiatives_settings["allow_users_to_see_initiative_attachments"]
+    end
+
     #
     # `action` is one of:
     # - create
