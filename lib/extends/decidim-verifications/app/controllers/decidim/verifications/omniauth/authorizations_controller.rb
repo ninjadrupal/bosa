@@ -7,9 +7,9 @@ module VerificationsOmniauthAuthorizationsControllerExtend
 
   included do
 
-    def redirect_url
-      @redirect_url ||= request.referer || decidim_verifications.authorizations_path
-    end
+    # def redirect_url
+    #   @redirect_url ||= request.referer || decidim_verifications.authorizations_path
+    # end
 
   end
 end

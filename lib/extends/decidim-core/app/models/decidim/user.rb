@@ -10,21 +10,14 @@ module UserExtend
     validates :name, presence: true, unless: -> { deleted? }
     validates :nickname, presence: true, unless: -> { deleted? || managed? }, length: { maximum: Decidim::User.nickname_max_length }
     validates :locale, inclusion: { in: :available_locales }, allow_blank: true
-    validates :tos_agreement, acceptance: true, allow_nil: false, on: :create
+    validates :tos_agreement, acceptance: true, allow_nil: true, on: :create
     validates :tos_agreement, acceptance: true, if: :user_invited?
     validates :email, :nickname, uniqueness: { scope: :organization }, unless: -> { deleted? || managed? || nickname.blank? || email.blank? }
 
     validate :all_roles_are_valid
 
-    def tos_accepted?
-      return true if managed
-      return true if email.blank?
-      return false if accepted_tos_version.nil?
-
-      # For some reason, if we don't use `#to_i` here we get some
-      # cases where the comparison returns false, but calling `#to_i` returns
-      # the same number :/
-      accepted_tos_version.to_i >= organization.tos_version.to_i
+    def active_for_authentication?
+      super
     end
 
     def after_confirmation

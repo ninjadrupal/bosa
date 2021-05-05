@@ -63,12 +63,11 @@ fr:
     devise:
       omniauth_registrations:
         new:
-          registration_info: |-
-            Texte d'information pour la création de compte qui supporte le <code>HTML</code>.
-            <br/><br/>
-            <small>
-              <i>Please change me with translation key <code>decidim.devise.omniauth_registrations.new.registration_info</code><i/>
-            <small/>
+          terms: les termes et conditions d'utilisation
+          tos_agreement: En vous inscrivant, vous acceptez %{link}
+          registration_title: Données optionnelles
+          registration_info: Votre adresse e-mail sert à vous informer des actions et sujets qui vous intéressent sur la plateforme. Après votre inscription, un e-mail vous sera envoyé pour confirmer votre adresse e-mail. Si vous ne remplissez pas votre adresse e-mail ici et ne la confirmez pas ensuite, vous ne recevrez aucune notification par e-mail par la suite. <a href="%{more_url}" target="_blank" rel="noopener noreferrer">Plus d’info</a>
+
     pages:
       terms_and_conditions:
         refuse:
