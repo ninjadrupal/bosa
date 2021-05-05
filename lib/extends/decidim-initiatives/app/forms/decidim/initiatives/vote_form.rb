@@ -57,15 +57,11 @@ module VoteFormExtend
     # have been added to the InitiativeType with its voting settings.
     #
     def authorized_scopes
-      list = initiative.votable_initiative_type_scopes.select do |initiative_type_scope|
-        if initiative_type_scope.scope.present?
+      initiative.votable_initiative_type_scopes.select do |initiative_type_scope|
+        initiative_type_scope.global_scope? ||
           initiative_type_scope.scope == user_authorized_scope ||
-            initiative_type_scope.scope.ancestor_of?(user_authorized_scope)
-        else
-          initiative.type.only_global_scope_enabled && user_authorized_scope.nil?
-        end
-      end
-      list.flat_map(&:scope)
+          initiative_type_scope.scope.ancestor_of?(user_authorized_scope)
+      end.flat_map(&:scope)
     end
 
     # Public: Finds the scope the user has an authorization for, this way the user can vote
