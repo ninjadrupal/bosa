@@ -733,9 +733,10 @@ fr:
     resources:
       initiatives_type:
         actions:
+          title: Actions
           create: Créer une pétition
           vote: Signer une pétition
-          title: Actions
+          view_author_metadata: Afficher les métadonnées de l'auteur
     scopes:
       global: Global
   layouts:

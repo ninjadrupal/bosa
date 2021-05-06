@@ -117,7 +117,8 @@ module InitiativeHelperExtend
       html_options["data-open"] = "authorizationModal"
       html_options["data-open-url"] = authorization_router(authorization).metadata_authorization_path(authorization)
       html_options["onclick"] = "event.preventDefault();"
-      send("button_to", "", html_options, &block)
+      html_options["type"] = "button"
+      send("button_tag", "", html_options, &block)
     end
 
     def any_initiative_types_authorized?
@@ -145,12 +146,12 @@ module InitiativeHelperExtend
 
     # rubocop:enable Style/MultilineBlockChain
 
-    def authorizations
+    def authorizations(action = "create")
       @authorizations ||= Decidim::Verifications::Authorizations.new(
         organization: current_organization,
         user: current_initiative.author,
         granted: true,
-        name: (action_authorized_to("create", resource: current_initiative, permissions_holder: current_initiative.type).statuses || []).map(&:handler_name)
+        name: (action_authorized_to(action, resource: current_initiative, permissions_holder: current_initiative.type).statuses || []).map(&:handler_name)
       )
     end
 

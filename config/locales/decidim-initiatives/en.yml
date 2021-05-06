@@ -239,10 +239,10 @@ en:
     resources:
       initiatives_type:
         actions:
-          create: Create initiative
           title: Actions
-          vote: Sign
+          create: Create initiative
           vote: Sign initiative
+          view_author_metadata: View author metadata
 
     scopes:
       global: Global

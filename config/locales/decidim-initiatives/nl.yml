@@ -527,9 +527,10 @@ nl:
     resources:
       initiatives_type:
         actions:
+          title: Acties
           create: Create initiative
-          title: acties
           vote: Onderteken
+          view_author_metadata: Bekijk metagegevens van de auteur
     scopes:
       global: Global
   layouts:

@@ -12,8 +12,9 @@
         <%= current_initiative.author.name %>
       </div>
       <div class="author--actions">
-        <% if authorizations.any? && authorizations.first.metadata.present? && Decidim::Verifications.find_workflow_manifest(authorizations.first.name)&.admin_engine.present? %>
-          <%= metadata_modal_button_to authorizations.first, method: :get, remote: true, class: "button tiny hollow" do %>
+        <% auth = authorizations("view_author_metadata").first %>
+        <% if auth && auth.metadata.present? && allowed_to?(:index, :authorization) && Decidim::Verifications.find_workflow_manifest(auth.name)&.admin_engine.present? %>
+          <%= metadata_modal_button_to auth, method: :get, remote: true, class: "button tiny hollow" do %>
             <%= icon "shield" %>
             <%= t "actions.metadata", scope: "decidim.verifications.omniauth.admin.authorizations.index" %>
           <% end %>
