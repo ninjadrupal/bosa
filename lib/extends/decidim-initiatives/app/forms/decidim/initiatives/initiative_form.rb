@@ -39,18 +39,18 @@ module InitiativeFormExtend
     #   errors.add(:scope_id, :invalid) unless InitiativesTypeScope.where(type: initiative_type, scope: scope).exists?
     # end
 
-    def type
-      @type ||= Decidim::InitiativesType.find(type_id)
-    end
+    # def type
+    #   @type ||= Decidim::InitiativesType.find(type_id)
+    # end
 
     def notify_missing_attachment_if_errored
-      return if attachment.file.blank?
+      return if attachment.blank? || attachment.file.blank?
 
       errors.add(:attachment, :needs_to_be_reattached) if errors.any?
     end
 
     def trigger_attachment_errors
-      return if attachment.file.blank?
+      return if attachment.blank? || attachment.file.blank?
       return if attachment.valid?
 
       if attachment.errors.has_key?(:title)
