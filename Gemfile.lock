@@ -62,7 +62,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: e05f318076e840fbaf142614599cd4879d7c8ac1
+  revision: 24d393389588a1a382714939e01287d6643d7e1b
   branch: 0.22.0
   specs:
     decidim-verifications_omniauth (0.22.0)
@@ -662,7 +662,7 @@ GEM
       chef-utils
     mongo (2.14.0)
       bson (>= 4.8.2, < 5.0.0)
-    mongoid (7.2.2)
+    mongoid (7.2.3)
       activemodel (>= 5.1, < 6.2)
       mongo (>= 2.10.5, < 3.0.0)
     msgpack (1.3.3)
