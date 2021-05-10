@@ -42,11 +42,11 @@
         table: false,
         'better-table': {
           operationMenu: {
-            items: {
-              unmergeCells: {
-                text: 'Another unmerge cells name'
-              }
-            }
+            // items: {
+            //   unmergeCells: {
+            //     text: 'Another unmerge cells name'
+            //   }
+            // }
           }
         }
 
