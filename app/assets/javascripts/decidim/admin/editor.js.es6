@@ -1,4 +1,4 @@
-// // // = require quill.min
+// // require quill.min
 // = require decidim/admin/quill-2.0.0-dev.3.min
 // = require decidim/admin/quill_iframe_plugin
 // = require decidim/admin/quill-image-drop-plugin.min
