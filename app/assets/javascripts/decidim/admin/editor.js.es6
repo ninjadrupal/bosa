@@ -1,9 +1,13 @@
-// = require quill.min
+// // // = require quill.min
+// = require decidim/admin/quill-2.0.0-dev.3.min
 // = require decidim/admin/quill_iframe_plugin
 // = require decidim/admin/quill-image-drop-plugin.min
+// = require decidim/admin/quill-better-table-plugin.min
 // = require_self
 
 ((exports) => {
+  window.Quill.register('modules/better-table', quillBetterTable);
+
   const quillFormats = ["bold", "italic", "link", "underline", "header", "list", "image", "video", "iframe"];
 
   const createQuillEditor = (container) => {
@@ -33,7 +37,19 @@
     const quill = new Quill(container, {
       modules: {
         toolbar: quillToolbar,
-        imageDrop: true
+        imageDrop: true,
+
+        table: false,
+        'better-table': {
+          operationMenu: {
+            items: {
+              unmergeCells: {
+                text: 'Another unmerge cells name'
+              }
+            }
+          }
+        }
+
       },
       formats: quillFormats,
       theme: "snow"
