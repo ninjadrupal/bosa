@@ -2,7 +2,7 @@
 
 require "active_support/concern"
 
-module FlashMessagesHelperExtend
+module FoundationRailsHelperFlashHelperExtend
   extend ActiveSupport::Concern
 
   included do
@@ -32,4 +32,4 @@ module FlashMessagesHelperExtend
   end
 end
 
-FoundationRailsHelper::FlashHelper.send(:include, FlashMessagesHelperExtend)
+FoundationRailsHelper::FlashHelper.send(:include, FoundationRailsHelperFlashHelperExtend)

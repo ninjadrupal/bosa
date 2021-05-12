@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-module Decidim
-  # Helper that provides methods to enable or disable omniauth buttons
-  module OmniauthHelper
+require "active_support/concern"
+
+module OmniauthHelperExtend
+  extend ActiveSupport::Concern
+
+  included do
     # Public: returns true if the social provider is enabled
     def social_provider_enabled?(provider)
       current_organization.enabled_omniauth_providers.key?(provider.to_sym)
@@ -35,10 +38,7 @@ module Decidim
       name ||= provider.to_s.split("_").first
       icon(name)
     end
-
-    # Public: pretty print provider name
-    def provider_name(provider)
-      provider.to_s.gsub(/_|-/, " ").camelize
-    end
   end
 end
+
+Decidim::OmniauthHelper.send(:include, OmniauthHelperExtend)
