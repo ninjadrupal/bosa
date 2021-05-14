@@ -2,7 +2,7 @@
 
 require "active_support/concern"
 
-module InitiativeWidgetsControllerExtend
+module InitiativesWidgetsControllerExtend
   extend ActiveSupport::Concern
 
   included do
@@ -20,4 +20,4 @@ module InitiativeWidgetsControllerExtend
   end
 end
 
-Decidim::Initiatives::InitiativeWidgetsController.send(:include, InitiativeWidgetsControllerExtend)
+Decidim::Initiatives::WidgetsController.send(:include, InitiativesWidgetsControllerExtend)
