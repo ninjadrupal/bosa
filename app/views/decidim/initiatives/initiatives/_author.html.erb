@@ -10,7 +10,7 @@
             <%= t(".deleted") %>
           </span>
         <% else %>
-          <a href="/profiles/<%= initiative.author.nickname %>"> <%= initiative.author_name %> </a>
+          <%= link_to(initiative.author_name, decidim.profile_path(initiative.author.nickname)) %>
         <% end %>
       </span>
     </div>
