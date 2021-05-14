@@ -10,7 +10,7 @@
             <%= t(".deleted") %>
           </span>
         <% else %>
-          <%= initiative.author_name %>
+          <a href="/profiles/<%= initiative.author.nickname %>"> <%= initiative.author_name %> </a>
         <% end %>
       </span>
     </div>
