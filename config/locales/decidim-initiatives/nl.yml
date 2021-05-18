@@ -31,7 +31,7 @@ nl:
       initiatives_committee_member:
         user: Commissielid
       initiatives_type:
-        area_enabled: Stel beheerders in staat het gebied voor suggestie te kiezen
+        area_enabled: Stel beheerders in staat het gebied voor initiatief te kiezen
         banner_image: Banner afbeelding
         cannot_accumulate_supports_beyond_threshold: Geen stemmen kunnen verzamelen boven de drempel
         child_scope_threshold_enabled: Enable child scope signatures

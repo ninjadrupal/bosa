@@ -23,7 +23,7 @@ Decidim::Verifications.register_workflow(:csam) do |workflow|
   # workflow.form = "Decidim::Verifications::Omniauth::OmniauthAuthorizationForm"
   workflow.omniauth_provider = :csam
   # workflow.minimum_age = 16
-  workflow.expires_in = 24.hours
+  # workflow.expires_in = 24.hours
 end
 
 Decidim::Verifications.register_workflow(:saml) do |workflow|
@@ -33,5 +33,5 @@ Decidim::Verifications.register_workflow(:saml) do |workflow|
   # workflow.form = "Decidim::Verifications::Omniauth::OmniauthAuthorizationForm"
   workflow.omniauth_provider = :saml
   # workflow.minimum_age = 16
-  workflow.expires_in = 24.hours
+  # workflow.expires_in = 24.hours
 end

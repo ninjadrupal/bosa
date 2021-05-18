@@ -36,7 +36,7 @@ fr:
         user: Membre du Comité de promotion
       initiatives_type:
         #area_enabled: Enable authors to choose the area for their initiative
-        area_enabled: Permettre aux administrateurs de choisir la zone de suggestion
+        area_enabled: Permettre aux administrateurs de choisir la zone de pétition
         attachments_enabled: Enable attachments
         banner_image: Image d'en-tête
         cannot_accumulate_supports_beyond_threshold: Ne pas pouvoir accumuler de votes au-delà du seuil
