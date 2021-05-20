@@ -8,7 +8,7 @@ en:
 
       initiatives_type:
         #area_enabled: Enable authors to choose the area for their initiative
-        area_enabled: Enable admins to choose the area for suggestion
+        area_enabled: Enable admins to choose the area for initiative
         attachments_enabled: Enable attachments
         cannot_accumulate_supports_beyond_threshold: Cannot accumulate votes beyond threshold
         child_scope_threshold_enabled: Enable child scope signatures
