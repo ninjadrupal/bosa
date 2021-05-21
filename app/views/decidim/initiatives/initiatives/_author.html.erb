@@ -10,7 +10,7 @@
             <%= t(".deleted") %>
           </span>
         <% else %>
-          <%= initiative.author_name %>
+          <%= link_to(initiative.author_name, decidim.profile_path(initiative.author.nickname)) %>
         <% end %>
       </span>
     </div>
