@@ -4,13 +4,15 @@ source 'https://rubygems.org'
 
 ruby RUBY_VERSION
 
-DECIDIM_VERSION = '0.22.0'
+DECIDIM_VERSION = '0.24.2'
 
-gem 'decidim', DECIDIM_VERSION, git: 'https://github.com/decidim/decidim'
-gem 'decidim-initiatives', DECIDIM_VERSION, git: 'https://github.com/decidim/decidim'
-gem 'decidim-verifications_omniauth', git: 'https://github.com/belighted/decidim-module-verifications_omniauth', branch: DECIDIM_VERSION
+gem 'decidim', DECIDIM_VERSION
+gem 'decidim-initiatives', DECIDIM_VERSION
 gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed', branch: DECIDIM_VERSION
-gem 'decidim-suggestions', git: 'https://github.com/belighted/decidim-module-suggestions', branch: DECIDIM_VERSION
+gem 'decidim-verifications_omniauth', git: 'https://github.com/belighted/decidim-module-verifications_omniauth', branch: DECIDIM_VERSION
+# gem 'decidim-verifications_omniauth', path: '../decidim-module-verifications_omniauth'
+# gem 'decidim-suggestions', git: 'https://github.com/belighted/decidim-module-suggestions', branch: DECIDIM_VERSION
+gem 'decidim-suggestions', path: '../decidim-module-suggestions'
 gem 'decidim-term_customizer', git: 'https://github.com/belighted/decidim-module-term_customizer', branch: DECIDIM_VERSION
 gem 'decidim-cookies', git: 'https://github.com/belighted/decidim-module-cookies', branch: DECIDIM_VERSION
 gem 'decidim-navbar_links', git: 'https://github.com/belighted/decidim-module-navbar_links', branch: DECIDIM_VERSION
@@ -19,25 +21,25 @@ gem 'decidim-castings', git: 'https://github.com/belighted/decidim-module-castin
 # ----------------------------------------------------------------------------------------------------------------------
 gem 'appsignal'
 gem 'activerecord-session_store'
-gem 'bootsnap'
+gem "bootsnap", "~> 1.3"
 gem 'deepl-rb'
 gem 'http_logger'
 gem 'omniauth-rails_csrf_protection'
-gem "puma", "~> 4.3"
+gem "puma", ">= 5.0.0"
 gem 'pry'
 gem 'ruby-progressbar'
 gem 'rubyzip', require: 'zip'
 gem 'sentry-raven'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
-gem 'uglifier'
-gem 'wicked_pdf'
+gem "uglifier", "~> 4.1"
+gem "wicked_pdf", "~> 1.4"
 gem 'wkhtmltopdf-binary'
 
 gem 'dotenv-rails'
 
 group :development, :test do
-  gem 'faker', '~> 1.9'
+  gem "faker", "~> 2.14"
   gem 'byebug', '~> 11.0', platform: :mri
   gem 'decidim-dev', DECIDIM_VERSION
   gem 'pry-rails'
