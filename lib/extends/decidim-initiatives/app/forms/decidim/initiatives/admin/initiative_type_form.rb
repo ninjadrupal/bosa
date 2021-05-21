@@ -13,4 +13,4 @@ module InitiativeTypeFormExtend
   end
 end
 
-Decidim::Initiatives::Admin::InitiativeTypeForm.send(:includae, InitiativeTypeFormExtend)
+Decidim::Initiatives::Admin::InitiativeTypeForm.send(:include, InitiativeTypeFormExtend)

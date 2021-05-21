@@ -10,7 +10,7 @@ module UserExtend
     validates :name, presence: true, unless: -> { deleted? }
     validates :nickname,
               presence: true,
-              format: { with: REGEXP_NICKNAME },
+              format: { with: Decidim::User::REGEXP_NICKNAME },
               length: { maximum: Decidim::User.nickname_max_length },
               unless: -> { deleted? || managed? }
     validates :locale, inclusion: { in: :available_locales }, allow_blank: true
