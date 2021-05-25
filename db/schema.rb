@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_05_063027) do
+ActiveRecord::Schema.define(version: 2021_05_25_110101) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -611,6 +611,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_063027) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "decidim_organization_id"
+    t.string "rrn_hash"
     t.index ["decidim_organization_id"], name: "index_decidim_identities_on_decidim_organization_id"
     t.index ["decidim_user_id"], name: "index_decidim_identities_on_decidim_user_id"
     t.index ["provider", "uid", "decidim_organization_id"], name: "decidim_identities_provider_uid_organization_unique", unique: true
