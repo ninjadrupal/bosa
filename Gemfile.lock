@@ -37,8 +37,8 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-suggestions
-  revision: 03fab5ec8f4e31920c82e0b7b6d1c32f25bc268b
-  branch: 0.22.0
+  revision: c12a0b851d38f4b755464263f789d4ef7d1c022d
+  branch: 0.24.2
   specs:
     decidim-suggestions (0.24.2)
       decidim-admin (= 0.24.2)
@@ -63,8 +63,8 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: 11934165558b53f379c27fae111d41d12cfcfa71
-  branch: 0.22.0
+  revision: d60daffdf72ba47c47f03c1d113ef3fdea5915ac
+  branch: 0.24.2
   specs:
     decidim-verifications_omniauth (0.24.2)
       decidim-core (= 0.24.2)
@@ -165,7 +165,7 @@ GEM
     bootsnap (1.7.5)
       msgpack (~> 1.0)
     browser (2.7.1)
-    bson (4.12.0)
+    bson (4.12.1)
     builder (3.2.4)
     byebug (11.1.3)
     capistrano (3.16.0)
