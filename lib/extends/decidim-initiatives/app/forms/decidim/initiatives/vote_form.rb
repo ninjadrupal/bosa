@@ -14,6 +14,9 @@ module VoteFormExtend
 
     clear_validators!
     validates :initiative, :signer, presence: true
+
+    validates :authorized_scopes, presence: true
+
     with_options if: :required_personal_data? do
       validates :encrypted_metadata, :hash_id, :resident, presence: true
       validate :already_voted?

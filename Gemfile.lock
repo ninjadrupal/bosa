@@ -36,6 +36,23 @@ GIT
       decidim-core (= 0.24.2)
 
 GIT
+  remote: https://github.com/belighted/decidim-module-suggestions
+  revision: b1ac935994930837866f9113b14f280002d9debf
+  branch: 0.24.2
+  specs:
+    decidim-suggestions (0.24.2)
+      decidim-admin (= 0.24.2)
+      decidim-comments (= 0.24.2)
+      decidim-core (= 0.24.2)
+      decidim-verifications (= 0.24.2)
+      kaminari (~> 1.2, >= 1.2.1)
+      origami (~> 2.1)
+      virtus-multiparams (~> 0.1)
+      wicked (~> 1.3)
+      wicked_pdf (~> 1.4)
+      wkhtmltopdf-binary (~> 0.12)
+
+GIT
   remote: https://github.com/belighted/decidim-module-term_customizer
   revision: 1b920a66d326a229a15bdf1a5a6f11a2ebe4afd6
   branch: 0.24.2
@@ -56,21 +73,6 @@ GIT
       omniauth-saml (~> 1.10)
       savon (~> 2.12.0)
       signer
-
-PATH
-  remote: ../decidim-module-suggestions
-  specs:
-    decidim-suggestions (0.24.2)
-      decidim-admin (= 0.24.2)
-      decidim-comments (= 0.24.2)
-      decidim-core (= 0.24.2)
-      decidim-verifications (= 0.24.2)
-      kaminari (~> 1.2, >= 1.2.1)
-      origami (~> 2.1)
-      virtus-multiparams (~> 0.1)
-      wicked (~> 1.3)
-      wicked_pdf (~> 1.4)
-      wkhtmltopdf-binary (~> 0.12)
 
 GEM
   remote: https://rubygems.org/

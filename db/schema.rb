@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_11_064627) do
+ActiveRecord::Schema.define(version: 2021_05_28_073519) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "btree_gin"
@@ -1483,19 +1483,20 @@ ActiveRecord::Schema.define(version: 2021_05_11_064627) do
     t.jsonb "answer"
     t.datetime "answered_at"
     t.string "answer_url"
-    t.integer "suggestion_votes_count", default: 0, null: false
     t.integer "decidim_user_group_id"
     t.string "hashtag"
-    t.integer "suggestion_supports_count", default: 0, null: false
     t.integer "scoped_type_id"
     t.datetime "first_progress_notification_at"
     t.datetime "second_progress_notification_at"
-    t.integer "offline_votes"
     t.string "reference"
     t.bigint "decidim_area_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "answer_date"
+    t.integer "comments_count", default: 0, null: false
+    t.integer "follows_count", default: 0, null: false
+    t.jsonb "online_votes", default: {}
+    t.jsonb "offline_votes", default: {}
     t.index "md5((description)::text)", name: "decidim_suggestions_description_search"
     t.index ["answered_at"], name: "index_decidim_suggestions_on_answered_at"
     t.index ["decidim_area_id"], name: "index_decidim_suggestions_on_decidim_area_id"
@@ -1567,16 +1568,14 @@ ActiveRecord::Schema.define(version: 2021_05_11_064627) do
   create_table "decidim_suggestions_votes", force: :cascade do |t|
     t.bigint "decidim_suggestion_id", null: false
     t.bigint "decidim_author_id", null: false
-    t.integer "decidim_user_group_id"
     t.text "encrypted_metadata"
     t.string "timestamp"
     t.string "hash_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "decidim_scope_id"
     t.index ["decidim_author_id"], name: "index_decidim_suggestions_votes_on_decidim_author_id"
-    t.index ["decidim_suggestion_id", "decidim_author_id", "decidim_user_group_id"], name: "decidim_suggestions_votes_author_uniqueness_index", unique: true
     t.index ["decidim_suggestion_id"], name: "index_decidim_suggestions_votes_on_decidim_suggestion_id"
-    t.index ["decidim_user_group_id"], name: "index_decidim_suggestions_votes_on_decidim_user_group_id"
     t.index ["hash_id"], name: "index_decidim_suggestions_votes_on_hash_id"
   end
 

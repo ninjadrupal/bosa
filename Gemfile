@@ -10,9 +10,7 @@ gem 'decidim', DECIDIM_VERSION
 gem 'decidim-initiatives', DECIDIM_VERSION
 gem 'decidim-initiatives_no_signature_allowed', git: 'https://github.com/belighted/decidim-module-initiatives_nosignature_allowed', branch: DECIDIM_VERSION
 gem 'decidim-verifications_omniauth', git: 'https://github.com/belighted/decidim-module-verifications_omniauth', branch: DECIDIM_VERSION
-# gem 'decidim-verifications_omniauth', path: '../decidim-module-verifications_omniauth'
-# gem 'decidim-suggestions', git: 'https://github.com/belighted/decidim-module-suggestions', branch: DECIDIM_VERSION
-gem 'decidim-suggestions', path: '../decidim-module-suggestions'
+gem 'decidim-suggestions', git: 'https://github.com/belighted/decidim-module-suggestions', branch: DECIDIM_VERSION
 gem 'decidim-term_customizer', git: 'https://github.com/belighted/decidim-module-term_customizer', branch: DECIDIM_VERSION
 gem 'decidim-cookies', git: 'https://github.com/belighted/decidim-module-cookies', branch: DECIDIM_VERSION
 gem 'decidim-navbar_links', git: 'https://github.com/belighted/decidim-module-navbar_links', branch: DECIDIM_VERSION

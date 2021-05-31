@@ -6,15 +6,6 @@ module InitiativesControllerExtend
   extend ActiveSupport::Concern
 
   included do
-    helper Decidim::ActionAuthorizationHelper
-    include Decidim::Initiatives::SingleInitiativeType
-
-    # GET /initiatives/:id/signature_identities
-    def signature_identities
-      @voted_groups = []
-
-      render layout: false
-    end
 
     private
 
