@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-cookies
-  revision: 75fe29d5cc93b5aa806ec4f2ad9796954ba9d427
+  revision: a14584df419c51642efb7fdcaa368d0d788df547
   branch: 0.24.2
   specs:
     decidim-cookies (0.24.2)
