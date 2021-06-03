@@ -20,7 +20,7 @@ set :rbenv_roles, :all # default value
 set :puma_init_active_record, true
 set :puma_preload_app, true
 set :puma_env, fetch(:rack_env, fetch(:rails_env))
-
+set :use_sudo, true
 
 set :sidekiq_config, -> { File.join(shared_path, 'config', 'sidekiq.yml') }
 set sidekiq_default_hooks: false
