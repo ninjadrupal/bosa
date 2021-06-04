@@ -309,9 +309,21 @@ module Decidim
       supports_count * 100 / supports_required
     end
 
+    def percentage_for_scope(id, votes_number)
+      required_for_scope = votable_initiative_type_scopes.find{ |s| s.decidim_scopes_id == id}.supports_required
+
+      return 100 if supports_goal_reached_for_scope?(required_for_scope,votes_number)
+
+      votes_number * 100 / required_for_scope
+    end
+
     # Public: Whether the supports required objective has been reached
     def supports_goal_reached?
       supports_count >= supports_required
+    end
+
+    def supports_goal_reached_for_scope?(required_for_scope,votes_number)
+      votes_number >= required_for_scope
     end
 
     # Public: Calculates all the votes across all the scopes.

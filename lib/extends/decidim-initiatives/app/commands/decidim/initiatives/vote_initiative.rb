@@ -25,11 +25,20 @@ module VoteInitiativeExtend
         create_votes
       end
 
+      initiative_scope_list = initiative.votable_initiative_type_scopes
+      scope_after = {}
+
+      initiative_scope_list.each do |initiatives_type_scope|
+        scope_after[initiatives_type_scope.decidim_scopes_id] =
+          initiative.votes.where(decidim_scope_id: initiatives_type_scope.decidim_scopes_id).count unless initiatives_type_scope.decidim_scopes_id.nil?
+      end
+
       percentage_after = initiative.reload.percentage
 
       send_notification
       notify_percentage_change(percentage_before, percentage_after)
       notify_support_threshold_reached(percentage_after)
+      notify_support_threshold_reached_for_scopes(scope_after)
 
       broadcast(:ok, votes)
     end
@@ -95,10 +104,28 @@ module VoteInitiativeExtend
 
       Decidim::EventsManager.publish(
         event: "decidim.events.initiatives.support_threshold_reached",
-        event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEvent,
+        event_class: Decidim::Initiatives::SupportThresholdReachedEvent,
         resource: initiative,
         followers: organization_admins
       )
+    end
+
+    def notify_support_threshold_reached_for_scopes(scopes)
+      scopes.each do |k,v|
+        next if initiative.percentage_for_scope(k, v) != 100
+
+        scope = initiative.votable_initiative_type_scopes.find{ |s| s.decidim_scopes_id == k}.scope
+
+        Decidim::EventsManager.publish(
+          event: "decidim.events.initiatives.support_threshold_reached",
+          event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEventForScope,
+          resource: initiative,
+          affected_users: [initiative.author],
+          extra: {
+            scope: scope
+          }
+        )
+      end
     end
 
     def organization_admins
