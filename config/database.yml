@@ -28,18 +28,18 @@ default: &default
 
 development:
   <<: *default
-  database: bosa_petition_dev
+  database: <%= ENV.fetch("DATABASE_NAME", "bosa_petition_dev") %>
 
 test:
   <<: *default
-  database: bosa_petition_test
+  database: <%= ENV.fetch("DATABASE_NAME", "bosa_petition_test") %>
 
 staging:
-  database: <%= ENV['DATABASE_NAME'] %>
+  database: <%= ENV["DATABASE_NAME"] %>
 
 production:
   <<: *default
-  database: <%= ENV['DATABASE_NAME'] %>
+  database: <%= ENV["DATABASE_NAME"] %>
 
 
   # The specified database role being used to connect to postgres.

@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-cookies
-  revision: a312864b9b57075d387e1dd96dbfaab05065bf66
+  revision: ead9e4349afb6442d106df52643d557615d09c90
   branch: 0.22.0
   specs:
     decidim-cookies (0.22.0)
@@ -36,7 +36,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-suggestions
-  revision: 83eddcfa309202dd98ce5630235db333a0163134
+  revision: 03fab5ec8f4e31920c82e0b7b6d1c32f25bc268b
   branch: 0.22.0
   specs:
     decidim-suggestions (0.22.0)
@@ -62,7 +62,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: 3c294333935311a17380a38dc495ac6a2eae38cc
+  revision: 39096cafef1f023f027ab9d71fbc4f3ff423c36f
   branch: 0.22.0
   specs:
     decidim-verifications_omniauth (0.22.0)
@@ -650,7 +650,9 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0225)
-    mimemagic (0.3.5)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_magick (4.11.0)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
