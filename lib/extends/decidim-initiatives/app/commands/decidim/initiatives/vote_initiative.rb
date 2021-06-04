@@ -104,7 +104,7 @@ module VoteInitiativeExtend
 
       Decidim::EventsManager.publish(
         event: "decidim.events.initiatives.support_threshold_reached",
-        event_class: Decidim::Initiatives::SupportThresholdReachedEvent,
+        event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEvent,
         resource: initiative,
         followers: organization_admins
       )
@@ -117,8 +117,8 @@ module VoteInitiativeExtend
         scope = initiative.votable_initiative_type_scopes.find{ |s| s.decidim_scopes_id == k}.scope
 
         Decidim::EventsManager.publish(
-          event: "decidim.events.initiatives.support_threshold_reached",
-          event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEventForScope,
+          event: "decidim.events.initiatives.milestone_completed.support_threshold_reached_for_scope",
+          event_class: Decidim::Initiatives::SupportThresholdReachedForScopeEvent,
           resource: initiative,
           affected_users: [initiative.author],
           extra: {

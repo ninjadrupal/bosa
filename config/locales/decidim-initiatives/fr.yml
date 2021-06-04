@@ -216,20 +216,12 @@ fr:
             notification_title: The <a href="%{resource_path}">%{resource_title}</a>
               initiative has reached the support threshold
           support_threshold_reached_for_scope:
-            author:
-              email_intro: Votre pétition %{resource_title} a atteint le nombre minimum de signatures
-              email_outro: You have received this notification because you are an admin
-                of the platform.
-              email_subject: Support threshold reached
-              notification_title: Votre pétition <a href="%{resource_path}">"%{resource_title}"</a>
-                a atteint le nombre minimum de signatures pour la %{scope_name}
-            admin:
-              email_intro: La pétition %{resource_title} a atteint le nombre minimum de signatures
-              email_outro: You have received this notification because you are an admin
-                of the platform.
-              email_subject: Support threshold reached
-              notification_title: Votre pétition <a href="%{resource_path}">%{resource_title}</a>
-                initiative has reached the support threshold
+            email_intro: Votre pétition %{resource_title} a atteint le nombre minimum de signatures
+            email_outro: You have received this notification because you are an admin
+              of the platform.
+            email_subject: Support threshold reached
+            notification_title: Votre pétition <a href="%{resource_path}">"%{resource_title}"</a>
+              a atteint le nombre minimum de signatures pour la %{scope_name}
     gamification:
       badges:
         initiatives:

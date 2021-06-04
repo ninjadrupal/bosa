@@ -2,9 +2,7 @@
 
 module Decidim
   module Initiatives
-    class SupportThresholdReachedEventForScope < Decidim::Events::BaseEvent
-      include Decidim::Events::EmailEvent
-      include Decidim::Events::NotificationEvent
+    class SupportThresholdReachedForScopeEvent < Decidim::Events::SimpleEvent
 
       def scope
         extra[:scope]
@@ -39,7 +37,7 @@ module Decidim
 
       def notification_title
         I18n.t(
-          "decidim.events.initiatives.milestone_completed.support_threshold_reached_for_scope.author.notification_title",
+          "decidim.events.initiatives.milestone_completed.support_threshold_reached_for_scope.notification_title",
           resource_title: resource_title,
           resource_path: resource_path,
           author_nickname: author.nickname,
