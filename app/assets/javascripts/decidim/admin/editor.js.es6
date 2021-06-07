@@ -8,7 +8,7 @@
 ((exports) => {
   window.Quill.register('modules/better-table', quillBetterTable);
 
-  const quillFormats = ["bold", "italic", "link", "underline", "header", "list", "image", "video", "iframe"];
+  const quillFormats = ["bold", "italic", "link", "underline", "header", "list", "image", "video", "iframe", "table"];
 
   const createQuillEditor = (container) => {
     const toolbar = $(container).data("toolbar");
@@ -24,12 +24,12 @@
       quillToolbar = [
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ...quillToolbar,
-        ["image", "video", "iframe"]
+        ["image", "video", "iframe", "table"]
       ];
     } else if (toolbar === "basic") {
       quillToolbar = [
         ...quillToolbar,
-        ["image", "video", "iframe"]
+        ["image", "video", "iframe", "table"]
       ];
     }
 
@@ -42,11 +42,6 @@
         table: false,
         'better-table': {
           operationMenu: {
-            // items: {
-            //   unmergeCells: {
-            //     text: 'Another unmerge cells name'
-            //   }
-            // }
           }
         }
 
@@ -80,6 +75,12 @@
         });
       } else {
         this.quill.format('link', false);
+      }
+    });
+    tb.addHandler('table', function (value) {
+      if (value) {
+        const tableModule = quill.getModule('better-table');
+        tableModule.insertTable(3, 5)
       }
     });
 
