@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/belighted/decidim-module-castings
-  revision: 636992c2f64a3b4ebf3348a4bac977ba5fb229db
+  revision: 812ea13eafc44f4cf7517e99855f731073e29f21
   branch: 0.22.0
   specs:
     decidim-castings (0.22.0)
@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-cookies
-  revision: a312864b9b57075d387e1dd96dbfaab05065bf66
+  revision: ead9e4349afb6442d106df52643d557615d09c90
   branch: 0.22.0
   specs:
     decidim-cookies (0.22.0)
@@ -62,7 +62,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: 9ea2c2f23418fc8f9c8059a8e78cc28326bdf63e
+  revision: 39096cafef1f023f027ab9d71fbc4f3ff423c36f
   branch: 0.22.0
   specs:
     decidim-verifications_omniauth (0.22.0)
@@ -557,6 +557,9 @@ GEM
     geocoder (1.6.6)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    goldiloader (4.1.0)
+      activerecord (>= 5.2, < 7.1)
+      activesupport (>= 5.2, < 7.1)
     graphiql-rails (1.4.11)
       railties
       sprockets-rails
@@ -650,7 +653,9 @@ GEM
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2021.0225)
-    mimemagic (0.3.5)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
     mini_magick (4.11.0)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
@@ -1042,6 +1047,7 @@ DEPENDENCIES
   dotenv-rails
   faker (~> 1.9)
   fog-aws
+  goldiloader
   http_logger
   letter_opener_web (~> 1.3)
   listen (~> 3.1)
@@ -1068,7 +1074,7 @@ DEPENDENCIES
   wkhtmltopdf-binary
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 2.6.6p146
 
 BUNDLED WITH
    2.1.4
