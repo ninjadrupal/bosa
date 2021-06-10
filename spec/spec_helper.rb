@@ -30,11 +30,9 @@ end
 
 require "decidim/core/test/factories"
 require "decidim/initiatives/test/factories"
+Dir["#{Rails.root.join('spec')}/support/**/*.rb"].each { |f| require f }
 
 # ---------------------------------------------------------------------------------------------------------------------
-
-require "database_cleaner/active_record"
-DatabaseCleaner.strategy = :truncation
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -67,13 +65,14 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
+  config.prepend_before(:each, type: :system) do
+    # Use JS driver always
+    driven_by Capybara.javascript_driver
+  end
+
   config.before(:suite) do
     # Set time zone - fixes tests running in non UTC timezone
     Time.zone = "UTC"
-  end
-
-  config.after(:suite) do
-    DatabaseCleaner.clean
   end
 
 # The settings below are suggested to provide a good initial experience

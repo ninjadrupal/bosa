@@ -47,9 +47,6 @@ group :development, :test do
   gem 'decidim-dev', DECIDIM_VERSION
   gem 'pry-rails'
   gem 'webdrivers'
-  gem 'rack-mini-profiler'
-  gem 'memory_profiler'
-  gem 'stackprof'
 end
 
 group :development do
@@ -61,6 +58,9 @@ group :development do
   gem "capistrano-db-tasks", require: false
   gem 'letter_opener_web', '~> 1.3'
   gem 'listen', '~> 3.1'
+  gem 'rack-mini-profiler'
+  gem 'memory_profiler'
+  gem 'stackprof'
   gem 'spring', '~> 2.0'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'web-console', '~> 3.5'
@@ -74,5 +74,6 @@ group :production do
 end
 
 group :test do
-  gem 'database_cleaner-active_record'
+  gem 'cuprite'
+  gem "test-prof", "~> 1.0"
 end
