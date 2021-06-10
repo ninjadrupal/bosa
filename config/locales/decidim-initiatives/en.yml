@@ -73,17 +73,21 @@ en:
             email_outro: You have received this notification because you are an admin of the platform.
             email_subject: Initiative "%{resource_title}" has been created.
             notification_title: The initiative "%{resource_title}" has been created. Check it out at <a href="%{admin_initiative_path}">the admin panel</a>
+          support_threshold_reached_for_scope:
+            email_intro: The initiative %{resource_title} has reached the minimum number of signatures for the %{scope_name} Region.
+            email_outro: You have received this notification because you are an admin of the platform.
+            email_subject: Support threshold reached
+            notification_title: The <a href="%{resource_path}">%{resource_title}</a> initiative has reached the minimum number of signatures for the %{scope_name} Region.
         initiative_sent_to_technical_validation:
           email_intro: The initiative "%{resource_title}" has been sent to technical validation.
           email_outro: You have received this notification because you are author of initiative.
           email_subject: initiative "%{resource_title}" has been sent to technical validation.
           notification_title: The initiative <a href="%{resource_path}">"%{resource_title}"</a> has been sent to technical validation.
-        milestone_completed:
-          support_threshold_reached:
-            email_intro: The initiative %{resource_title} has reached the support threshold
-            email_outro: You have received this notification because you are an admin of the platform.
-            email_subject: Support threshold reached
-            notification_title: The <a href="%{resource_path}">%{resource_title}</a> initiative has reached the support threshold
+        support_threshold_reached_for_scope:
+          email_intro: Your initiative %{resource_title} has reached the minimum number of signatures for the %{scope_name} Region.
+          email_outro: You have received this notification because you are author of initiative.
+          email_subject: Support threshold reached
+          notification_title: Your <a href="%{resource_path}">%{resource_title}</a> initiative has reached the minimum number of signatures for the %{scope_name} Region.
 
     initiatives:
       admin:

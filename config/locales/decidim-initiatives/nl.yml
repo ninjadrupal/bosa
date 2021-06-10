@@ -137,6 +137,11 @@ nl:
             email_outro: Je hebt deze melding ontvangen omdat je beheerder bent van het platform.
             email_subject: Initiatief "%{resource_title}" is gemaakt.
             notification_title: Het initiatief "%{resource_title}" is gemaakt. Bekijk het via <a href="%{admin_initiative_path}">het beheerpaneel</a>
+          support_threshold_reached_for_scope:
+            email_intro: De petitie %{resource_title} heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
+            email_outro: Je hebt deze melding ontvangen omdat je beheerder bent van het platform.
+            email_subject: Ondersteuningsdrempel bereikt
+            notification_title: De petitie <a href="%{resource_path}">%{resource_title}</a> heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
         initiative_extended:
           email_intro: De einddatum voor de handtekeningen van initiatief %{resource_title} is verlengd!
           email_outro: U hebt deze melding ontvangen omdat u %{resource_title} volgt. Je kunt de meldingen stoppen door de vorige link te volgen.
@@ -158,6 +163,11 @@ nl:
             email_outro: U hebt deze melding ontvangen omdat u %{resource_title} volgt. Je kunt de meldingen stoppen door de vorige link te volgen.
             email_subject: Nieuwe mijlpaal voltooid!
             notification_title: Het <a href="%{resource_path}">%{resource_title}</a> initiatief heeft %{percentage}% handtekeningen behaald.
+        support_threshold_reached_for_scope:
+          email_intro: Uw petitie %{resource_title} heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
+          email_outro: Je hebt deze melding ontvangen omdat u de auteur van de initiatief bent.
+          email_subject: Ondersteuningsdrempel bereikt
+          notification_title: Uw petitie <a href="%{resource_path}">%{resource_title}</a> heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
     gamification:
       badges:
         initiatives:
