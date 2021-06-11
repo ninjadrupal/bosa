@@ -21,6 +21,7 @@ ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 Decidim::Dev::dummy_app_path = File.expand_path(File.join("."))
 
 require "decidim/dev/test/base_spec_helper"
+require "decidim/faker/internet"
 
 # Fix loading shared examples from subfolders
 ['admin', 'initiatives'].each do |f|
