@@ -62,7 +62,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: 39096cafef1f023f027ab9d71fbc4f3ff423c36f
+  revision: 05fd7eacfa857467df7c058e1a4c3732ec9bde75
   branch: 0.22.0
   specs:
     decidim-verifications_omniauth (0.22.0)
