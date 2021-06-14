@@ -46,6 +46,7 @@ group :development, :test do
   gem 'byebug', '~> 11.0', platform: :mri
   gem 'decidim-dev', DECIDIM_VERSION
   gem 'pry-rails'
+  gem 'stackprof'
   gem 'webdrivers'
 end
 
@@ -60,7 +61,6 @@ group :development do
   gem 'listen', '~> 3.1'
   gem 'rack-mini-profiler'
   gem 'memory_profiler'
-  gem 'stackprof'
   gem 'spring', '~> 2.0'
   gem 'spring-watcher-listen', '~> 2.0'
   gem 'web-console', '~> 3.5'
