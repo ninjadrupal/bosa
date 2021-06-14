@@ -1,10 +1,14 @@
-// = require quill.min
+// // require quill.min
+// = require decidim/admin/quill-2.0.0-dev.3.min
 // = require decidim/admin/quill_iframe_plugin
 // = require decidim/admin/quill-image-drop-plugin.min
+// = require decidim/admin/quill-better-table-plugin.min
 // = require_self
 
 ((exports) => {
-  const quillFormats = ["bold", "italic", "link", "underline", "header", "list", "image", "video", "iframe"];
+  window.Quill.register('modules/better-table', quillBetterTable);
+
+  const quillFormats = ["bold", "italic", "link", "underline", "header", "list", "image", "video", "iframe", "table"];
 
   const createQuillEditor = (container) => {
     const toolbar = $(container).data("toolbar");
@@ -20,12 +24,12 @@
       quillToolbar = [
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         ...quillToolbar,
-        ["image", "video", "iframe"]
+        ["image", "video", "iframe", "table"]
       ];
     } else if (toolbar === "basic") {
       quillToolbar = [
         ...quillToolbar,
-        ["image", "video", "iframe"]
+        ["image", "video", "iframe", "table"]
       ];
     }
 
@@ -33,7 +37,14 @@
     const quill = new Quill(container, {
       modules: {
         toolbar: quillToolbar,
-        imageDrop: true
+        imageDrop: true,
+
+        table: false,
+        'better-table': {
+          operationMenu: {
+          }
+        }
+
       },
       formats: quillFormats,
       theme: "snow"
@@ -64,6 +75,12 @@
         });
       } else {
         this.quill.format('link', false);
+      }
+    });
+    tb.addHandler('table', function (value) {
+      if (value) {
+        const tableModule = quill.getModule('better-table');
+        tableModule.insertTable(3, 5)
       }
     });
 

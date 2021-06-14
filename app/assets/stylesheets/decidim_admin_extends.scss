@@ -1,1 +1,4 @@
-@import "decidim/admin/extends/*"
+
+@import "decidim/quill-plugins/2.0.0-dev.3-quill.snow.min";
+@import "decidim/quill-plugins/quill-better-table-plugin";
+@import "decidim/admin/extends/*";
