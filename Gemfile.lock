@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/belighted/decidim-module-castings
-  revision: 146d5bc695acded8a33c5e5a87692d6db8855009
+  revision: 7279eff1108e57fa9209cc9bfb7b24d529898297
   branch: 0.24.2
   specs:
     decidim-castings (0.24.2)
@@ -37,7 +37,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-suggestions
-  revision: c12a0b851d38f4b755464263f789d4ef7d1c022d
+  revision: 535646e77fc68ea6bb61fb1e8313143306e1231f
   branch: 0.24.2
   specs:
     decidim-suggestions (0.24.2)
@@ -63,7 +63,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-verifications_omniauth
-  revision: d5f211aaed19bc10e220e6d560fccadd160c5625
+  revision: aa5ca955d37f8697174c6f9fbd9b249bb4330bb8
   branch: 0.24.2
   specs:
     decidim-verifications_omniauth (0.24.2)
