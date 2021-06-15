@@ -209,6 +209,7 @@ module Decidim
     end
 
     def votes_enabled?
+      !no_signature &&
       votes_enabled_state? &&
         signature_start_date.present? && signature_start_date <= Date.current &&
         signature_end_date.present? && signature_end_date >= Date.current
@@ -293,14 +294,6 @@ module Decidim
       online_votes_count_for(scope) + offline_votes_count_for(scope)
     end
 
-    # Public: Calculates the number of supports required to accept the initiative
-    # across all votable scopes.
-    #
-    # Returns an Integer.
-    def supports_required
-      @supports_required ||= votable_initiative_type_scopes.sum(&:supports_required)
-    end
-
     # Public: Calculates the number of supports required to accept the initiative for a scope.
     #
     # Returns an Integer.
@@ -315,10 +308,13 @@ module Decidim
       supports_count * 100 / supports_required
     end
 
+    def percentage_for(scope)
+      return 100 if supports_goal_reached_for?(scope)
+
+      supports_count_for(scope) * 100 / supports_required_for(scope)
+    end
+
     # Public: Whether the supports required objective has been reached
-    # def supports_goal_reached?
-    #   supports_count >= supports_required
-    # end
     def supports_goal_reached?
       initiative_type_scopes.map(&:scope).all? { |scope| supports_goal_reached_for?(scope) }
     end
@@ -519,28 +515,6 @@ module Decidim
     ransacker :supports_count do
       Arel.sql("(coalesce((online_votes->>'total')::int,0) + coalesce((offline_votes->>'total')::int,0))")
     end
-
-    # # method for sort_link by number of supports
-    # ransacker :supports_count do
-    #   query = <<~SQL
-    #     (
-    #       SELECT
-    #         CASE
-    #           WHEN signature_type = 0 THEN 0
-    #           ELSE COALESCE((offline_votes::json->>'total')::int, 0)
-    #         END
-    #         +
-    #         CASE
-    #           WHEN signature_type = 1 THEN 0
-    #           ELSE COALESCE((online_votes::json->>'total')::int, 0)
-    #         END
-    #        FROM decidim_initiatives as initiatives
-    #       WHERE initiatives.id = decidim_initiatives.id
-    #       GROUP BY initiatives.id
-    #     )
-    #   SQL
-    #   Arel.sql(query)
-    # end
 
     ransacker :id_string do
       Arel.sql(%{cast("decidim_initiatives"."id" as text)})
