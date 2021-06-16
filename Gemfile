@@ -22,7 +22,6 @@ gem 'activerecord-session_store'
 gem "bootsnap", "~> 1.3"
 gem 'deepl-rb'
 gem 'goldiloader'
-gem 'http_logger'
 gem 'omniauth-rails_csrf_protection'
 gem "puma", ">= 5.0.0"
 gem 'pry'

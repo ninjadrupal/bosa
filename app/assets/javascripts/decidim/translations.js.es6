@@ -11,9 +11,13 @@ let translate = function (originalText, targetLang, callback) {
       },
       dataType: "json",
       success: function (body) {
-        callback([body.translations[0].detected_source_language, body.translations[0].text]);
+        const response = body.translations !== undefined
+          ? [body.translations[0].detected_source_language, body.translations[0].text]
+          : null;
+
+        callback(response);
       },
-      error: function (body, status, error) {
+      error: function (_body, _status, error) {
         throw error;
       }
     });
@@ -44,17 +48,26 @@ $(() => {
       $spinner.removeClass("loading-spinner--hidden");
 
       translate(originalTitle, targetLang, (response) => {
+        if(response === null) {
+          return;
+        }
+
         $item.data("title", $title.text());
         $title.text(response[1]);
       });
 
       translate(originalBody, targetLang, (response) => {
+        $spinner.addClass("loading-spinner--hidden");
+
+        if(response === null) {
+          return;
+        }
+
         $item.data("body", $body.html());
         $body.html(response[1]);
 
         $btn.text(translated);
 
-        $spinner.addClass("loading-spinner--hidden");
 
         $item.data("translatable", false);
       });
