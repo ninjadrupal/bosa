@@ -1,4 +1,4 @@
-let translate = function (originalText, targetLang, callback) {
+let translate = function (originalText, targetLang, callback, errorCallback) {
   if (originalText !== "" && targetLang !== "") {
     $.ajax({
       url: "/api/translate",
@@ -17,7 +17,8 @@ let translate = function (originalText, targetLang, callback) {
 
         callback(response);
       },
-      error: function (_body, _status, error) {
+      error: function (response, status) {
+        if (errorCallback) errorCallback(response, status);
         throw error;
       }
     });
@@ -54,6 +55,9 @@ $(() => {
 
         $item.data("title", $title.text());
         $title.text(response[1]);
+      }, (reponse) => {
+        $spinner.addClass("loading-spinner--hidden");
+        $item.data("translatable", false);
       });
 
       translate(originalBody, targetLang, (response) => {
@@ -69,6 +73,9 @@ $(() => {
         $btn.text(translated);
 
 
+        $item.data("translatable", false);
+      }, (reponse) => {
+        $spinner.addClass("loading-spinner--hidden");
         $item.data("translatable", false);
       });
     } else {

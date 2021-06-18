@@ -12,14 +12,15 @@
       </div>
     </div>
   </div>
-  <div class="comment__content">
+  <div id="comment_<%= model.id %>_body" class="comment__content">
     <%= alignment_badge %>
     <%= comment_body %>
-
-    <% if translatable? %>
-      <%= translate_button_helper_for(title: "", body: comment_body, model: model) %>
-    <% end %>
   </div>
+  <% if translatable? %>
+    <div class="comment__content">
+        <%= translate_button_helper_for(title: "", body: comment_body, model: model) %>
+    </div>
+  <% end %>
   <div class="comment__footer">
     <%= render :actions %>
     <%= votes %>
