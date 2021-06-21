@@ -74,6 +74,7 @@ group :production do
 end
 
 group :test do
-  gem 'cuprite'
+  gem "cuprite"
+  gem "database_cleaner-active_record"
   gem "test-prof", "~> 1.0"
 end

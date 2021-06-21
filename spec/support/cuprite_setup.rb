@@ -4,6 +4,8 @@
 # instead of Selenium & co.
 # See https://github.com/rubycdp/cuprite
 
+return if ENV['CAPYBARA_ENGINE'] != 'cuprite'
+
 REMOTE_CHROME_URL = ENV["CHROME_URL"]
 REMOTE_CHROME_HOST, REMOTE_CHROME_PORT =
   if REMOTE_CHROME_URL
@@ -59,4 +61,9 @@ end
 
 RSpec.configure do |config|
   config.include CupriteHelpers, type: :system
+
+  config.prepend_before(:each, type: :system) do
+    # Use JS driver always
+    driven_by Capybara.javascript_driver
+  end
 end

@@ -250,6 +250,10 @@ GEM
     cuprite (0.13)
       capybara (>= 2.1, < 4)
       ferrum (~> 0.11.0)
+    database_cleaner-active_record (2.0.1)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date_validator (0.9.0)
       activemodel
       activesupport
@@ -1083,6 +1087,7 @@ DEPENDENCIES
   capistrano-sidekiq (= 2.0.0.beta5)
   capistrano3-puma
   cuprite
+  database_cleaner-active_record
   decidim (= 0.24.2)
   decidim-castings!
   decidim-cookies!
