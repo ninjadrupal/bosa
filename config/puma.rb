@@ -46,3 +46,7 @@ end
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# add integration for appsignal
+plugin :appsignal
+extra_runtime_dependencies ["appsignal"]
