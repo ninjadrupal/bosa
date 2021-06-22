@@ -474,6 +474,7 @@ nl:
           any_vote_method: Dit burgerinitiatief verzamelt zowel online als face-to-face stemmen.
           follow_description: Ontvang een melding wanneer er nieuws is in dit initiatief
           offline_method: Dit burgerinitiatief verzamelt alleen face-to-face stemmen.
+          see_other_versions: zie andere versies
         organization_initiatives_settings:
           create:
             modal_title: Sorry, je mag deze actie niet uitvoeren
