@@ -381,7 +381,7 @@ module Decidim
     def set_offline_votes_total
       self.offline_votes = {"total": 0} if offline_votes.blank?
 
-      self.offline_votes.merge!({"total": offline_votes.except('total').values.sum(&:to_i)})
+      self.offline_votes["total"] = self.offline_votes.except("total").values.sum(&:to_i)
     end
 
     # Public: Finds all the InitiativeTypeScopes that are eligible to be voted by a user.
