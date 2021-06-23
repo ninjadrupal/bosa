@@ -1,3 +1,20 @@
 .vote-cabin-progress-bar {
   margin-bottom: 1.5rem;
 }
+
+.progress__bar {
+  &.total-votes-count {
+    .progress__bar__bar {
+      .progress__bar__bar--complete{
+        background-color: #cb3c29;
+      }
+    }
+  }
+  &.offline-votes-count {
+    .progress__bar__bar {
+      .progress__bar__bar--complete{
+        background-color: #3e7f8b;
+      }
+    }
+  }
+}
