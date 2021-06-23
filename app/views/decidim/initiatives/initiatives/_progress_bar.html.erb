@@ -10,7 +10,8 @@
             units_name: "decidim.initiatives.initiatives.votes_count.total_count",
             element_id: "initiative-#{current_initiative.id}-votes-total-count",
             subtitle_text: current_initiative.supports_goal_reached? ? t("decidim.initiatives.initiatives.votes_count.most_popular_initiative") : t("decidim.initiatives.initiatives.votes_count.need_more_votes"),
-            small: false
+            small: false,
+            container_class: 'total-votes-count'
         ) %>
 
     <% if current_initiative.votable_initiative_type_scopes.count > 1 %>
@@ -37,7 +38,8 @@
                                      t("activemodel.attributes.initiative.offline_votes_for_scope", scope_name: translated_attribute(type_scope.scope_name))
                                      : translated_attribute(type_scope.scope_name),
                   element_id: "initiative-scope-#{type_scope.id}-#{current_initiative.id}-votes-count",
-                  horizontal: true
+                  horizontal: true,
+                  container_class: 'offline-votes-count'
               ) %>
         <% end %>
       <% end %>

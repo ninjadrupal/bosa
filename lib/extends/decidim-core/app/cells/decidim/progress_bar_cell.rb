@@ -10,6 +10,7 @@ module ProgressBarCellExtend
       container_class = "progress__bar"
       container_class += " progress__bar--horizontal" if horizontal? && !small?
       container_class += " progress__bar--vertical" if vertical?
+      container_class += " #{options[:container_class]}" if options[:container_class].present?
       container_class
     end
 
