@@ -14,8 +14,8 @@
             container_class: 'total-votes-count'
         ) %>
 
-    <% if current_initiative.votable_initiative_type_scopes.count > 1 %>
-      <% accepts_online_and_offline_votes = current_initiative.accepts_online_votes? && current_initiative.accepts_offline_votes? %>
+    <% accepts_online_and_offline_votes = current_initiative.accepts_online_votes? && current_initiative.accepts_offline_votes? %>
+    <% if accepts_online_and_offline_votes || current_initiative.votable_initiative_type_scopes.count > 1 %>
       <% current_initiative.votable_initiative_type_scopes.each_with_index do |type_scope, index| %>
         <% if current_initiative.accepts_online_votes? %>
           <%= cell(
