@@ -13,6 +13,7 @@ fr:
         decidim_user_group_id: Auteur
         description: Description
         offline_votes: Votes en présentiel
+        online_votes: Votes en ligne
         offline_votes_for_scope: Signatures en présentiel pour %{scope_name}
         online_votes_for_scope: Signatures en ligne pour %{scope_name}
         scope_id: Périmètre d'application
