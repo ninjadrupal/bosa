@@ -15,7 +15,8 @@
         ) %>
 
     <% accepts_online_and_offline_votes = current_initiative.accepts_online_votes? && current_initiative.accepts_offline_votes? %>
-    <% if accepts_online_and_offline_votes || current_initiative.votable_initiative_type_scopes.count > 1 %>
+    <% multiple_scopes = current_initiative.votable_initiative_type_scopes.count > 1 %>
+    <% if accepts_online_and_offline_votes || multiple_scopes %>
       <% current_initiative.votable_initiative_type_scopes.each_with_index do |type_scope, index| %>
         <% if current_initiative.accepts_online_votes? %>
           <%= cell(
@@ -23,7 +24,9 @@
                   current_initiative.online_votes_count_for(type_scope.scope),
                   total: type_scope.supports_required,
                   subtitle_text: accepts_online_and_offline_votes ?
-                                     t("activemodel.attributes.initiative.online_votes_for_scope", scope_name: translated_attribute(type_scope.scope_name))
+                                     multiple_scopes ?
+                                         t("activemodel.attributes.initiative.online_votes_for_scope", scope_name: translated_attribute(type_scope.scope_name))
+                                         : t("activemodel.attributes.initiative.online_votes")
                                      : translated_attribute(type_scope.scope_name),
                   element_id: "initiative-scope-#{type_scope.id}-#{current_initiative.id}-votes-count",
                   horizontal: true
@@ -35,7 +38,9 @@
                   current_initiative.offline_votes_count_for(type_scope.scope),
                   total: type_scope.supports_required,
                   subtitle_text: accepts_online_and_offline_votes ?
-                                     t("activemodel.attributes.initiative.offline_votes_for_scope", scope_name: translated_attribute(type_scope.scope_name))
+                                     multiple_scopes ?
+                                         t("activemodel.attributes.initiative.offline_votes_for_scope", scope_name: translated_attribute(type_scope.scope_name))
+                                         : t("activemodel.attributes.initiative.offline_votes")
                                      : translated_attribute(type_scope.scope_name),
                   element_id: "initiative-scope-#{type_scope.id}-#{current_initiative.id}-votes-count",
                   horizontal: true,

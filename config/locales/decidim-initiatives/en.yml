@@ -4,6 +4,8 @@ en:
     attributes:
       initiative:
         area_ids: Areas
+        offline_votes: In-person signatures
+        online_votes: Online signatures
         offline_votes_for_scope: In-person signatures for %{scope_name}
         online_votes_for_scope: Online signatures for %{scope_name}
 
