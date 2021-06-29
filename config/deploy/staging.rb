@@ -5,7 +5,7 @@
 web_server = ENV['WEB_SERVER']
 user= ENV['USER']
 deploy_path= ENV['DEPLOY_PATH']
-set :branch, ENV.fetch('BRANCH', 'master')
+set :branch, 'decidim-0.24.3' # ENV.fetch('BRANCH', 'master')
 
 
 server web_server, user: user, roles: %w{app db web}, primary: true
