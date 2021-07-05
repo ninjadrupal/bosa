@@ -9,7 +9,7 @@ module LogUserPresenterExtend
     private
 
     def present_user_name
-      extra["name"].html_safe || I18n.t("decidim.profile.deleted.name")
+      ERB::Util.unwrapped_html_escape(extra["name"]) || I18n.t("decidim.profile.deleted.name")
     end
 
     def user_path
