@@ -1,6 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
+require 'rack/cors'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -16,6 +17,41 @@ module DecidimAws
     Redis.exists_returns_integer = false
 
     Decidim.unconfirmed_access_for = 0.days
+
+    initializer "CORS" do
+      if Rails.env.production?
+        #
+        # Keep it here in config/application.rb as it loads after the lib/decidim/api/engine.rb initialization.
+        # To avoid multiple Rack::Cors middlewares and handle multiple CORS policies correctly we swap the middleware
+        # from api/engine.rb with our own that should include the policies for /api and other resources.
+        #
+        # When not using `decidim-api` module, change it to the standard way of adding Rack::Cors middleware:
+        # `Rails.application.config.middleware.insert_before 0, Rack::Cors do ...`
+        #
+        Rails.application.config.middleware.swap Rack::Cors, Rack::Cors do
+          orgs_hosts = Decidim::Organization.all.collect do |org|
+            [
+              "https://#{org.host}",
+              org.secondary_hosts.blank? ? [] : org.secondary_hosts.collect {|h| "https://#{h}"}
+            ]
+          end.flatten
+
+          allow do
+            origins "*"
+            resource "/api", headers: :any, methods: [:post, :options]
+          end
+          allow do
+            origins *orgs_hosts
+            resource '*', headers: :any, methods: [:get, :post, :delete, :put, :patch, :options, :head]
+          end
+        end
+
+        Rails.application.config.action_dispatch.default_headers['Cross-Origin-Embedder-Policy'] = 'unsafe-none'
+        Rails.application.config.action_dispatch.default_headers['Cross-Origin-Opener-Policy'] = 'same-origin'
+        # Rails.application.config.action_dispatch.default_headers['Cross-Origin-Resource-Policy'] = ''
+        # Rails.application.config.action_dispatch.default_headers['Permissions-Policy'] = ''
+      end
+    end
 
     config.to_prepare do
       list = Dir.glob("#{Rails.root}/lib/extends/**/*.rb")
