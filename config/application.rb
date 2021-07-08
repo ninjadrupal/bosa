@@ -72,6 +72,17 @@ module DecidimAws
       ActiveRecord::SessionStore::Session.serializer = :json
     end
 
+    # Remove decidim-api routes in favor of definition of `Decidim::Api::Engine.routes.draw` in config/routes.rb
+    initializer "Remove default decidim-api routes" do |app|
+      routes_paths = app.routes_reloader.paths
+      decidim_api_route_path = routes_paths.select{ |path| path.include?("decidim-api/config/routes.rb") }.first
+
+      if decidim_api_route_path.present?
+        decidim_api_route_path_index = routes_paths.index(decidim_api_route_path)
+        routes_paths.delete_at(decidim_api_route_path_index)
+      end
+    end
+
     Sentry.init do |config|
       config.logger = Sentry::Logger.new(STDOUT)
       config.dsn = "https://c3d3d789cfd241db940fcd8c8c2b81eb@o26574.ingest.sentry.io/5471760" # ENV["SENTRY_DSN"]
