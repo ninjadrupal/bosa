@@ -10,6 +10,11 @@
   config.timeout_in = 30.minutes
 
   config.parent_controller = "ApplicationController"
+
+  # It will change confirmation, password recovery and other workflows
+  # to behave the same regardless if the e-mail provided was right or wrong.
+  # Does not affect registerable.
+  config.paranoid = true
 end
 
 require "omniauth/strategies/eid_saml"
