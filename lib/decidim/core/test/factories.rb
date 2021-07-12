@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "decidim/faker/localized"
+require "decidim/faker/internet"
 require "decidim/dev"
 
 require "decidim/participatory_processes/test/factories"

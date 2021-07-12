@@ -142,7 +142,7 @@ nl:
           support_threshold_reached_for_scope:
             email_intro: De petitie %{resource_title} heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
             email_outro: Je hebt deze melding ontvangen omdat je beheerder bent van het platform.
-            email_subject: Ondersteuningsdrempel bereikt
+            email_subject: Drempel voor handtekeningen bereikt
             notification_title: De petitie <a href="%{resource_path}">%{resource_title}</a> heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
           support_period_finished:
             email_intro: De periode voor het verzamelen van handtekeningen voor de petitie %{resource_title} is voorbij. Het is nu niet meer mogelijk om handtekeningen te verzamelen voor deze petitie.
@@ -173,7 +173,7 @@ nl:
         support_threshold_reached_for_scope:
           email_intro: Uw petitie %{resource_title} heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
           email_outro: Je hebt deze melding ontvangen omdat u de auteur van de initiatief bent.
-          email_subject: Ondersteuningsdrempel bereikt
+          email_subject: Drempel voor handtekeningen bereikt
           notification_title: Uw petitie <a href="%{resource_path}">%{resource_title}</a> heeft het minimumaantal handtekeningen voor het %{scope_name} Gewest bereikt.
         support_period_finished:
           email_intro: De periode voor het verzamelen van handtekeningen voor uw petitie %{resource_title} is voorbij. Het is nu niet meer mogelijk om handtekeningen te verzamelen voor deze petitie.
