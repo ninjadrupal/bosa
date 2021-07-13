@@ -6,8 +6,10 @@
 # For further information see the following documentation
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
 
-if Rails.env.production?
+if true #Rails.env.production?
   orgs_hosts = Decidim::Organization.all.collect {|org| ["https://#{org.host}", org.secondary_hosts.collect {|sh| "https://#{sh}"}]}.flatten.join(',')
+
+  orgs_hosts << "http://localhost:3000" if Rails.env.development?
 
   Rails.application.config.content_security_policy do |policy|
     policy.default_src :self, :https, orgs_hosts

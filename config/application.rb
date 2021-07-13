@@ -48,7 +48,12 @@ module DecidimAws
 
         Rails.application.config.action_dispatch.default_headers['Cross-Origin-Embedder-Policy'] = 'unsafe-none'
         Rails.application.config.action_dispatch.default_headers['Cross-Origin-Opener-Policy'] = 'same-origin'
-        # Rails.application.config.action_dispatch.default_headers['Cross-Origin-Resource-Policy'] = ''
+        Rails.application.config.action_dispatch.default_headers['Cross-Origin-Resource-Policy'] = 'same-origin'
+
+        #
+        # Requires to specify a <directive>:<allowlist> if any of the feature is used
+        # Docs: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
+        #
         # Rails.application.config.action_dispatch.default_headers['Permissions-Policy'] = ''
       end
     end
