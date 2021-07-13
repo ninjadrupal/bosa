@@ -8,8 +8,8 @@ FactoryBot.define do
     title { generate_localized_title }
     # description { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
     description { generate_localized_title }
-    banner_image { Decidim::Dev.test_file("city2.jpeg", "image/jpeg") }
     organization
+    banner_image { Decidim::Dev.test_file("city2.jpeg", "image/jpeg") } # Keep after organization
     signature_type { :online }
     attachments_enabled { true }
     undo_online_signatures_enabled { true }
@@ -72,6 +72,7 @@ FactoryBot.define do
     trait :with_user_extra_fields_collection do
       collect_user_extra_fields { true }
       extra_fields_legal_information { Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title } }
+      document_number_authorization_handler { "dummy_authorization_handler" }
     end
 
     trait :with_sms_code_validation do
@@ -123,10 +124,6 @@ FactoryBot.define do
         create(:authorization, user: initiative.author, granted_at: Time.now.utc)
       end
       create_list(:initiatives_committee_member, 3, initiative: initiative)
-    end
-
-    trait :with_area do
-      area { create(:area, organization: organization) }
     end
 
     trait :with_answer do
@@ -198,6 +195,7 @@ FactoryBot.define do
       signature_type { "online" }
 
       after(:build) do |initiative|
+        initiative.online_votes[initiative.scope.id.to_s] = initiative.supports_required + 1
         initiative.online_votes["total"] = initiative.supports_required + 1
       end
     end
@@ -208,6 +206,7 @@ FactoryBot.define do
       signature_type { "online" }
 
       after(:build) do |initiative|
+        initiative.online_votes[initiative.scope.id.to_s] = 0
         initiative.online_votes["total"] = 0
       end
     end
@@ -218,11 +217,52 @@ FactoryBot.define do
                type: create(:initiatives_type, :with_user_extra_fields_collection, organization: organization))
       end
     end
+
+    trait :with_area do
+      area { create(:area, organization: organization) }
+    end
+
+    trait :with_documents do
+      transient do
+        documents_number { 2 }
+      end
+
+      after :create do |initiative, evaluator|
+        evaluator.documents_number.times do
+          initiative.attachments << create(
+            :attachment,
+            :with_pdf,
+            attached_to: initiative
+          )
+        end
+      end
+    end
+
+    trait :with_photos do
+      transient do
+        photos_number { 2 }
+      end
+
+      after :create do |initiative, evaluator|
+        evaluator.photos_number.times do
+          initiative.attachments << create(
+            :attachment,
+            :with_image,
+            attached_to: initiative
+          )
+        end
+      end
+    end
   end
 
   factory :initiative_user_vote, class: "Decidim::InitiativesVote" do
     initiative { create(:initiative) }
     author { create(:user, :confirmed, organization: initiative.organization) }
+    hash_id { SecureRandom.uuid }
+    scope { initiative.scope }
+    after(:create) do |vote|
+      vote.initiative.update_online_votes_counters
+    end
   end
 
   factory :organization_user_vote, class: "Decidim::InitiativesVote" do
