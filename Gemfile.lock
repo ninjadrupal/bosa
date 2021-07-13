@@ -1056,6 +1056,7 @@ DEPENDENCIES
   pry
   pry-rails
   puma (~> 4.3)
+  rack-cors
   rack-mini-profiler
   ruby-progressbar
   rubyzip
