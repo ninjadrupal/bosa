@@ -19,7 +19,7 @@ module DecidimAws
     Decidim.unconfirmed_access_for = 0.days
 
     initializer "CORS" do
-      if Rails.env.production?
+      if Rails.env.production? && !ARGV.include?("assets:")
         #
         # Keep it here in config/application.rb as it loads after the lib/decidim/api/engine.rb initialization.
         # To avoid multiple Rack::Cors middlewares and handle multiple CORS policies correctly we swap the middleware
