@@ -18,6 +18,8 @@ module DecidimAws
 
     Decidim.unconfirmed_access_for = 0.days
 
+    config.assets.initialize_on_precompile = false
+
     initializer "CORS" do
       if Rails.env.production?
         #
