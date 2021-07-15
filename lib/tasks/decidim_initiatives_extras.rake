@@ -14,14 +14,16 @@ namespace :decidim_initiatives do
         event: "decidim.events.initiatives.support_period_finished",
         event_class: Decidim::Initiatives::SupportPeriodFinishedEvent,
         resource: initiative,
-        affected_users: [initiative.author]
+        affected_users: [initiative.author],
+        force_send: true
       )
 
       Decidim::EventsManager.publish(
         event: "decidim.events.initiatives.admin.support_period_finished",
         event_class: Decidim::Initiatives::Admin::SupportPeriodFinishedEvent,
         resource: initiative,
-        affected_users: initiative.organization.admins
+        affected_users: initiative.organization.admins,
+        force_send: true
       )
     end
   end
