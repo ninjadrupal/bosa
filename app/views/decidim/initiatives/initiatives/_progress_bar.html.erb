@@ -18,6 +18,8 @@
     <% multiple_scopes = current_initiative.votable_initiative_type_scopes.count > 1 %>
     <% if accepts_online_and_offline_votes || multiple_scopes %>
       <% current_initiative.votable_initiative_type_scopes.each_with_index do |type_scope, index| %>
+        <% next if multiple_scopes && type_scope.global_scope? %>
+
         <% if current_initiative.accepts_online_votes? %>
           <%= cell(
                   "decidim/progress_bar",
@@ -47,6 +49,7 @@
                   container_class: 'offline-votes-count'
               ) %>
         <% end %>
+
       <% end %>
     <% end %>
   </div>
