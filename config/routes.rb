@@ -42,13 +42,13 @@ Rails.application.routes.draw do
 
   Decidim::Api::Engine.routes.draw do
     post "/translate", to: "translation#translate"
+    post "/" => "queries#create", as: :root
 
     unless Rails.env.production?
       get "/graphiql", to: "graphiql#show", graphql_path: "/api", as: :graphiql
       # mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api", as: :graphiql
       get "/docs", to: "documentation#show", as: :documentation
       get "/", to: redirect("/api/docs")
-      post "/" => "queries#create", as: :root
     end
   end
 
