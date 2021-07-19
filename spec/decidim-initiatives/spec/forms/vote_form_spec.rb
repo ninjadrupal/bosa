@@ -40,7 +40,7 @@ module Decidim
           name: "dummy_authorization_handler",
           user: current_user,
           unique_id: document_number,
-          metadata: { document_number: document_number, postal_code: postal_code, scope_id: user_scope.id }
+          # metadata: { document_number: document_number, postal_code: postal_code, scope_id: user_scope.id }
         )
       end
       let(:user_scope) { district_1 }
@@ -77,6 +77,12 @@ module Decidim
       end
       let(:attributes) { personal_data.merge(vote_attributes) }
       let(:context) { { current_organization: organization } }
+
+      before(:each) do
+        # The way to encrypt the metadata customized, the `=` method should be called
+        authorization.metadata = {document_number: document_number, postal_code: postal_code, scope_id: user_scope.id}
+        authorization.save!
+      end
 
       context "when everything is OK" do
         it { is_expected.to be_valid }
@@ -142,7 +148,8 @@ module Decidim
 
           context "when the authorization metadata doesn't match" do
             before do
-              authorization.metadata["postal_code"] = "08080"
+              # The way to encrypt the metadata customized, the `=` method should be called
+              authorization.metadata = authorization.metadata.merge("scope_id": nil)
               authorization.save!
             end
 
@@ -183,12 +190,15 @@ module Decidim
         subject { form.authorized_scopes }
 
         context "when the authorization is not valid" do
+          subject { form }
+
           before do
             authorization.granted_at = nil
             authorization.save!
           end
 
-          it { is_expected.to be_empty }
+          it { is_expected.not_to be_valid }
+          it { expect(form.authorized_scopes).to be_empty }
         end
 
         context "when an authorization is not needed" do
@@ -207,20 +217,20 @@ module Decidim
               context "when the user scope has children" do
                 let(:user_scope) { district_1 }
 
-                it { is_expected.to match_array([nil, city, district_1]) }
+                it { is_expected.to match_array([city, district_1]) }
               end
 
               context "when the user scope is a leaf" do
                 let(:user_scope) { neighbourhood_1 }
 
-                it { is_expected.to match_array([nil, city, district_1, neighbourhood_1]) }
+                it { is_expected.to match_array([city, district_1, neighbourhood_1]) }
               end
             end
 
             context "when child scope voting is disabled" do
               let(:child_scope_threshold_enabled) { false }
 
-              it { is_expected.to eq([nil]) }
+              it { is_expected.to eq([]) } # in accordance with changes in form.authorized_scopes
             end
           end
 

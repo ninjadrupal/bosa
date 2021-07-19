@@ -60,14 +60,6 @@ module Decidim
         expect(offline_initiative).to be_valid
       end
 
-      it "technical revision request is notified by email" do
-        expect(administrator).not_to be_nil
-        expect(Decidim::Initiatives::InitiativesMailer).to receive(:notify_validating_request)
-          .at_least(:once)
-          .and_return(message_delivery)
-        initiative.validating!
-      end
-
       it "Creation is notified by email" do
         expect(Decidim::Initiatives::InitiativesMailer).to receive(:notify_creation)
           .at_least(:once)
@@ -202,32 +194,37 @@ module Decidim
     context "when percentage" do
       context "and online initiatives" do
         let!(:initiative) { create(:initiative) }
+        let(:scope_id) { initiative.scope.id.to_s }
 
         it "ignores any value in offline_votes attribute" do
-          initiative.update(offline_votes: { "total" => 1000 }, online_votes: { "total" => initiative.scoped_type.supports_required / 2 })
+          initiative.update(offline_votes: { scope_id => 1000, "total" => 1000 },
+                            online_votes: { scope_id => initiative.scoped_type.supports_required / 2, "total" => initiative.scoped_type.supports_required / 2 })
           expect(initiative.percentage).to eq(50)
         end
 
         it "can't be greater than 100" do
-          initiative.update(online_votes: { "total" => initiative.scoped_type.supports_required * 2 })
+          initiative.update(online_votes: { scope_id => initiative.scoped_type.supports_required, "total" => initiative.scoped_type.supports_required * 2 })
           expect(initiative.percentage).to eq(100)
         end
       end
 
       context "and face-to-face support" do
         let!(:initiative) { create(:initiative, signature_type: "any") }
+        let(:scope_id) { initiative.scope.id.to_s }
 
         it "returns the percentage of votes reached" do
           online_votes = initiative.scoped_type.supports_required / 4
           offline_votes = initiative.scoped_type.supports_required / 4
-          initiative.update(offline_votes: { "total" => offline_votes }, online_votes: { "total" => online_votes })
+          initiative.update(offline_votes: { scope_id => offline_votes, "total" => offline_votes },
+                            online_votes: { scope_id => online_votes, "total" => online_votes })
           expect(initiative.percentage).to eq(50)
         end
 
         it "can't be greater than 100" do
           online_votes = initiative.scoped_type.supports_required * 4
           offline_votes = initiative.scoped_type.supports_required * 4
-          initiative.update(offline_votes: { "total" => offline_votes }, online_votes: { "total" => online_votes })
+          initiative.update(offline_votes: { scope_id => offline_votes, "total" => offline_votes },
+                            online_votes: { scope_id => online_votes, "total" => online_votes })
           expect(initiative.percentage).to eq(100)
         end
       end
