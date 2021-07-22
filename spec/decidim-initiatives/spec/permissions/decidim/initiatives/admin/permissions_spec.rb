@@ -6,7 +6,7 @@ describe Decidim::Initiatives::Admin::Permissions do
   subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
   let(:user) { create :user, organization: organization }
-  let(:organization) { create :organization }
+  let(:organization) { create(:organization, available_authorizations: %w(dummy_authorization_handler another_dummy_authorization_handler)) }
   let(:initiative) { create :initiative, organization: organization }
   let(:context) { { initiative: initiative } }
   let(:permission_action) { Decidim::PermissionAction.new(action) }
@@ -101,7 +101,7 @@ describe Decidim::Initiatives::Admin::Permissions do
     let(:action) do
       { scope: :admin, action: :enter, subject: :space_area }
     end
-    let(:context) { { space_name: :initiatives } }
+    let(:context) {{initiative: initiative, space_name: :initiatives}}
 
     context "when user created an initiative" do
       let(:initiative) { create :initiative, author: user, organization: organization }
@@ -126,9 +126,11 @@ describe Decidim::Initiatives::Admin::Permissions do
     end
 
     context "when space name is not set" do
-      let(:context) { {} }
+      let(:context) { {initiative: initiative} }
 
-      it_behaves_like "permission is not set"
+      # it_behaves_like "permission is not set"
+      # disallow regular users to access admin panel
+      it { is_expected.to eq false }
     end
   end
 
@@ -179,10 +181,6 @@ describe Decidim::Initiatives::Admin::Permissions do
       context "when sending to technical validation" do
         let(:action_name) { :send_to_technical_validation }
 
-        context "when initiative is not created" do
-          it { is_expected.to eq false }
-        end
-
         context "when initiative is created" do
           let(:initiative) { create :initiative, :created, organization: organization }
 
@@ -211,6 +209,16 @@ describe Decidim::Initiatives::Admin::Permissions do
 
             it { is_expected.to eq false }
           end
+        end
+
+        context "when initiative is discarded" do
+          let(:initiative) { create :initiative, :discarded, organization: organization }
+
+          it { is_expected.to eq true }
+        end
+
+        context "when initiative is not created or discarded" do
+          it { is_expected.to eq false }
         end
       end
 
@@ -250,7 +258,9 @@ describe Decidim::Initiatives::Admin::Permissions do
           context "when attached to an initiative" do
             let(:attachment) { create :attachment, attached_to: initiative }
 
-            it { is_expected.to eq true }
+            # it { is_expected.to eq true }
+            # disallow regular users to access admin panel
+            it { is_expected.to eq false }
           end
 
           context "when attached to something else" do
@@ -270,7 +280,8 @@ describe Decidim::Initiatives::Admin::Permissions do
       context "when creating" do
         let(:action_name) { :create }
 
-        it { is_expected.to eq true }
+        # it { is_expected.to eq true }
+        it { is_expected.to eq false } # because we do not allow to create attachments for published initiatives (?)
       end
 
       it_behaves_like "attached to an initiative", :update
@@ -404,10 +415,10 @@ describe Decidim::Initiatives::Admin::Permissions do
       context "when accepting the initiative" do
         let(:action_name) { :accept }
         let(:initiative) { create :initiative, organization: organization, signature_end_date: 2.days.ago }
-        let(:percentage) { 110 }
+        let(:goal_reached) { true }
 
         before do
-          allow(initiative).to receive(:percentage).and_return(percentage)
+          allow(initiative).to receive(:supports_goal_reached?).and_return(goal_reached)
         end
 
         it { is_expected.to eq true }
@@ -425,7 +436,7 @@ describe Decidim::Initiatives::Admin::Permissions do
         end
 
         context "when the initiative percentage is not complete" do
-          let(:percentage) { 90 }
+          let(:goal_reached) { false }
 
           it { is_expected.to eq false }
         end
@@ -434,10 +445,10 @@ describe Decidim::Initiatives::Admin::Permissions do
       context "when rejecting the initiative" do
         let(:action_name) { :reject }
         let(:initiative) { create :initiative, organization: organization, signature_end_date: 2.days.ago }
-        let(:percentage) { 90 }
+        let(:goal_reached) { false }
 
         before do
-          allow(initiative).to receive(:percentage).and_return(percentage)
+          allow(initiative).to receive(:supports_goal_reached?).and_return(goal_reached)
         end
 
         it { is_expected.to eq true }
@@ -455,7 +466,7 @@ describe Decidim::Initiatives::Admin::Permissions do
         end
 
         context "when the initiative percentage is complete" do
-          let(:percentage) { 110 }
+          let(:goal_reached) { true }
 
           it { is_expected.to eq false }
         end
@@ -468,6 +479,8 @@ describe Decidim::Initiatives::Admin::Permissions do
       { scope: :admin, action: :foo, subject: :bar }
     end
 
-    it_behaves_like "permission is not set"
+    # it_behaves_like "permission is not set"
+    # disallow regular users to access admin panel
+    it { is_expected.to eq false }
   end
 end
