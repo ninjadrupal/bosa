@@ -10,9 +10,9 @@ module Decidim
       let(:type2) { create :initiatives_type, organization: organization }
       let(:scoped_type1) { create :initiatives_type_scope, type: type1 }
       let(:scoped_type2) { create :initiatives_type_scope, type: type2 }
-      let(:user1) { create(:user, organization: organization, name: "John McDog") }
+      let(:user1) { create(:user, organization: organization, name: "John McDog", nickname: "john_mcdog") }
       let(:user2) { create(:user, organization: organization, nickname: "dogtrainer") }
-      let(:group1) { create(:user_group, organization: organization, name: "The Dog House") }
+      let(:group1) { create(:user_group, organization: organization, name: "The Dog House", nickname: "the_dog_house") }
       let(:group2) { create(:user_group, organization: organization, nickname: "thedogkeeper") }
       let(:area1) { create(:area, organization: organization) }
       let(:area2) { create(:area, organization: organization) }
@@ -22,7 +22,6 @@ module Decidim
           described_class.new(
             search_text: search_text,
             state: state,
-            custom_state: custom_state,
             type_id: type_id,
             author: author,
             scope_id: scope_id,
@@ -34,7 +33,6 @@ module Decidim
 
         let(:search_text) { nil }
         let(:state) { nil }
-        let(:custom_state) { nil }
         let(:type_id) { ["all"] }
         let(:author) { nil }
         let(:scope_id) { nil }
@@ -128,20 +126,8 @@ module Decidim
             end
           end
 
-          context "and filtering published initiatives" do
-            let(:custom_state) { ["published"] }
-
-            it "returns only published initiatives" do
-              default_published_initiatives = create_list(:initiative, 3, organization: organization)
-              published_initiatives = create_list(:initiative, 3, :published, organization: organization)
-
-              expect(subject.size).to eq(6)
-              expect(subject).to match_array(default_published_initiatives + published_initiatives)
-            end
-          end
-
           context "and filtering classified initiatives" do
-            let(:custom_state) { ["classified"] }
+            let(:state) { ["classified"] }
 
             it "returns only classified initiatives" do
               create_list(:initiative, 3, organization: organization)
@@ -153,7 +139,7 @@ module Decidim
           end
 
           context "and filtering examinated initiatives" do
-            let(:custom_state) { ["examinated"] }
+            let(:state) { ["examinated"] }
 
             it "returns only examinated initiatives" do
               create_list(:initiative, 3, organization: organization)
@@ -165,7 +151,7 @@ module Decidim
           end
 
           context "and filtering debatted initiatives" do
-            let(:custom_state) { ["debatted"] }
+            let(:state) { ["debatted"] }
 
             it "returns only debatted initiatives" do
               create_list(:initiative, 3, organization: organization)
@@ -177,24 +163,21 @@ module Decidim
           end
 
           context "and mixing state filtering" do
-            context "when filtering by open, closed and published" do
+            context "when filtering by open and closed" do
               let(:state) { %w(open closed) }
-              let(:custom_state) { ["published"] }
 
               it "returns only published initiatives from opened or closed" do
                 default_published_initiatives = create_list(:initiative, 3, organization: organization)
                 published_initiatives = create_list(:initiative, 3, :published, organization: organization)
                 closed_initiatives = create_list(:initiative, 3, :rejected, organization: organization)
 
-                expect(subject.size).to eq(6)
-                expect(subject).to match_array(default_published_initiatives + published_initiatives)
-                expect(subject).not_to include(closed_initiatives)
+                expect(subject.size).to eq(9)
+                expect(subject).to match_array(default_published_initiatives + published_initiatives + closed_initiatives)
               end
             end
 
             context "when filtering by answered, closed and examinated" do
               let(:state) { %w(answered closed) }
-              let(:custom_state) { ["examinated"] }
 
               it "returns only examinated initiatives from answered or closed" do
                 create_list(:initiative, 3, organization: organization)
@@ -202,9 +185,8 @@ module Decidim
                 closed_initiatives = create_list(:initiative, 3, :rejected, organization: organization)
                 examinated_initiatives = create_list(:initiative, 3, :examinated, organization: organization)
 
-                expect(subject.size).to eq(3)
-                expect(subject).to match_array(answered_initiatives)
-                expect(subject).not_to include(closed_initiatives)
+                expect(subject.size).to eq(6)
+                expect(subject).to match_array(answered_initiatives + closed_initiatives)
                 expect(subject).not_to include(examinated_initiatives)
               end
             end
@@ -235,6 +217,7 @@ module Decidim
         context "when the filter includes author" do
           let!(:initiative) { create(:initiative, organization: organization) }
           let!(:initiative2) { create(:initiative, organization: organization, author: user1) }
+          let!(:created_initiative) { create(:initiative, :created, organization: organization, author: user1) }
 
           context "and any author" do
             it "contains all initiatives" do
@@ -246,7 +229,7 @@ module Decidim
             let(:author) { "myself" }
 
             it "contains only initiatives of the author" do
-              expect(subject).to match_array [initiative2]
+              expect(subject).to match_array [initiative2, created_initiative]
             end
           end
         end
@@ -270,8 +253,8 @@ module Decidim
         end
 
         context "when the filter includes area_id" do
-          let!(:initiative) { create(:initiative, area: area1, organization: organization) }
-          let!(:initiative2) { create(:initiative, area: area2, organization: organization) }
+          let!(:initiative) { create(:initiative, :with_area, area: area1, organization: organization) }
+          let!(:initiative2) { create(:initiative, :with_area, area: area2, organization: organization) }
 
           context "when an area id is being sent" do
             let(:area_id) { [area1.id.to_s] }

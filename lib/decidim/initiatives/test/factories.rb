@@ -220,6 +220,10 @@ FactoryBot.define do
 
     trait :with_area do
       area { create(:area, organization: organization) }
+
+      after(:build) do |initiative|
+        initiative.areas << initiative.area
+      end
     end
 
     trait :with_documents do
