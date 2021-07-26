@@ -56,7 +56,7 @@ module Decidim
           end
 
           context "when the search_text is an initiative id" do
-            let(:initiative) { create(:initiative, organization: organization) }
+            let(:initiative) { create(:initiative, organization: organization, id: 555) }
             let(:search_text) { initiative.id.to_s }
 
             it "returns the initiative with the searched id" do

@@ -17,7 +17,6 @@
 # ---------------------------------------------------------------------------------------------------------------------
 # require 'decidim'
 require "decidim/dev"
-require "database_cleaner/active_record"
 ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 Decidim::Dev::dummy_app_path = File.expand_path(File.join("."))
 
@@ -34,6 +33,9 @@ require "decidim/core/test/factories"
 require "decidim/initiatives/test/factories"
 Dir["#{Rails.root.join('spec')}/support/**/*.rb"].each { |f| require f }
 
+# ---------------------------------------------------------------------------------------------------------------------
+
+require "database_cleaner/active_record"
 DatabaseCleaner.strategy = :truncation
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -77,6 +79,12 @@ RSpec.configure do |config|
   config.after(:suite) do
     DatabaseCleaner.clean
   end
+
+  # config.after(:all) do
+  #   FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads"])
+  #   FileUtils.rm_rf(Dir["#{Rails.root}/tmp/cache"])
+  #   FileUtils.rm_rf(Dir["#{Rails.root}/tmp/screenshots"])
+  # end
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
