@@ -85,8 +85,7 @@ module Decidim
         .or(where("signature_end_date < ?", Date.current))
     }
 
-    # scope :answered, -> { where.not(answered_at: nil) }
-    scope :answered, -> {where.not(answered_at: nil).or(where.not(answer_date: nil))}
+    scope :answered, -> { where.not(answered_at: nil) }
     scope :published, -> { where.not(published_at: nil) }
 
     scope :public_spaces, -> { published }

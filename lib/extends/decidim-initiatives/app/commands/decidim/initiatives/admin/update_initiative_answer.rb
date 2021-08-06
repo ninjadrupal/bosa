@@ -16,7 +16,7 @@ module UpdateInitiativeAnswerExtend
         answer_date: answer_date
       }
 
-      attrs[:answered_at] = Time.current if form.answer.present?
+      attrs[:answered_at] = form.answer.blank? || form.answer.values.all?(&:blank?) ? nil : Time.current
 
       if form.signature_dates_required?
         attrs[:signature_start_date] = form.signature_start_date
