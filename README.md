@@ -6,6 +6,9 @@ This is the repository for the main application for BOSA, based on [Decidim](htt
 
 It includes specificities for Belgian Federal Government, Regions and Citizen. 
 
+<a href="https://codeclimate.com/github/belighted/bosa/maintainability"><img src="https://api.codeclimate.com/v1/badges/d37901ec0c44a3c39c17/maintainability"/></a>
+---
+
 
 ## Development setup
 
