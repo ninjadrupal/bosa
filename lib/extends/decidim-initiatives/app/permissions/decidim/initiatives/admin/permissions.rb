@@ -2,7 +2,7 @@
 
 require "active_support/concern"
 
-module AdminPermissionsExtend
+module InitiativesAdminPermissionsExtend
   extend ActiveSupport::Concern
 
   included do
@@ -10,6 +10,7 @@ module AdminPermissionsExtend
       # The public part needs to be implemented yet
       return permission_action if permission_action.scope != :admin
       return permission_action unless user
+      disallow! and return permission_action unless user.organization.module_initiatives_enabled?
 
       user_can_enter_space_area?
       return permission_action if initiative && !initiative.is_a?(Decidim::Initiative)
@@ -124,4 +125,4 @@ module AdminPermissionsExtend
   end
 end
 
-Decidim::Initiatives::Admin::Permissions.send(:include, AdminPermissionsExtend)
+Decidim::Initiatives::Admin::Permissions.send(:include, InitiativesAdminPermissionsExtend)

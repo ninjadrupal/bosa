@@ -17,6 +17,7 @@ module PermissionsExtend
       # Delegate the admin permission checks to the admin permissions class
       return Decidim::Initiatives::Admin::Permissions.new(user, permission_action, context).permissions if permission_action.scope == :admin
       return permission_action if permission_action.scope != :public
+      disallow! and return permission_action unless user.organization.module_initiatives_enabled?
 
       # Non-logged users permissions
       public_report_content_action?

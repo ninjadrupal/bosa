@@ -8,12 +8,14 @@ Decidim.menu :admin_menu do |menu|
             position: 1,
             active: ["decidim/admin/dashboard" => :show]
 
-  menu.item I18n.t("menu.suggestions", scope: "decidim.admin"),
-            decidim_admin_suggestions.suggestions_path,
-            icon_name: "task",
-            position: 2,
-            active: :inclusive,
-            if: allowed_to?(:enter, :space_area, space_name: :suggestions)
+  if current_organization.module_suggestions_enabled?
+    menu.item I18n.t("menu.suggestions", scope: "decidim.admin"),
+              decidim_admin_suggestions.suggestions_path,
+              icon_name: "task",
+              position: 2,
+              active: :inclusive,
+              if: allowed_to?(:enter, :space_area, space_name: :suggestions)
+  end
 
   menu.item I18n.t("menu.assemblies", scope: "decidim.admin"),
             decidim_admin_assemblies.assemblies_path,
@@ -22,12 +24,14 @@ Decidim.menu :admin_menu do |menu|
             active: :inclusive,
             if: allowed_to?(:enter, :space_area, space_name: :assemblies)
 
-  menu.item I18n.t("menu.initiatives", scope: "decidim.admin"),
-            decidim_admin_initiatives.initiatives_path,
-            icon_name: "chat",
-            position: 4,
-            active: :inclusive,
-            if: allowed_to?(:enter, :space_area, space_name: :initiatives)
+  if current_organization.module_initiatives_enabled?
+    menu.item I18n.t("menu.initiatives", scope: "decidim.admin"),
+              decidim_admin_initiatives.initiatives_path,
+              icon_name: "chat",
+              position: 4,
+              active: :inclusive,
+              if: allowed_to?(:enter, :space_area, space_name: :initiatives)
+  end
 
   menu.item I18n.t("menu.participatory_processes", scope: "decidim.admin"),
             decidim_admin_participatory_processes.participatory_processes_path,
@@ -54,7 +58,7 @@ Decidim.menu :admin_menu do |menu|
             active: [%w(user_groups users managed_users impersonatable_users authorization_workflows).map {|segment| "/decidim/admin/#{segment}"}, []],
             if: allowed_to?(:read, :admin_user) || allowed_to?(:read, :managed_user)
 
-  if current_organization.castings_enabled?
+  if current_organization.module_castings_enabled?
     menu.item I18n.t("menu.castings", scope: "decidim.castings"),
               decidim_admin_castings.castings_path,
               icon_name: "people",

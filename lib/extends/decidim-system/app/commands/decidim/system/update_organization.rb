@@ -21,7 +21,10 @@ module SystemUpdateOrganizationExtend
       organization.omniauth_settings = form.encrypted_omniauth_settings
       organization.smtp_settings = form.encrypted_smtp_settings
 
-      organization.castings_enabled = form.castings_enabled
+      organization.module_castings_enabled = form.module_castings_enabled
+      organization.module_initiatives_enabled = form.module_initiatives_enabled
+      organization.module_suggestions_enabled = form.module_suggestions_enabled
+
       organization.initiatives_settings = form.initiatives_settings
       organization.suggestions_settings = form.suggestions_settings
 
