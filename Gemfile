@@ -25,6 +25,7 @@ gem 'goldiloader'
 gem 'omniauth-rails_csrf_protection'
 gem "puma", ">= 5.0.0"
 gem 'pry'
+gem 'rack-cors'
 gem 'ruby-progressbar'
 gem 'rubyzip', require: 'zip'
 gem 'sidekiq'
@@ -34,10 +35,7 @@ gem "wicked_pdf", "~> 1.4"
 gem 'wkhtmltopdf-binary'
 
 gem 'dotenv-rails'
-
 gem "sentry-ruby"
-
-# and the integrations you need
 gem "sentry-rails"
 gem "sentry-sidekiq"
 
