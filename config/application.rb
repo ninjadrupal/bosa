@@ -80,7 +80,7 @@ module DecidimAws
     # Remove decidim-api routes in favor of definition of `Decidim::Api::Engine.routes.draw` in config/routes.rb
     initializer "Remove default decidim-api routes" do |app|
       routes_paths = app.routes_reloader.paths
-      decidim_api_route_path = routes_paths.select{ |path| path.include?("decidim-api/config/routes.rb") }.first
+      decidim_api_route_path = routes_paths.select{ |path| path.match(/decidim-api(.*)\/config\/routes.rb/) }.first
 
       if decidim_api_route_path.present?
         decidim_api_route_path_index = routes_paths.index(decidim_api_route_path)
