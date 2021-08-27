@@ -6,6 +6,10 @@ module OrganizationExtend
   extend ActiveSupport::Concern
 
   included do
+    def bosa_cities_app_type?
+      self.bosa_app_type.present? && self.bosa_app_type.downcase == 'bosa-cities'
+    end
+
     def translatable_locales
       available_locales & Decidim.config.translatable_locales
     end

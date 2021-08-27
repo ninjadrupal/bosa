@@ -6,6 +6,7 @@ module UpdateOrganizationFormExtend
   extend ActiveSupport::Concern
 
   included do
+    attribute :bosa_app_type, String
     attribute :module_initiatives_enabled, Virtus::Attribute::Boolean
 
     attribute :basic_auth_username, String

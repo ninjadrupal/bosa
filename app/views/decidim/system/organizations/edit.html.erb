@@ -30,6 +30,14 @@
     <%= f.collection_check_boxes :available_authorizations, Decidim.authorization_workflows, :name, :description %>
   </div>
 
+  <hr/>
+  <div class="field">
+    <%= f.select :bosa_app_type,
+                 [['Default (BOSA)', 'default'], ['BOSA CITIES', 'bosa-cities']],
+                 {include_blank: false},
+                 {multiple: false} %>
+  </div>
+
   <fieldset class="fieldset">
     <legend>Enabled Modules</legend>
     <div class="field">

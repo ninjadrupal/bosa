@@ -1009,6 +1009,7 @@ ActiveRecord::Schema.define(version: 2021_08_26_111546) do
     t.boolean "module_castings_enabled"
     t.boolean "module_initiatives_enabled"
     t.boolean "module_suggestions_enabled"
+    t.string "bosa_app_type", default: "default"
     t.index ["host"], name: "index_decidim_organizations_on_host", unique: true
     t.index ["name"], name: "index_decidim_organizations_on_name", unique: true
   end
