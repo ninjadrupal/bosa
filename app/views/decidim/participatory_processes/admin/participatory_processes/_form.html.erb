@@ -41,7 +41,7 @@
     </div>
   </div>
 
-  <% if Decidim::Map.available?(:geocoding) %>
+  <% if Decidim.geocoder.present? %>
     <div class="row column">
       <%= form.text_field :address %>
       <p class="help-text"><%== t(".address_help") %></p>
