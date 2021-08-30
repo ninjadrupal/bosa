@@ -39,7 +39,11 @@ module AdminUpdateParticipatoryProcessExtend
         participatory_process_group: form.participatory_process_group,
         show_metrics: form.show_metrics,
         show_statistics: form.show_statistics,
-        announcement: form.announcement
+        announcement: form.announcement,
+        address: form.address,
+        latitude: form.latitude,
+        longitude: form.longitude,
+        display_linked_assemblies: form.display_linked_assemblies
       }
     end
 

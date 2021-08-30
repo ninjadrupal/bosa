@@ -19,13 +19,14 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-homepage_interactive_map
-  revision: 209bbd1723d572cfc7b03bc73737616527fcaada
+  revision: 341e01f7856ea0767751cbcdb78d38687e185f84
   branch: 0.22.0
   specs:
     decidim-homepage_interactive_map (0.22.0)
       decidim-admin (= 0.22.0)
       decidim-core (= 0.22.0)
       decidim-dev (= 0.22.0)
+      decidim-participatory_processes (= 0.22.0)
 
 GIT
   remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
