@@ -43,6 +43,13 @@
       <%= form.translated :editor, :announcement %>
       <p class="help-text"><%== t(".announcement_help") %></p>
     </div>
+
+    <% if Decidim.geocoder.present? %>
+      <div class="row column">
+        <%= form.text_field :address %>
+        <p class="help-text"><%== t(".address_help") %></p>
+      </div>
+    <% end %>
   </div>
 
   <div class="card-divider">
@@ -163,6 +170,10 @@
     </div>
         <div class="row column">
       <%= form.check_box :promoted %>
+    </div>
+
+    <div class="row column">
+      <%= form.check_box :display_linked_assemblies %>
     </div>
   </div>
 

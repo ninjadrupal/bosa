@@ -18,6 +18,17 @@ GIT
       decidim-core (= 0.24.3)
 
 GIT
+  remote: https://github.com/belighted/decidim-module-homepage_interactive_map
+  revision: 341e01f7856ea0767751cbcdb78d38687e185f84
+  branch: 0.22.0
+  specs:
+    decidim-homepage_interactive_map (0.22.0)
+      decidim-admin (= 0.22.0)
+      decidim-core (= 0.22.0)
+      decidim-dev (= 0.22.0)
+      decidim-participatory_processes (= 0.22.0)
+
+GIT
   remote: https://github.com/belighted/decidim-module-initiatives_nosignature_allowed
   revision: a04a5bbba9c1b6e893bcacb06416106ef774ad2b
   branch: 0.24.3
@@ -1092,6 +1103,7 @@ DEPENDENCIES
   decidim-castings!
   decidim-cookies!
   decidim-dev (= 0.24.3)
+  decidim-homepage_interactive_map!
   decidim-initiatives (= 0.24.3)
   decidim-initiatives_no_signature_allowed!
   decidim-navbar_links!
