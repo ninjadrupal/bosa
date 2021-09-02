@@ -1,13 +1,8 @@
 <div id="<%= element_id %>" class="<%= container_class %>">
   <div class="progress__bar__title">
-
-    <% if horizontal? %>
-      <span class="progress__bar__number"><%= number_with_delimiter(progress, delimiter: t(".number_delimiter")) %></span>
-      <span class="progress__bar__text"><%= subtitle_text %></span>
-    <% else %>
-      <span class="progress__bar__number"><%= number_with_delimiter(progress, delimiter: t(".number_delimiter")) %></span><%= "/#{number_with_delimiter(total, delimiter: t(".number_delimiter"))}" if total != 0 %>
-      <span class="progress__bar__text"><%= units_name_text %></span>
-    <% end %>
+    <span class="progress__bar__number"><%= number_with_delimiter(progress, delimiter: t(".number_delimiter")) %></span>
+    <%= "/#{number_with_delimiter(total, delimiter: t(".number_delimiter"))}" if total != 0 %>
+    <span class="progress__bar__text"><%= horizontal? ? subtitle_text : units_name_text %></span>
   </div>
   <% if total != 0 %>
     <div class="progress progress__bar__bar" role="progressbar" tabindex="0" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuetext="<%= percentage %> percent" aria-valuemax="100">
