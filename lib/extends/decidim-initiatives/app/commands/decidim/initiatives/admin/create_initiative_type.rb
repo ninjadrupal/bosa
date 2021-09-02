@@ -2,14 +2,16 @@
 
 require "active_support/concern"
 
-module CreateInitiativeTypeExtend
+module AdminCreateInitiativeTypeExtend
   extend ActiveSupport::Concern
 
   included do
+
     private
 
-    def attributes
-      result = {
+    def create_initiative_type
+      initiative_type = Decidim::InitiativesType.new(
+        organization: form.current_organization,
         title: form.title,
         description: form.description,
         signature_type: form.signature_type,
@@ -20,6 +22,7 @@ module CreateInitiativeTypeExtend
         promoting_committee_enabled: form.promoting_committee_enabled,
         comments_enabled: form.comments_enabled,
         minimum_committee_members: form.minimum_committee_members,
+        banner_image: form.banner_image,
         collect_user_extra_fields: form.collect_user_extra_fields,
         extra_fields_legal_information: form.extra_fields_legal_information,
         validate_sms_code_on_votes: form.validate_sms_code_on_votes,
@@ -27,12 +30,14 @@ module CreateInitiativeTypeExtend
         child_scope_threshold_enabled: form.child_scope_threshold_enabled,
         only_global_scope_enabled: form.only_global_scope_enabled,
         no_signature_allowed: form.no_signature_allowed
-      }
+      )
 
-      result[:banner_image] = form.banner_image unless form.banner_image.nil?
-      result
+      return initiative_type unless initiative_type.valid?
+
+      initiative_type.save
+      initiative_type
     end
   end
 end
 
-Decidim::Initiatives::Admin::CreateInitiativeType.send(:include, CreateInitiativeTypeExtend)
+Decidim::Initiatives::Admin::CreateInitiativeType.send(:include, AdminCreateInitiativeTypeExtend)

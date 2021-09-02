@@ -25,6 +25,7 @@ module AdminInitiativeFormExtend
     validate :hashtag_uniqueness, if: ->(form) {form.hashtag.present?}
     validate :notify_missing_attachment_if_errored
     validate :area_is_not_removed
+    validate :check_no_signature
 
     def map_model(model)
       self.type_id = model.type.id

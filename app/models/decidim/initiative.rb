@@ -281,7 +281,7 @@ module Decidim
 
     # Public: Returns wether the signature interval is already defined or not.
     def has_signature_interval_defined?
-      signature_end_date.present? && signature_start_date.present?
+      !no_signature? && signature_end_date.present? && signature_start_date.present?
     end
 
     # Public: Returns the hashtag for the initiative.
