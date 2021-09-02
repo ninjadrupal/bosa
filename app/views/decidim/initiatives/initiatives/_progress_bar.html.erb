@@ -24,7 +24,7 @@
           <%= cell(
                   "decidim/progress_bar",
                   current_initiative.online_votes_count_for(type_scope.scope),
-                  total: type_scope.supports_required,
+                  total: accepts_online_and_offline_votes ? 0 : type_scope.supports_required,
                   subtitle_text: accepts_online_and_offline_votes ?
                                      multiple_scopes ?
                                          t("activemodel.attributes.initiative.online_votes_for_scope", scope_name: translated_attribute(type_scope.scope_name))
@@ -38,7 +38,7 @@
           <%= cell(
                   "decidim/progress_bar",
                   current_initiative.offline_votes_count_for(type_scope.scope),
-                  total: type_scope.supports_required,
+                  total: accepts_online_and_offline_votes ? 0 : type_scope.supports_required,
                   subtitle_text: accepts_online_and_offline_votes ?
                                      multiple_scopes ?
                                          t("activemodel.attributes.initiative.offline_votes_for_scope", scope_name: translated_attribute(type_scope.scope_name))
