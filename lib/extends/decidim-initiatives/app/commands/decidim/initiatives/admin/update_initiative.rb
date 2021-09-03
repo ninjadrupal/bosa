@@ -6,13 +6,14 @@ module AdminUpdateInitiativeExtend
   extend ActiveSupport::Concern
 
   included do
+    include Decidim::Initiatives::InitiativeHelper
 
     private
 
     def add_admin_accessible_attrs(attrs)
       attrs[:no_signature] = form.no_signature
-      attrs[:signature_start_date] = form.signature_start_date
-      attrs[:signature_end_date] = form.signature_end_date
+      attrs[:signature_start_date] = form.signature_start_date if initiative.published?
+      attrs[:signature_end_date] = form.signature_end_date if initiative.published? || can_edit_custom_signature_end_date?(initiative)
       attrs[:offline_votes] = form.offline_votes if form.offline_votes
       attrs[:state] = form.state if form.state
       attrs[:decidim_area_id] = form.area_id
