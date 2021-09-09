@@ -7,9 +7,10 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
     switch_to_host(organization.host)
   end
 
+  let(:dummy_authorization_handler_name) { I18n.t("decidim.authorization_handlers.dummy_authorization_handler.name") }
+
   context "when a new user" do
     let(:organization) { create :organization, available_authorizations: authorizations }
-
     let(:user) { create(:user, :confirmed, organization: organization) }
 
     context "when one authorization has been configured" do
@@ -81,7 +82,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
 
         # click_link "Authorizations"
         visit decidim_verifications.authorizations_path
-        click_link "BOSA dummy authorization"
+        click_link dummy_authorization_handler_name
 
         fill_in "Document number", with: "123456789X"
         page.execute_script("$('#authorization_handler_date_of_birth').focus()")
@@ -96,8 +97,8 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
         end
 
         within ".authorizations-list" do
-          expect(page).to have_content("BOSA dummy authorization")
-          expect(page).to have_no_link("BOSA dummy authorization")
+          expect(page).to have_content(dummy_authorization_handler_name)
+          expect(page).to have_no_link(dummy_authorization_handler_name)
         end
       end
 
@@ -108,9 +109,9 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
 
         # click_link "Authorizations"
         visit decidim_verifications.authorizations_path
-        click_link "BOSA dummy authorization"
+        click_link dummy_authorization_handler_name
 
-        fill_in "Document number", with: "12345678"
+        fill_in "Document number", with: "12345678%"
         page.execute_script("$('#authorization_handler_date_of_birth').focus()")
         page.find(".datepicker-dropdown .day", text: "12").click
         click_button "Send"
@@ -135,7 +136,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
         visit decidim_verifications.authorizations_path
 
         within ".authorizations-list" do
-          expect(page).to have_content("BOSA dummy authorization")
+          expect(page).to have_content(dummy_authorization_handler_name)
         end
       end
 
@@ -154,7 +155,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
             visit decidim_verifications.authorizations_path
 
             within ".authorizations-list" do
-              expect(page).to have_no_link("BOSA dummy authorization")
+              expect(page).to have_no_link(dummy_authorization_handler_name)
               expect(page).to have_no_css(".authorization-renewable")
             end
           end
@@ -174,7 +175,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
             visit decidim_verifications.authorizations_path
 
             within ".authorizations-list" do
-              expect(page).to have_link("BOSA dummy authorization")
+              expect(page).to have_link(dummy_authorization_handler_name)
               expect(page).to have_css(".authorization-renewable")
             end
           end
@@ -186,10 +187,10 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
 
             # click_link "Authorizations"
             visit decidim_verifications.authorizations_path
-            click_link "BOSA dummy authorization"
+            click_link dummy_authorization_handler_name
 
             within "#renew-modal" do
-              expect(page).to have_content("BOSA dummy authorization")
+              expect(page).to have_content(dummy_authorization_handler_name)
               expect(page).to have_content("This is the data of the current verification:")
               expect(page).to have_content("Continue")
               expect(page).to have_content("Cancel")
@@ -203,7 +204,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
               end
               # click_link "Authorizations"
               visit decidim_verifications.authorizations_path
-              click_link "BOSA dummy authorization"
+              click_link dummy_authorization_handler_name
               within "#renew-modal" do
                 click_link "Continue"
               end
@@ -229,7 +230,7 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
           visit decidim_verifications.authorizations_path
 
           within ".authorizations-list" do
-            expect(page).to have_no_link("BOSA dummy authorization")
+            expect(page).to have_no_link(dummy_authorization_handler_name)
             expect(page).to have_content(I18n.localize(authorization.granted_at, format: :long))
           end
         end
@@ -249,8 +250,8 @@ describe "Authorizations", type: :system, with_authorization_workflows: ["dummy_
           visit decidim_verifications.authorizations_path
 
           within ".authorizations-list" do
-            expect(page).to have_link("BOSA dummy authorization")
-            click_link "BOSA dummy authorization"
+            expect(page).to have_link(dummy_authorization_handler_name)
+            click_link dummy_authorization_handler_name
           end
           within "#renew-modal" do
             click_link "Continue"

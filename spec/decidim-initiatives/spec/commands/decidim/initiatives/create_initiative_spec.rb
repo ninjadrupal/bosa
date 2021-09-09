@@ -65,11 +65,20 @@ module Decidim
           expect(Decidim::EventsManager)
             .to receive(:publish)
             .with(
-              event: "decidim.events.initiatives.initiative_created",
-              event_class: Decidim::Initiatives::CreateInitiativeEvent,
+              event: "decidim.events.initiatives.admin.initiative_created",
+              event_class: Decidim::Initiatives::Admin::InitiativeCreatedEvent,
               resource: kind_of(Decidim::Initiative),
-              followers: [follower]
+              affected_users: organization.admins.all,
+              force_send: true
             )
+          expect(Decidim::EventsManager)
+            .to receive(:publish)
+                  .with(
+                    event: "decidim.events.initiatives.initiative_created",
+                    event_class: Decidim::Initiatives::CreateInitiativeEvent,
+                    resource: kind_of(Decidim::Initiative),
+                    followers: [follower]
+                  )
 
           subject.call
         end

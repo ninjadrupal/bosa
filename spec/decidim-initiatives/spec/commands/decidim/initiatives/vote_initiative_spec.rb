@@ -9,7 +9,7 @@ module Decidim
       let(:organization) { create(:organization) }
       let(:initiative) { create(:initiative, organization: organization) }
 
-      let(:current_user) { create(:user, organization: initiative.organization) }
+      let(:current_user) { create(:user, :confirmed, organization: initiative.organization) }
       let(:form) do
         form_klass
           .from_params(
@@ -82,15 +82,15 @@ module Decidim
                    ))
           end
 
+          let!(:follower) { create(:user, organization: initiative.organization) }
+          let!(:follow) { create(:follow, followable: initiative, user: follower) }
+
           before do
-            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
-            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
+            create(:initiative_user_vote, initiative: initiative)
+            create(:initiative_user_vote, initiative: initiative)
           end
 
           it "notifies the followers" do
-            follower = create(:user, organization: initiative.organization)
-            create(:follow, followable: initiative, user: follower)
-
             expect(Decidim::EventsManager).to receive(:publish)
               .with(kind_of(Hash))
 
@@ -107,10 +107,18 @@ module Decidim
 
             command.call
           end
+
+          it "sends notification with email" do
+            expect do
+              perform_enqueued_jobs { command.call }
+            end.to change(emails, :count).by(1) #3)
+
+            expect(last_email_body).to include("has achieved the 75% of signatures")
+          end
         end
 
         context "when support threshold is reached" do
-          let(:admin) { create(:user, :admin, :confirmed, organization: organization) }
+          let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
           let(:initiative) do
             create(:initiative,
                    organization: organization,
@@ -125,12 +133,26 @@ module Decidim
             create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
             create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
             create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
-            create(:initiative_user_vote, initiative: initiative, hash_id: new_form.hash_id)
           end
 
-          it "notifies the admins" do
-            expect(Decidim::EventsManager).to receive(:publish)
-              .with(kind_of(Hash))
+          it "sends notifications" do
+            expect(Decidim::EventsManager).to receive(:publish).with(
+              event: "decidim.events.initiatives.initiative_endorsed",
+              event_class: Decidim::Initiatives::EndorseInitiativeEvent,
+              resource: initiative,
+              followers: initiative.author.followers
+            )
+
+            expect(Decidim::EventsManager).to receive(:publish).with(
+              event: "decidim.events.initiatives.milestone_completed",
+              event_class: Decidim::Initiatives::MilestoneCompletedEvent,
+              resource: initiative,
+              affected_users: [initiative.author],
+              followers: initiative.followers - [initiative.author],
+              extra: {
+                percentage: 100
+              }
+            )
 
             expect(Decidim::EventsManager)
               .to receive(:publish)
@@ -141,7 +163,64 @@ module Decidim
                 followers: [admin]
               )
 
+            initiative.votable_initiative_type_scopes.each do |type_scope|
+              expect(Decidim::EventsManager).to receive(:publish).with(
+                event: "decidim.events.initiatives.support_threshold_reached_for_scope",
+                event_class: Decidim::Initiatives::SupportThresholdReachedForScopeEvent,
+                resource: initiative,
+                affected_users: [initiative.author],
+                extra: {
+                  scope: type_scope.scope
+                }
+              )
+
+              expect(Decidim::EventsManager).to receive(:publish).with(
+                event: "decidim.events.initiatives.admin.support_threshold_reached_for_scope",
+                event_class: Decidim::Initiatives::Admin::SupportThresholdReachedForScopeEvent,
+                resource: initiative,
+                affected_users: [admin],
+                extra: {
+                  scope: type_scope.scope
+                }
+              )
+            end
+
             command.call
+          end
+
+          it "sends notification with email" do
+            expect do
+              perform_enqueued_jobs { command.call }
+            end.to change(emails, :count).by(3) #4)
+
+            expect(email_body(emails[0])).to include("has achieved the 100% of signatures")
+            # expect(email_body(emails[1])).to include("has reached the signatures threshold")
+            expect(email_body(emails[1])).to include("has reached the minimum number of signatures for the #{initiative.scope.name[I18n.locale.to_s]} Region")
+            expect(email_body(emails[2])).to include("has reached the minimum number of signatures for the #{initiative.scope.name[I18n.locale.to_s]} Region")
+          end
+
+          context "when more votes are added" do
+            before do
+              create(:initiative_user_vote, initiative: initiative)
+            end
+
+            it "doesn't notifies the admins" do
+              expect(Decidim::EventsManager).to receive(:publish)
+                                                  .with(kind_of(Hash)).once
+
+              expect(Decidim::EventsManager)
+                .not_to receive(:publish)
+                          .with(
+                            event: "decidim.events.initiatives.support_threshold_reached",
+                            event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEvent,
+                            resource: initiative,
+                            followers: [admin]
+                          )
+
+              expect do
+                perform_enqueued_jobs { command.call }
+              end.to change(emails, :count).by(0)
+            end
           end
         end
 
@@ -186,63 +265,6 @@ module Decidim
             end
           end
 
-          # (?) turn off this part as there is no `document_number` any more (see VoteFormExtend `metadata` method)
-          xcontext "when initiative type has document number authorization handler" do
-            let(:handler_name) { "dummy_authorization_handler" }
-            let(:unique_id) { "test_digest" }
-            let(:metadata) { { test: "dummy" } }
-            let!(:authorization_handler) { Decidim::AuthorizationHandler.handler_for(handler_name) }
-
-            before do
-              allow(authorization_handler).to receive(:unique_id).and_return(unique_id)
-              allow(authorization_handler).to receive(:metadata).and_return(metadata)
-              allow(Decidim::AuthorizationHandler).to receive(:handler_for).and_return(authorization_handler)
-              initiative.type.update(document_number_authorization_handler: handler_name)
-            end
-
-            context "when current_user doesn't have any authorization for the handler" do
-              it "broadcasts invalid" do
-                expect { command_with_personal_data.call }.to broadcast :invalid
-              end
-            end
-
-            context "when current_user have an an authorization for the handler" do
-              let!(:authorization) { create(:authorization, granted_at: granted_at, name: handler_name, unique_id: authorization_unique_id, metadata: authorization_metadata, user: current_user) }
-              let(:authorization_unique_id) { unique_id }
-              let(:authorization_metadata) { metadata }
-              let(:granted_at) { 1.minute.ago }
-
-              context "when authorization unique_id and metadata are coincident with handler" do
-                it "broadcasts ok" do
-                  expect { command_with_personal_data.call }.to broadcast :ok
-                end
-              end
-
-              context "when authorization unique_id is different of handler unique_id" do
-                let(:authorization_unique_id) { "other" }
-
-                it "broadcasts invalid" do
-                  expect { command_with_personal_data.call }.to broadcast :invalid
-                end
-              end
-
-              context "when authorization metadata is different of handler metadata" do
-                let(:authorization_metadata) { { test: "other" } }
-
-                it "broadcasts invalid" do
-                  expect { command_with_personal_data.call }.to broadcast :invalid
-                end
-              end
-
-              context "when authorization is not fully granted" do
-                let(:granted_at) { nil }
-
-                it "broadcasts invalid" do
-                  expect { command_with_personal_data.call }.to broadcast :invalid
-                end
-              end
-            end
-          end
         end
 
         def new_form
