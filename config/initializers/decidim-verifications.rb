@@ -16,6 +16,12 @@ end
 #   workflow.form = "AnotherDummyAuthorizationHandler"
 # end
 
+Decidim::Verifications.register_workflow(:socio_demographic_authorization_handler) do |workflow|
+  workflow.form = "SocioDemographicAuthorizationHandler"
+  workflow.renewable = true
+  workflow.time_between_renewals = 0.days
+end
+
 Decidim::Verifications.register_workflow(:csam) do |workflow|
   workflow.engine = Decidim::Verifications::Omniauth::Engine
   workflow.admin_engine = Decidim::Verifications::Omniauth::AdminEngine

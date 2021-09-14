@@ -1,0 +1,35 @@
+---
+en:
+  decidim:
+    authorization_handlers:
+      socio_demographic_authorization_handler:
+        name: Sociaal-demografische machtiging
+        explanation: Vul uw profiel aan met aanvullende sociaal-demografische informatie
+
+        fields:
+          category: Categorie
+          gender: Geslacht
+          age: Leeftijd
+          study_level: Studieniveau
+          scope_id: Wijk
+          postal_code: Postcode
+
+        categories:
+          blank_option: Specificeer a.u.b. categorie
+          citizen: Inwoner
+          association: Vereniging
+          academic_environment: Academische omgeving
+          local_authorities: Lokale autoriteiten
+        age_slices:
+          blank_option: Geef een leeftijdssegment op
+        genders:
+          blank_option: Geef het geslacht op
+          man: Man
+          woman: Vrouw
+          undefined: Niet gedefinieerd
+        scope_id:
+          blank_option: Geef een buurt op
+
+        errors:
+          messages:
+            integer_only: Alleen geheel getal
