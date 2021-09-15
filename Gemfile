@@ -45,7 +45,6 @@ group :development, :test do
   gem 'byebug', '~> 11.0', platform: :mri
   gem 'decidim-dev', DECIDIM_VERSION
   gem 'pry-rails'
-  gem 'webdrivers'
   gem 'rack-mini-profiler'
   gem 'memory_profiler'
   gem 'stackprof'
