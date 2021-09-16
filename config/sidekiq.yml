@@ -9,7 +9,7 @@
 
 :schedule:
   CalculateAllMetrics:
-    cron: '0 14 * * *'
+    cron: '0 22 * * *'
     class: CalculateAllMetricsJob
   PreloadOpenData:
     cron: '0 17 * * *'
