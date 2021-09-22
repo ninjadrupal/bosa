@@ -51,7 +51,7 @@ fr:
         name: Omniauth Decidim
         explanation: Confirmer votre identité avec un compte Decidim externe
       dummy_authorization_handler:
-        name: BOSA dummy authorization
+        name: Bosa Authorization
         explanation: Ajouter des informations complémentaires à votre profil
     authorization_modals:
       content:
