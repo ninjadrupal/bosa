@@ -33,7 +33,7 @@ module SuggestionHelperExtend
 
     # rubocop:disable Style/MultilineBlockChain
     def merged_permissions_for(action)
-      Decidim::Initiatives::InitiativeTypes.for(current_organization).map do |type|
+      Decidim::Suggestions::SuggestionTypes.for(current_organization).map do |type|
         permissions_for(action, type)
       end.inject do |result, list|
         result + list
