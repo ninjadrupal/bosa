@@ -6,18 +6,28 @@ This is the repository for the main application for BOSA, based on [Decidim](htt
 
 It includes specificities for Belgian Federal Government, Regions and Citizen. 
 
+# Tech
 
-## Development setup
+## System dependencies
 
-You will need to do some steps before having the app working properly once you've deployed it:
+Dependencies required to run the program and the version
+- Ruby 2.6.6
+- PostgreSQL 12
+- Redis 6
+- ImageMagick 6+
+
+## Development environment
+
+### Setup
+
+You will need to do some steps before having the app working properly once you've pulled it from git:
 
 * make local copy for `.env` based on `.env.example`
 * make db setup via `bin/rails db:setup`
-* start server: `bin/rails s`
 
-## Development setup via docker
+### Setup via docker
 
-### Structure
+#### Structure
 
 There are following files related to docker setup for this project:
 
@@ -29,7 +39,7 @@ There are following files related to docker setup for this project:
 
 * `.ops/Aptfile` - list of project related packages required during build process
 
-### Build process
+#### Build process
 
 * make a proper `.env` to connect to specific service:
 ```
@@ -46,7 +56,7 @@ REDIS_URL=redis://redis:6379/1
 
 * make setup for the db: `docker-compose run rails bin/rails db:setup`
 
-### Utilities
+#### Utilities
 
 * run the rails container: `docker-compose up rails`
 
@@ -56,7 +66,36 @@ REDIS_URL=redis://redis:6379/1
 
 * open container: `docker-compose run rails /bin/bash`
 
-## Production setup
+## Run the app
+
+### Commands
+
+* start Rails server: `rails s`
+* make sure you have Redis service running, otherwise you can start it manually by: `redis-server`
+* start sidekiq: `sidekiq`
+
+### Info
+
+Pages available in the browser:
+- `localhost:3000` - app
+- `localhost:3000/system` - system panel
+- `localhost:3000/admin` - admin panel
+- `localhost:3000/sidekiq` - sidekiq dashboard
+- `localhost:3000/letter_opener` - letter_opener is used to catch the emails on dev env
+
+(!) Note that you need to be logged in as admin to access `/sidekiq` and `/letter_opener` pages.
+
+There are 2 kinds of users in app:
+- `system` (`Decidim::System::Admin`) - users used to login only to the system panel
+- `admin` or regular user (`Decidim::User` with `admin` attribute set to `true`/`false`) - users used to login to the app
+
+For the first organization `system`, `admin` and regular users are created at `db:setup` phase.
+To create more users refer to the next section below.
+
+
+## Production environment 
+
+### Setup
 
 * Open a Rails console in the server: `bundle exec rails console`
 * Create a System Admin user:
@@ -97,7 +136,9 @@ user.confirm
 
 You're good to go!
 
-## Capistrano deployment
+## [Old] Staging environment
+
+### Capistrano deployment
 
 You can deploy app via capistrano utils. Currently we support following stages: `staging`.
 
@@ -109,8 +150,13 @@ We have included support for:
 Commands:
 
 * `bundle exec cap -T` - list of available capistrano tasks
-* `bundle exec cap staging deploy` - deploy app to staging
-* `BRANCH=master bundle exec cap staging deploy` - deploy specific branch to staging(default: master)
+* `DEPLOY_PATH=/home/webuser/bosa USER=webuser WEB_SERVER='xx.xxx.xx.xxx' cap staging deploy` - deploy app to staging
+* add `BRANCH=master ... cap staging deploy` - deploy specific branch to staging(default: master)
+* to restart sidekiq:
+ ```
+  ssh webuser@xx.xxx.xx.xxx
+  systemctl --user restart sidekiq_bosa.service
+```
 
 ### Notes about for first deployment
 
