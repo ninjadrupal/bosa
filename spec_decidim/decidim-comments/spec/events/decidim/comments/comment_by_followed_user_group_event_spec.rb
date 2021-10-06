@@ -29,15 +29,23 @@ module Decidim
 
       describe "email_outro" do
         it "is correct" do
+          # -------------------------------------------------------------------
+          # start of bosa patch
           expect(subject.email_outro)
-            .to include("You have received this notification because you are following #{CGI.escapeHTML(user_group.name)}")
+            .to include("You have received this notification because you are following #{user_group.name}")
+          # end of bosa patch
+          # -------------------------------------------------------------------
         end
       end
 
       describe "notification_title" do
         it "is correct" do
+          # -------------------------------------------------------------------
+          # start of bosa patch
           expect(subject.notification_title)
-            .to start_with("There is a new comment by <a href=\"#{user_group_path}\">#{CGI.escapeHTML(user_group.name)} @#{user_group.nickname}</a> in")
+            .to start_with("There is a new comment by <a href=\"#{user_group_path}\">#{user_group.name} @#{user_group.nickname}</a> in")
+          # end of bosa patch
+          # -------------------------------------------------------------------
           expect(subject.notification_title)
             .to end_with("<a href=\"#{resource_path}#comment_#{comment.id}\">#{resource_title}</a>.")
         end
