@@ -47,6 +47,29 @@ describe "Authorizations", type: :system do
       end
     end
 
+    context "when using an email that is already taken" do
+      let(:user) {create(:user, password: user_password, organization: organization)}
+
+      it "shows an error message" do
+        find(".sign-up-link").click
+
+        within ".new_user" do
+          fill_in :registration_user_email, with: user.email
+          fill_in :registration_user_name, with: "User Example"
+          fill_in :registration_user_nickname, with: "user_example"
+          fill_in :registration_user_password, with: user_password
+          fill_in :registration_user_password_confirmation, with: user_password
+          check :registration_user_tos_agreement
+          check :registration_user_newsletter
+          find("*[type=submit]").click
+        end
+
+        within(find("label[for=registration_user_email]")) do
+          expect(page).to have_selector("small", class: "form-error", text: "Taken")
+        end
+      end
+    end
+
     context "when sign up is disabled" do
       let(:organization) {create(:organization, users_registration_mode: :existing)}
 
