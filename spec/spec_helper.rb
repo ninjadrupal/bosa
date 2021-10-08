@@ -23,7 +23,7 @@ require "decidim/dev/test/base_spec_helper"
 
 # Fix loading shared examples from subfolders
 require "decidim/core/test/factories"
-['comments', 'blogs'].each do |f|
+['core', 'comments', 'blogs'].each do |f|
   engine_spec_dir = File.join(Dir.pwd, "spec_decidim")
   Dir["#{engine_spec_dir}/decidim-#{f}/spec/shared/**/*.rb"].each { |f| require f }
   Dir["#{engine_spec_dir}/decidim-#{f}/lib/decidim/**/shared_examples/*.rb"].each { |f| require f }
