@@ -27,7 +27,7 @@ decidim_modules=(
   # "decidim-generators"
   # "decidim-initiatives"
   # "decidim-meetings"
-  # "decidim-pages"
+  "decidim-pages"
   # "decidim-participatory_processes"
   # "decidim-proposals"
   # "decidim-sortitions"
@@ -68,6 +68,10 @@ _main() {
       echo "-- last upstream commit was $previous_commit"
 
       new_commits=$(git log --pretty=format:"%h" --reverse "$previous_commit"..HEAD "$module/spec")
+      if [ -z "$new_commits" ]; then
+          echo "-- no new upstream commits found"
+          continue
+      fi
       while read -r new_commit; do
           echo "-- applying rev $new_commit"
           git show "$new_commit" "$module/spec" > "/tmp/$new_commit.patch"
