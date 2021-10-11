@@ -21,13 +21,12 @@ Decidim::Dev::dummy_app_path = File.expand_path(File.join("."))
 
 require "decidim/dev/test/base_spec_helper"
 
-# Fix loading shared examples from subfolders
-require "decidim/core/test/factories"
-['core', 'comments', 'blogs'].each do |f|
+['core', 'comments', 'blogs', 'pages'].each do |f|
+  require File.join(Dir.pwd, "spec/decidim-#{f}/spec/factories")
+
   engine_spec_dir = File.join(Dir.pwd, "spec")
   Dir["#{engine_spec_dir}/decidim-#{f}/spec/shared/**/*.rb"].each { |f| require f }
   Dir["#{engine_spec_dir}/decidim-#{f}/lib/decidim/**/shared_examples/*.rb"].each { |f| require f }
-  require "decidim/#{f}/test/factories"
 end
 # ---------------------------------------------------------------------------------------------------------------------
 
