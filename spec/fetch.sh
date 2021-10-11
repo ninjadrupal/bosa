@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# bundle exec rspec spec_decidim from root project dir to run test
+# `bundle exec rspec spec` from root project dir to run test
 
 set -o nounset
 set -o errexit
@@ -27,7 +27,7 @@ decidim_modules=(
   # "decidim-generators"
   # "decidim-initiatives"
   # "decidim-meetings"
-  # "decidim-pages"
+  "decidim-pages"
   # "decidim-participatory_processes"
   # "decidim-proposals"
   # "decidim-sortitions"
@@ -68,15 +68,19 @@ _main() {
       echo "-- last upstream commit was $previous_commit"
 
       new_commits=$(git log --pretty=format:"%h" --reverse "$previous_commit"..HEAD "$module/spec")
+      if [ -z "$new_commits" ]; then
+          echo "-- no new upstream commits found"
+          continue
+      fi
       while read -r new_commit; do
           echo "-- applying rev $new_commit"
           git show "$new_commit" "$module/spec" > "/tmp/$new_commit.patch"
           popd > /dev/null
           pushd "$script_dir/.." > /dev/null
-          git apply --directory spec_decidim -3 "/tmp/$new_commit.patch"
+          git apply --directory spec -3 "/tmp/$new_commit.patch"
           rm "/tmp/$new_commit.patch"
           echo "$new_commit" > "$script_dir/$module/decidim_rev.txt"
-          git commit -am "spec_decidim: $module: applied rev $new_commit from upstream"
+          git commit -am "spec: $module: applied rev $new_commit from upstream"
           popd > /dev/null
           pushd "$script_dir/$decidim_repo_dir" > /dev/null
       done <<< "$new_commits"
@@ -87,7 +91,9 @@ _main() {
       echo "$decidim_rev" > "$script_dir/$module/decidim_rev.txt"
       cp -r "$script_dir/$decidim_repo_dir/$module/spec" "$script_dir/$module"
       mkdir -p "$script_dir/$module/lib/decidim/${module:8}"
-      cp -r "$script_dir/$decidim_repo_dir/$module/lib/decidim/${module:8}/test" "$script_dir/$module/lib/decidim/${module:8}"
+      if [ -d "$script_dir/$decidim_repo_dir/$module/lib/decidim/${module:8}/test" ]; then
+          cp -r "$script_dir/$decidim_repo_dir/$module/lib/decidim/${module:8}/test" "$script_dir/$module/lib/decidim/${module:8}"
+      fi
     fi
   done
 }
