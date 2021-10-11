@@ -91,7 +91,9 @@ _main() {
       echo "$decidim_rev" > "$script_dir/$module/decidim_rev.txt"
       cp -r "$script_dir/$decidim_repo_dir/$module/spec" "$script_dir/$module"
       mkdir -p "$script_dir/$module/lib/decidim/${module:8}"
-      cp -r "$script_dir/$decidim_repo_dir/$module/lib/decidim/${module:8}/test" "$script_dir/$module/lib/decidim/${module:8}"
+      if [ -d "$script_dir/$decidim_repo_dir/$module/lib/decidim/${module:8}/test" ]; then
+          cp -r "$script_dir/$decidim_repo_dir/$module/lib/decidim/${module:8}/test" "$script_dir/$module/lib/decidim/${module:8}"
+      fi
     fi
   done
 }
