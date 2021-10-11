@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# bundle exec rspec spec_decidim from root project dir to run test
+# `bundle exec rspec spec` from root project dir to run test
 
 set -o nounset
 set -o errexit
@@ -73,10 +73,10 @@ _main() {
           git show "$new_commit" "$module/spec" > "/tmp/$new_commit.patch"
           popd > /dev/null
           pushd "$script_dir/.." > /dev/null
-          git apply --directory spec_decidim -3 "/tmp/$new_commit.patch"
+          git apply --directory spec -3 "/tmp/$new_commit.patch"
           rm "/tmp/$new_commit.patch"
           echo "$new_commit" > "$script_dir/$module/decidim_rev.txt"
-          git commit -am "spec_decidim: $module: applied rev $new_commit from upstream"
+          git commit -am "spec: $module: applied rev $new_commit from upstream"
           popd > /dev/null
           pushd "$script_dir/$decidim_repo_dir" > /dev/null
       done <<< "$new_commits"
