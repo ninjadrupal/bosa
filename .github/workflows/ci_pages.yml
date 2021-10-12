@@ -1,4 +1,4 @@
-name: "[CI] Decidim"
+name: "[CI] Pages"
 on: [push]
 
 env:
@@ -37,5 +37,5 @@ jobs:
           bundler-cache: true
       - run: bundle exec rake db:test:prepare
         name: Setup database
-      - run: bundle exec rspec spec
+      - run: bundle exec rspec spec/decidim-pages
         name: Run specs
