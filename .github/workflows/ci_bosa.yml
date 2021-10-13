@@ -1,4 +1,4 @@
-name: "[CI] Decidim"
+name: "[CI] Bosa"
 on: [push]
 
 env:

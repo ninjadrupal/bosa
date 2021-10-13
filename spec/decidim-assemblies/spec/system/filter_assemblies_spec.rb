@@ -63,7 +63,10 @@ describe "Filter Assemblies", type: :system do
 
     context "and choosing an area" do
       before do
-        select translated(area.name), from: "filter[area_id]"
+        # --- start of bosa patch -------------------------------------------------------------------------------------
+        # select translated(area.name), from: "filter[area_id]"
+        find(:select, 'filter[area_id][]').first(:option, translated(area.name)).select_option
+        # --- end of bosa patch ---------------------------------------------------------------------------------------
       end
 
       it "lists all processes belonging to that area" do

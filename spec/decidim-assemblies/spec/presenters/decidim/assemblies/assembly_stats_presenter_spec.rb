@@ -17,6 +17,15 @@ module Decidim
       end
     end
 
+    # --- start of bosa patch -----------------------------------------------------------------------------------------
+    around do |example|
+      previous_backend = I18n.backend
+      I18n.backend = I18n::Backend::Simple.new
+      example.run
+      I18n.backend = previous_backend
+    end
+    # --- end of bosa patch -------------------------------------------------------------------------------------------
+
     before do
       manifest.stats.register :foo, priority: StatsRegistry::HIGH_PRIORITY, &proc { 10 }
 

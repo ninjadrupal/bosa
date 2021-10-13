@@ -80,10 +80,6 @@ es:
         error: Incapaz de desconectarse remotamente de "%{kind}".
         success: Usted ha sido automáticamente desconectado de su cuenta "%{kind}".
 
-  errors:
-    messages:
-      taken: Tomado
-
   time:
     formats:
       long_dashed: "%Y-%m-%d %H:%M:%S"
