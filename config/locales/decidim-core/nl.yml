@@ -97,9 +97,6 @@ nl:
         error: Could not sign you out from %{kind}.
         success: Successfully signed out from your %{kind} account.
 
-  errors:
-    messages:
-      taken: Taken
   time:
     formats:
       long_dashed: "%Y-%m-%d %H:%M:%S"

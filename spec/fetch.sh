@@ -13,7 +13,7 @@ decidim_modules=(
   # "decidim-accountability"
   # "decidim-admin"
   # "decidim-api"
-  # "decidim-assemblies"
+ "decidim-assemblies"
   "decidim-blogs"
   # "decidim-budgets"
   "decidim-comments"

@@ -65,7 +65,7 @@ describe "Authorizations", type: :system do
         end
 
         within(find("label[for=registration_user_email]")) do
-          expect(page).to have_selector("small", class: "form-error", text: "Taken")
+          expect(page).to have_selector("small", class: "form-error", text: "has already been taken")
         end
       end
     end

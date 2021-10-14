@@ -608,10 +608,15 @@ FactoryBot.define do
 
   factory :content_block, class: "Decidim::ContentBlock" do
     organization
-    scope { :homepage }
+    scope_name { :homepage }
     manifest_name { :hero }
     weight { 1 }
     published_at { Time.current }
+
+    trait :newsletter_template do
+      scope_name { :newsletter_template }
+      manifest_name { :basic_only_text }
+    end
   end
 
   factory :hashtag, class: "Decidim::Hashtag" do
