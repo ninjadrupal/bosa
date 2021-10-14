@@ -21,7 +21,7 @@ Decidim::Dev::dummy_app_path = File.expand_path(File.join("."))
 
 require "decidim/dev/test/base_spec_helper"
 
-['core', 'assemblies', 'comments', 'blogs', 'pages'].each do |f|
+['core', 'assemblies', 'comments', 'blogs', 'pages', 'initiatives'].each do |f|
   require File.join(Dir.pwd, "spec/decidim-#{f}/spec/factories")
 
   engine_spec_dir = File.join(Dir.pwd, "spec")
