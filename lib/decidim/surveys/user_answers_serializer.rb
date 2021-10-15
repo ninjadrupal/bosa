@@ -15,17 +15,15 @@ module Decidim
             answer_translated_attribute_name(:user_status) => answer_translated_attribute_name(answer.decidim_user_id.present? ? "registered" : "unregistered"),
           )
 
-          auth_data = socio_demographic_data(answer.user)
-          if auth_data.present?
-            org = answer.questionnaire&.questionnaire_for&.organization
-            serialized.update(
-              sd_translated_attribute_name("category") => sd_translated_attribute_value("categories", auth_data[:category]),
-              sd_translated_attribute_name("gender") => sd_translated_attribute_value("genders", auth_data[:gender]),
-              sd_translated_attribute_name("age") => auth_data[:age],
-              sd_translated_attribute_name("study_level") => auth_data[:study_level],
-              sd_translated_attribute_name("scope_id") => translated_attribute(org.scopes.find(auth_data[:scope_id])&.name),
-            )
-          end
+          auth_data = socio_demographic_data(answer.user) || {}
+          org = answer.questionnaire&.questionnaire_for&.organization
+          serialized.update(
+            sd_translated_attribute_name("category") => auth_data.present? ? sd_translated_attribute_value("categories", auth_data[:category]) : '',
+            sd_translated_attribute_name("gender") => auth_data.present? ? sd_translated_attribute_value("genders", auth_data[:gender]) : '',
+            sd_translated_attribute_name("age") => auth_data.dig(:age),
+            sd_translated_attribute_name("study_level") => auth_data.dig(:study_level),
+            sd_translated_attribute_name("scope_id") => auth_data.present? ? translated_attribute(org&.scopes&.find(auth_data.dig(:scope_id))&.name) : '',
+          )
 
           serialized.update(
             "#{idx + 1}. #{translated_attribute(answer.question.body)}" => normalize_body(answer)

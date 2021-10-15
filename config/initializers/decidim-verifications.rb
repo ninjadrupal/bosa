@@ -38,6 +38,7 @@ Decidim::Verifications.register_workflow(:socio_demographic_authorization_handle
   workflow.form = "SocioDemographicAuthorizationHandler"
   workflow.renewable = true
   workflow.time_between_renewals = 0.days
+  workflow.expires_in = 1.year
 end
 
 Decidim::Verifications.register_workflow(:csam) do |workflow|

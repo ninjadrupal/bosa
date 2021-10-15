@@ -24,8 +24,8 @@ nl:
           blank_option: Geef een leeftijdssegment op
         genders:
           blank_option: Geef het geslacht op
-          man: Man
-          woman: Vrouw
+          man: Mannelijk
+          woman: Vrouwelijk
           undefined: Niet gedefinieerd
         scope_id:
           blank_option: Geef een buurt op

@@ -32,6 +32,9 @@
   NotifyProgressSuggestions:
     cron: '50 8,16,23 * * *'
     class: NotifyProgressSuggestions
+  CleanSocioDemographicAuthorizationHandlers:
+    cron: '15 5 * * *'
+    class: CleanSocioDemographicAuthorizationHandlers
   CleanSessions:
     cron: '0 5 * * *'
     class: CleanSessions
