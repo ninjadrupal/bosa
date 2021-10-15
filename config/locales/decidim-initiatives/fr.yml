@@ -98,13 +98,13 @@ fr:
   decidim:
     admin:
       actions:
-        configure: Configure
-        confirm_destroy: Confirm destroy
-        destroy: Destroy
-        new: New
+#        configure: Configure
+#        confirm_destroy: Confirm destroy
+#        destroy: Destroy
+#        new: New
         new_initiative_type: Nouveau type de pétition
-        publish: Publish
-        unpublish: Unpublish
+#        publish: Publish
+#        unpublish: Unpublish
       filters:
         initiatives:
           decidim_area_id_eq:

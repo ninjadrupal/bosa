@@ -80,13 +80,13 @@ nl:
   decidim:
     admin:
       actions:
-        configure: Configure
-        confirm_destroy: Confirm destroy
-        destroy: Destroy
-        new: New
+#        configure: Configure
+#        confirm_destroy: Confirm destroy
+#        destroy: Destroy
+#        new: New
         new_initiative_type: Nieuw initiatiefstype
-        publish: Publish
-        unpublish: Unpublish
+#        publish: Publish
+#        unpublish: Unpublish
       filters:
         search_placeholder:
           title_or_description_cont: Search %{collection} by title or description.

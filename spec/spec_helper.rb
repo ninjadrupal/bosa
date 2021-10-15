@@ -15,22 +15,19 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 # ---------------------------------------------------------------------------------------------------------------------
-# require 'decidim'
 require "decidim/dev"
 ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 Decidim::Dev::dummy_app_path = File.expand_path(File.join("."))
 
 require "decidim/dev/test/base_spec_helper"
 
-# Fix loading shared examples from subfolders
-['admin', 'initiatives'].each do |f|
+['core', 'assemblies', 'comments', 'blogs', 'pages'].each do |f|
+  require File.join(Dir.pwd, "spec/decidim-#{f}/spec/factories")
+
   engine_spec_dir = File.join(Dir.pwd, "spec")
   Dir["#{engine_spec_dir}/decidim-#{f}/spec/shared/**/*.rb"].each { |f| require f }
+  Dir["#{engine_spec_dir}/decidim-#{f}/lib/decidim/**/shared_examples/*.rb"].each { |f| require f }
 end
-
-require "decidim/core/test/factories"
-require "decidim/initiatives/test/factories"
-
 # ---------------------------------------------------------------------------------------------------------------------
 
 require "database_cleaner/active_record"
