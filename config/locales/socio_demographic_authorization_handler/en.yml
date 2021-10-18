@@ -33,3 +33,30 @@ en:
         errors:
           messages:
             integer_only: Integer only
+
+      brucity_socio_demographic_authorization_handler:
+        name: Brucity - your personal data
+        explanation: Complete your profile with additional socio-demographic information
+
+        fields:
+          residence: Place of residence
+          gender: Gender
+          date_of_birth: Date of birth
+
+        residences:
+          blank_option: Please specify the residence
+          haren: Haren
+          laeken-nord: Laeken-Nord
+          laken-south: Laeken-South
+          neder-over-heembeek: Neder-over-Heembeek
+          pentagone: Pentagone
+          european_district: European district
+          louise_district: Louise district
+          north_district: North district
+          outside_the_city_but_within_brussels-capital_region: Outside the City but within Brussels-Capital region
+          outside_of_brussels-capital_region: Outside of Brussels-Capital region
+        genders:
+          blank_option: Please specify gender
+          man: Man
+          woman: Woman
+          undefined: Undefined
