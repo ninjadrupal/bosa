@@ -10,8 +10,9 @@ class BrucitySocioDemographicAuthorizationHandler < Decidim::AuthorizationHandle
     north_district outside_the_city_but_within_brussels-capital_region outside_of_brussels-capital_region).freeze
   GENDERS = %w(man woman undefined).freeze
 
-  validates :residence, :gender, :date_of_birth, presence: true
-  validates :gender, inclusion: {in: GENDERS, if: proc {|x| x.gender.present?}}, presence: false
+  validates :residence, inclusion: {in: RESIDENCES}, presence: true
+  validates :gender, inclusion: {in: GENDERS}, presence: true
+  validates :date_of_birth, presence: true
 
   def metadata
     super.merge(
