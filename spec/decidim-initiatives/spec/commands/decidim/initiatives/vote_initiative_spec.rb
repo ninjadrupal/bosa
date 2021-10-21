@@ -9,7 +9,9 @@ module Decidim
       let(:organization) { create(:organization) }
       let(:initiative) { create(:initiative, organization: organization) }
 
-      let(:current_user) { create(:user, organization: initiative.organization) }
+      # --- start of bosa patch -----------------------------------------------------------------------------------
+      let(:current_user) { create(:user, :confirmed, organization: initiative.organization) }
+      # --- end of bosa patch -----------------------------------------------------------------------------------
       let(:form) do
         form_klass
           .from_params(
@@ -19,22 +21,26 @@ module Decidim
 
       let(:form_params) do
         {
-          initiative_id: initiative.id,
-          author_id: current_user.id
+          initiative: initiative,
+          signer: current_user
         }
       end
 
+      # --- start of bosa patch ---------------------------------------------------------------------------------------
       let(:personal_data_params) do
         {
-          name_and_surname: ::Faker::Name.name,
-          document_number: ::Faker::IDNumber.spanish_citizen_number,
-          date_of_birth: ::Faker::Date.birthday(18, 40),
-          postal_code: ::Faker::Address.zip_code
+          # name_and_surname: ::Faker::Name.name,
+          # document_number: ::Faker::IDNumber.spanish_citizen_number,
+          # date_of_birth: ::Faker::Date.birthday(18, 40),
+          # postal_code: ::Faker::Address.zip_code,
+          user_scope_id: nil,
+          resident: true
         }
       end
+      # --- end of bosa patch -----------------------------------------------------------------------------------------
 
       describe "User votes initiative" do
-        let(:command) { described_class.new(form, current_user) }
+        let(:command) { described_class.new(form) }
 
         it "broadcasts ok" do
           expect { command.call }.to broadcast :ok
@@ -50,7 +56,7 @@ module Decidim
           expect do
             command.call
             initiative.reload
-          end.to change(initiative, :initiative_votes_count).by(1)
+          end.to change(initiative, :online_votes_count).by(1)
         end
 
         it "notifies the creation" do
@@ -80,15 +86,15 @@ module Decidim
                    ))
           end
 
+          let!(:follower) { create(:user, organization: initiative.organization) }
+          let!(:follow) { create(:follow, followable: initiative, user: follower) }
+
           before do
             create(:initiative_user_vote, initiative: initiative)
             create(:initiative_user_vote, initiative: initiative)
           end
 
           it "notifies the followers" do
-            follower = create(:user, organization: initiative.organization)
-            create(:follow, followable: initiative, user: follower)
-
             expect(Decidim::EventsManager).to receive(:publish)
               .with(kind_of(Hash))
 
@@ -105,10 +111,18 @@ module Decidim
 
             command.call
           end
+
+          it "sends notification with email" do
+            expect do
+              perform_enqueued_jobs { command.call }
+            end.to change(emails, :count).by(1) #3)
+
+            expect(last_email_body).to include("has achieved the 75% of signatures")
+          end
         end
 
         context "when support threshold is reached" do
-          let(:admin) { create(:user, :admin, :confirmed, organization: organization) }
+          let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
           let(:initiative) do
             create(:initiative,
                    organization: organization,
@@ -123,12 +137,27 @@ module Decidim
             create(:initiative_user_vote, initiative: initiative)
             create(:initiative_user_vote, initiative: initiative)
             create(:initiative_user_vote, initiative: initiative)
-            create(:initiative_user_vote, initiative: initiative)
           end
 
-          it "notifies the admins" do
-            expect(Decidim::EventsManager).to receive(:publish)
-              .with(kind_of(Hash))
+          # --- start of bosa patch -----------------------------------------------------------------------------------
+          it "sending notifications" do
+            expect(Decidim::EventsManager).to receive(:publish).with(
+              event: "decidim.events.initiatives.initiative_endorsed",
+              event_class: Decidim::Initiatives::EndorseInitiativeEvent,
+              resource: initiative,
+              followers: initiative.author.followers
+            )
+
+            expect(Decidim::EventsManager).to receive(:publish).with(
+              event: "decidim.events.initiatives.milestone_completed",
+              event_class: Decidim::Initiatives::MilestoneCompletedEvent,
+              resource: initiative,
+              affected_users: [initiative.author],
+              followers: initiative.followers - [initiative.author],
+              extra: {
+                percentage: 100
+              }
+            )
 
             expect(Decidim::EventsManager)
               .to receive(:publish)
@@ -136,11 +165,71 @@ module Decidim
                 event: "decidim.events.initiatives.support_threshold_reached",
                 event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEvent,
                 resource: initiative,
-                followers: [admin]
+                # followers: [admin]
+                affected_users: [admin]
               )
+
+            initiative.votable_initiative_type_scopes.each do |type_scope|
+              expect(Decidim::EventsManager).to receive(:publish).with(
+                event: "decidim.events.initiatives.support_threshold_reached_for_scope",
+                event_class: Decidim::Initiatives::SupportThresholdReachedForScopeEvent,
+                resource: initiative,
+                affected_users: [initiative.author],
+                extra: {
+                  scope: type_scope.scope
+                }
+              )
+
+              expect(Decidim::EventsManager).to receive(:publish).with(
+                event: "decidim.events.initiatives.admin.support_threshold_reached_for_scope",
+                event_class: Decidim::Initiatives::Admin::SupportThresholdReachedForScopeEvent,
+                resource: initiative,
+                affected_users: [admin],
+                extra: {
+                  scope: type_scope.scope
+                }
+              )
+            end
 
             command.call
           end
+
+          it "sending notification with email" do
+            expect do
+              perform_enqueued_jobs { command.call }
+            end.to change(emails, :count).by(4)
+
+            expect(email_body(emails[0])).to include("has achieved the 100% of signatures")
+            expect(email_body(emails[1])).to include("has reached the support threshold")
+            # expect(email_body(emails[1])).to include("has reached the signatures threshold") # `signatures` after 0.22.0
+            expect(email_body(emails[2])).to include("has reached the minimum number of signatures for the #{initiative.scope.name[I18n.locale.to_s]} Region")
+            expect(email_body(emails[3])).to include("has reached the minimum number of signatures for the #{initiative.scope.name[I18n.locale.to_s]} Region")
+          end
+
+          context "when more votes are added" do
+            before do
+              create(:initiative_user_vote, initiative: initiative)
+            end
+
+            it "doesn't notifies the admins" do
+              expect(Decidim::EventsManager).to receive(:publish)
+                                                  .with(kind_of(Hash)).once
+
+              expect(Decidim::EventsManager)
+                .not_to receive(:publish)
+                          .with(
+                            event: "decidim.events.initiatives.support_threshold_reached",
+                            event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEvent,
+                            resource: initiative,
+                            followers: [admin]
+                          )
+
+              expect do
+                perform_enqueued_jobs { command.call }
+              end.to change(emails, :count).by(0)
+            end
+          end
+          # --- end of bosa patch ---------------------------------------------------------------------------------------
         end
 
         context "when initiative type requires extra user fields" do
@@ -155,22 +244,11 @@ module Decidim
             form_klass.from_params(form_params.merge(personal_data_params)).with_context(current_organization: organization)
           end
 
-          let(:invalid_command) { described_class.new(form, current_user) }
-          let(:command_with_personal_data) { described_class.new(form_with_personal_data, current_user) }
+          let(:invalid_command) { described_class.new(form) }
+          let(:command_with_personal_data) { described_class.new(form_with_personal_data) }
 
           it "broadcasts invalid when form doesn't contain personal data" do
             expect { invalid_command.call }.to broadcast :invalid
-          end
-
-          it "broadcasts ok when form contains personal data" do
-            expect { command_with_personal_data.call }.to broadcast :ok
-          end
-
-          it "stores encrypted user personal data in vote" do
-            command_with_personal_data.call
-            vote = InitiativesVote.last
-            expect(vote.encrypted_metadata).to be_present
-            expect(form_klass.from_model(vote).decrypted_metadata).to eq personal_data_params
           end
 
           context "when another signature exists with the same hash_id" do
@@ -186,7 +264,12 @@ module Decidim
           context "when initiative type has document number authorization handler" do
             let(:handler_name) { "dummy_authorization_handler" }
             let(:unique_id) { "test_digest" }
-            let(:metadata) { { test: "dummy" } }
+            let(:metadata) do
+              {
+                test: "dummy",
+                scope_id: initiative.scoped_type.scope.id
+              }
+            end
             let!(:authorization_handler) { Decidim::AuthorizationHandler.handler_for(handler_name) }
 
             before do
@@ -196,79 +279,59 @@ module Decidim
               initiative.type.update(document_number_authorization_handler: handler_name)
             end
 
-            context "when current_user doesn't have any authorization for the handler" do
-              it "broadcasts invalid" do
-                expect { command_with_personal_data.call }.to broadcast :invalid
-              end
-            end
+            # --- start of bosa patch ---------------------------------------------------------------------------------
+            # context "when current_user doesn't have any authorization for the handler" do
+            #   it "broadcasts invalid" do
+            #     expect { command_with_personal_data.call }.to broadcast :invalid
+            #   end
+            # end
+            # --- end of bosa patch -----------------------------------------------------------------------------------
 
             context "when current_user have an an authorization for the handler" do
-              let!(:authorization) { create(:authorization, granted_at: granted_at, name: handler_name, unique_id: authorization_unique_id, metadata: authorization_metadata, user: current_user) }
+              let!(:authorization) { create(:authorization, granted_at: granted_at, name: handler_name, unique_id: authorization_unique_id, user: current_user) }
               let(:authorization_unique_id) { unique_id }
               let(:authorization_metadata) { metadata }
               let(:granted_at) { 1.minute.ago }
+
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              before do
+                authorization.metadata = authorization_metadata
+                authorization.save
+              end
+              # --- end of bosa patch ---------------------------------------------------------------------------------
 
               context "when authorization unique_id and metadata are coincident with handler" do
                 it "broadcasts ok" do
                   expect { command_with_personal_data.call }.to broadcast :ok
                 end
-              end
 
-              context "when authorization unique_id is different of handler unique_id" do
-                let(:authorization_unique_id) { "other" }
-
-                it "broadcasts invalid" do
-                  expect { command_with_personal_data.call }.to broadcast :invalid
+                it "stores encrypted user personal data in vote" do
+                  command_with_personal_data.call
+                  vote = InitiativesVote.last
+                  expect(vote.encrypted_metadata).to be_present
+                  expect(vote.decrypted_metadata).to eq personal_data_params
                 end
               end
 
-              context "when authorization metadata is different of handler metadata" do
-                let(:authorization_metadata) { { test: "other" } }
-
-                it "broadcasts invalid" do
-                  expect { command_with_personal_data.call }.to broadcast :invalid
-                end
-              end
-
-              context "when authorization is not fully granted" do
-                let(:granted_at) { nil }
-
-                it "broadcasts invalid" do
-                  expect { command_with_personal_data.call }.to broadcast :invalid
-                end
-              end
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              # context "when authorization unique_id is different of handler unique_id" do
+              #   let(:authorization_unique_id) { "other" }
+              #
+              #   it "broadcasts invalid" do
+              #     expect { command_with_personal_data.call }.to broadcast :invalid
+              #   end
+              # end
+              #
+              # context "when authorization is not fully granted" do
+              #   let(:granted_at) { nil }
+              #
+              #   it "broadcasts invalid" do
+              #     expect { command_with_personal_data.call }.to broadcast :invalid
+              #   end
+              # end
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
-        end
-      end
-
-      describe "Organization supports initiative" do
-        let(:user_group) { create(:user_group) }
-        let(:user_group_membership) { create(:user_group_membership, user: current_user, user_group: user_group) }
-        let(:group_form) do
-          form_klass.from_params(form_params.merge(group_id: user_group.id))
-        end
-        let(:command) { described_class.new(group_form, current_user) }
-
-        it "broadcasts ok" do
-          expect { command.call }.to broadcast :ok
-        end
-
-        it "creates a vote" do
-          expect do
-            command.call
-          end.to change(InitiativesVote, :count).by(1)
-        end
-
-        it "does not increases the vote counter by one" do
-          command.call
-          initiative.reload
-          expect(initiative.initiative_votes_count).to be_zero
-        end
-
-        it "does not notify the endorsement" do
-          expect(Decidim::EventsManager).not_to receive(:publish)
-          command.call
         end
       end
     end

@@ -105,7 +105,7 @@ module VoteInitiativeExtend
         event: "decidim.events.initiatives.support_threshold_reached",
         event_class: Decidim::Initiatives::Admin::SupportThresholdReachedEvent,
         resource: initiative,
-        followers: organization_admins
+        affected_users: organization_admins
       )
     end
 

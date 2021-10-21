@@ -19,7 +19,9 @@ module Decidim
         end
 
         it "returns the global scope name" do
-          expect(name).to eq("Global scope")
+          # --- start of bosa patch -----------------------------------------------------------------------------------
+          expect(name).to eq("Global")
+          # --- end of bosa patch -------------------------------------------------------------------------------------
         end
       end
 

@@ -4,7 +4,9 @@ require "spec_helper"
 
 module Decidim
   module Initiatives
-    describe ValidateMobilePhone do
+    # --- start of bosa patch -----------------------------------------------------------------------------------------
+    xdescribe ValidateMobilePhone do
+    # --- end of bosa patch -------------------------------------------------------------------------------------------
       let(:form_klass) { Decidim::Verifications::Sms::MobilePhoneForm }
       let(:current_user) { create(:user) }
       let(:form) { form_klass.from_params(mobile_phone_number: ::Faker::PhoneNumber.cell_phone) }

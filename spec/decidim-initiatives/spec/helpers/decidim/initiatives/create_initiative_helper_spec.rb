@@ -40,7 +40,9 @@ module Decidim
         let(:signature_type) { "any" }
 
         it "contains online and offline signature type options" do
-          expect(options).to match_array(all)
+          # --- start of bosa patch -----------------------------------------------------------------------------------
+          expect(options).to match_array([mixed])
+          # --- end of bosa patch -------------------------------------------------------------------------------------
         end
       end
 

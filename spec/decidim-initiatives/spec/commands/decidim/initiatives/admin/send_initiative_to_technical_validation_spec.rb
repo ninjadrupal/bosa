@@ -30,17 +30,28 @@ module Decidim
           end
 
           it "notifies the admins" do
+            # --- start of bosa patch ---------------------------------------------------------------------------------
             expect(Decidim::EventsManager)
               .to receive(:publish)
-              .once
-              .ordered
-              .with(
-                event: "decidim.events.initiatives.admin.initiative_sent_to_technical_validation",
-                event_class: Decidim::Initiatives::Admin::InitiativeSentToTechnicalValidationEvent,
-                force_send: true,
-                resource: initiative,
-                affected_users: a_collection_containing_exactly(another_admin)
-              )
+                    .ordered
+                    .with(
+                      event: "decidim.events.initiatives.admin.initiative_sent_to_technical_validation",
+                      event_class: Decidim::Initiatives::Admin::InitiativeSentToTechnicalValidationEvent,
+                      force_send: true,
+                      resource: initiative,
+                      affected_users: a_collection_containing_exactly(another_admin)
+                    )
+            expect(Decidim::EventsManager)
+              .to receive(:publish)
+                    .ordered
+                    .with(
+                      event: "decidim.events.initiatives.initiative_sent_to_technical_validation",
+                      event_class: Decidim::Initiatives::InitiativeSentToTechnicalValidationEvent,
+                      force_send: true,
+                      resource: initiative,
+                      affected_users: a_collection_containing_exactly(initiative.author)
+                    )
+            # --- end of bosa patch -----------------------------------------------------------------------------------
 
             subject.call
           end

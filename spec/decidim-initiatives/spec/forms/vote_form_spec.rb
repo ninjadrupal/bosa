@@ -13,25 +13,31 @@ module Decidim
 
       let(:current_user) { create(:user, organization: initiative.organization) }
 
+      # --- start of bosa patch ---------------------------------------------------------------------------------------
       let(:personal_data) do
         {
-          name_and_surname: "James Morgan McGill",
-          document_number: "01234567A",
-          date_of_birth: 40.years.ago,
-          postal_code: "87111"
+          # name_and_surname: "James Morgan McGill",
+          # document_number: "01234567A",
+          # date_of_birth: 40.years.ago,
+          # postal_code: "87111",
+          user_scope_id: initiative.scope.id,
+          resident: true
         }
       end
+      # --- end of bosa patch -----------------------------------------------------------------------------------------
 
       let(:encrypted_metadata) do
         described_class.from_params(attributes).encrypted_metadata
       end
 
+      # --- start of bosa patch ---------------------------------------------------------------------------------------
       let(:vote_attributes) do
         {
-          initiative_id: initiative.id,
-          author_id: current_user.id
+          initiative: initiative,
+          signer: current_user
         }
       end
+      # --- end of bosa patch -----------------------------------------------------------------------------------------
 
       let(:attributes) { personal_data.merge(vote_attributes) }
       let(:context) { { current_organization: organization } }
@@ -80,9 +86,11 @@ module Decidim
 
           it { is_expected.not_to eq(personal_data) }
 
-          [:name_and_surname, :document_number, :date_of_birth, :postal_code].each do |personal_attribute|
-            it { is_expected.not_to include(personal_data[personal_attribute].to_s) }
-          end
+          # --- start of bosa patch -----------------------------------------------------------------------------------
+          # [:name_and_surname, :document_number, :date_of_birth, :postal_code].each do |personal_attribute|
+          #   it { is_expected.not_to include(personal_data[personal_attribute].to_s) }
+          # end
+          # --- end of bosa patch -------------------------------------------------------------------------------------
         end
       end
 
