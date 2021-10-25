@@ -53,7 +53,9 @@ describe "Initiative", type: :system do
                signature_type: signature_type)
       end
       let!(:other_initiative_type) { create(:initiatives_type, organization: organization) }
-      let!(:initiative_type_scope) { create(:initiatives_type_scope, type: initiative_type) }
+      # --- start of bosa patch ---------------------------------------------------------------------------------------
+      let!(:initiative_type_scope) { create(:initiatives_type_scope, type: initiative_type, scope: nil) }
+      # --- end of bosa patch -----------------------------------------------------------------------------------------
       let!(:other_initiative_type_scope) { create(:initiatives_type_scope, type: initiative_type) }
 
       before do
@@ -161,8 +163,10 @@ describe "Initiative", type: :system do
         it "Contains data about the similar initiative found" do
           expect(page).to have_content(translated(initiative.title, locale: :en))
           expect(page).to have_content(ActionView::Base.full_sanitizer.sanitize(translated(initiative.description, locale: :en), tags: []))
-          expect(page).to have_content(translated(initiative.type.title, locale: :en))
-          expect(page).to have_content(translated(initiative.scope.name, locale: :en))
+          # --- start of bosa patch -----------------------------------------------------------------------------------
+          # expect(page).to have_content(translated(initiative.type.title, locale: :en))
+          # expect(page).to have_content(translated(initiative.scope.name, locale: :en))
+          # --- end of bosa patch -----------------------------------------------------------------------------------
           expect(page).to have_content(initiative.author_name)
         end
       end
@@ -208,7 +212,10 @@ describe "Initiative", type: :system do
           it "Information collected in previous steps is already filled" do
             expect(find(:xpath, "//input[@id='initiative_type_id']", visible: :all).value).to eq(initiative_type.id.to_s)
             expect(find(:xpath, "//input[@id='initiative_title']").value).to eq(translated(initiative.title, locale: :en))
-            expect(find(:xpath, "//input[@id='initiative_description']", visible: :all).value).to eq(translated(initiative.description, locale: :en))
+            # --- start of bosa patch -----------------------------------------------------------------------------------
+            expect(find(:xpath, "//input[@id='initiative_description']", visible: :all).value)
+              .to eq("<p>#{translated(initiative.description, locale: :en)}</p>")
+            # --- end of bosa patch -----------------------------------------------------------------------------------
           end
 
           context "when only one signature collection and scope are available" do
@@ -247,7 +254,9 @@ describe "Initiative", type: :system do
             let(:initiative_type) { create(:initiatives_type, :area_enabled, organization: organization, minimum_committee_members: initiative_type_minimum_committee_members, signature_type: "offline") }
 
             it "shows the area" do
-              expect(page).to have_content("Area")
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              expect(page).not_to have_content("Area")
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
         end
@@ -263,8 +272,10 @@ describe "Initiative", type: :system do
           fill_in_editor "initiative_description", with: translated(initiative.description, locale: :en)
           find_button("Continue").click
 
-          select("Online", from: "Signature collection type")
-          select(translated(initiative_type_scope.scope.name, locale: :en), from: "Scope")
+          # --- start of bosa patch -----------------------------------------------------------------------------------
+          # select("Online", from: "Signature collection type")
+          # select(translated(initiative_type_scope.scope.name, locale: :en), from: "Scope")
+          # --- end of bosa patch -------------------------------------------------------------------------------------
           find_button("Continue").click
         end
 
@@ -317,8 +328,10 @@ describe "Initiative", type: :system do
           fill_in_editor "initiative_description", with: translated(initiative.description, locale: :en)
           find_button("Continue").click
 
-          select(translated(initiative_type_scope.scope.name, locale: :en), from: "Scope")
-          select("Online", from: "Signature collection type")
+          # --- start of bosa patch -----------------------------------------------------------------------------------
+          # select(translated(initiative_type_scope.scope.name, locale: :en), from: "Scope")
+          # select("Online", from: "Signature collection type")
+          # --- start of bosa patch -----------------------------------------------------------------------------------
           fill_in :initiative_attachment_title, with: "Document name"
           attach_file :initiative_attachment_file, Decidim::Dev.asset("Exampledocument.pdf")
           find_button("Continue").click
@@ -334,14 +347,19 @@ describe "Initiative", type: :system do
           end
 
           it "Offers contextual help" do
-            within ".callout.secondary" do
+
+            # --- start of bosa patch ---------------------------------------------------------------------------------
+            within ".callout.success" do
+            # --- end of bosa patch -----------------------------------------------------------------------------------
               expect(page).to have_content("Congratulations! Your citizen initiative has been successfully created.")
             end
           end
 
           it "displays an edit link" do
             within ".column.actions" do
-              expect(page).to have_link("Edit my initiative")
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              expect(page).not_to have_link("Edit my initiative")
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
         end

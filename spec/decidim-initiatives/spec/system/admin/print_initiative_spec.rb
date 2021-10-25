@@ -7,6 +7,10 @@ describe "User prints the initiative", type: :system do
     include_context "when admins initiative"
 
     before do
+      # --- start of bosa patch -------------------------------------------------------------------------------------------
+      allow(Decidim::Initiatives).to receive(:print_enabled).and_return(true)
+      # --- end of bosa patch -------------------------------------------------------------------------------------------
+
       switch_to_host(organization.host)
       login_as user, scope: :user
       visit decidim_admin_initiatives.initiatives_path

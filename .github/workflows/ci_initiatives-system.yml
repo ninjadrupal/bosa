@@ -1,4 +1,4 @@
-name: "[CI] Initiatives"
+name: "[CI] Initiatives - System"
 on: [push]
 
 env:
@@ -37,5 +37,5 @@ jobs:
           bundler-cache: true
       - run: bundle exec rake db:test:prepare
         name: Setup database
-      - run: bundle exec rspec spec/decidim-initiatives --exclude-pattern "spec/decidim-initiatives/spec/system/**/*_spec.rb"
+      - run: bundle exec rspec spec/decidim-initiatives/spec/system
         name: Run specs

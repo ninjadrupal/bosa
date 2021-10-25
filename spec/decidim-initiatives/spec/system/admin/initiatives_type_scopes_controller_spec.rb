@@ -36,7 +36,9 @@ describe "InitiativeTypeScopesController", type: :system do
       end
 
       within ".edit_initiative_type" do
-        expect(page).to have_content("Global scope")
+        # --- start of bosa patch -------------------------------------------------------------------------------------------
+        expect(page).to have_content("Global")
+        # --- end of bosa patch -------------------------------------------------------------------------------------------
       end
     end
   end

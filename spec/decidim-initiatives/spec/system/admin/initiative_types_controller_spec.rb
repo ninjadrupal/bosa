@@ -71,9 +71,11 @@ describe "InitiativeTypesController", type: :system do
 
       select("In-person", from: "Signature type")
       check "Enable attachments"
-      uncheck "Enable participants to undo their online signatures"
+      # --- start of bosa patch ---------------------------------------------------------------------------------------
+      # uncheck "Enable participants to undo their online signatures"
       check "Enable authors to choose the end of signature collection period"
-      check "Enable authors to choose the area for their initiative"
+      check "Enable admins to choose the area for initiative"
+      # --- end of bosa patch -----------------------------------------------------------------------------------------
 
       click_button "Update"
 

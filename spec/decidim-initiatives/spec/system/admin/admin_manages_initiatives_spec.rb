@@ -36,7 +36,9 @@ describe "Admin manages initiatives", type: :system do
   include_context "with filterable context"
 
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :admin, organization: organization) }
+  # --- start of bosa patch -------------------------------------------------------------------------------------------
+  let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  # --- end of bosa patch ---------------------------------------------------------------------------------------------
   let(:model_name) { Decidim::Initiative.model_name }
   let(:type1) { create :initiatives_type, organization: organization }
   let(:type2) { create :initiatives_type, organization: organization }

@@ -14,7 +14,21 @@ describe "User prints the initiative", type: :system do
   end
 
   context "when initiative update" do
+    # --- start of bosa patch -----------------------------------------------------------------------------------------
     context "and user is author" do
+      before do
+        switch_to_host(organization.host)
+        login_as author, scope: :user
+        visit decidim_admin_initiatives.initiatives_path
+      end
+
+      it "disallow regular users to access admin panel" do
+        expect(page).to have_content("You are not authorized to perform this action")
+      end
+    end
+
+    xcontext "and user is author" do
+    # --- end of bosa patch -------------------------------------------------------------------------------------------
       before do
         switch_to_host(organization.host)
         login_as author, scope: :user
@@ -180,8 +194,10 @@ describe "User prints the initiative", type: :system do
           page.find(".action-icon--edit").click
 
           within ".edit_initiative" do
-            expect(page).not_to have_css("label[for='initiative_type_id']")
-            expect(page).not_to have_css("#initiative_type_id")
+            # --- start of bosa patch ---------------------------------------------------------------------------------
+            expect(page).to have_css("label[for='initiative_type_id']")
+            expect(page).to have_css("#initiative_type_id")
+            # --- end of bosa patch -----------------------------------------------------------------------------------
           end
         end
       end
