@@ -19,6 +19,10 @@ FactoryBot.define do
     minimum_committee_members { 3 }
     child_scope_threshold_enabled { false }
     only_global_scope_enabled { false }
+    # --- start of bosa patch -----------------------------------------------------------------------------------------
+    comments_enabled { true }
+    cannot_accumulate_supports_beyond_threshold { false }
+    # --- end of bosa patch -------------------------------------------------------------------------------------------
 
     trait :attachments_enabled do
       attachments_enabled { true }
@@ -198,6 +202,7 @@ FactoryBot.define do
       signature_type { "online" }
 
       after(:build) do |initiative|
+        initiative.online_votes[initiative.scope.id.to_s] = initiative.supports_required + 1
         initiative.online_votes["total"] = initiative.supports_required + 1
       end
     end
@@ -208,6 +213,7 @@ FactoryBot.define do
       signature_type { "online" }
 
       after(:build) do |initiative|
+        initiative.online_votes[initiative.scope.id.to_s] = 0
         initiative.online_votes["total"] = 0
       end
     end

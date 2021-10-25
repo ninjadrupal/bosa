@@ -176,6 +176,11 @@ describe Decidim::Initiatives::Permissions do
   end
 
   context "when creating an initiative" do
+    # --- start of bosa patch -----------------------------------------------------------------------------------------
+    # Remove on upgrade after 0.22.0 as permissions logic changes
+    let(:organization) { create(:organization, available_authorizations: %w(dummy_authorization_handler another_dummy_authorization_handler)) }
+    # --- end of bosa patch -------------------------------------------------------------------------------------------
+
     let(:action) do
       { scope: :public, action: :create, subject: :initiative }
     end
@@ -200,6 +205,11 @@ describe Decidim::Initiatives::Permissions do
       end
 
       context "when user is authorized" do
+        # --- start of bosa patch -----------------------------------------------------------------------------------------
+        # Remove on upgrade after 0.22.0 as permissions logic changes
+        let(:organization) { create(:organization)}
+        # --- end of bosa patch -------------------------------------------------------------------------------------------
+
         before do
           create :authorization, :granted, user: user
         end
@@ -283,7 +293,11 @@ describe Decidim::Initiatives::Permissions do
         context "when user is not connected" do
           let(:user) { nil }
 
-          it { is_expected.to eq true }
+          # --- start of bosa patch -----------------------------------------------------------------------------------------
+          # it { is_expected.to eq true }
+          # Remove on upgrade after 0.22.0 as permissions logic changes
+          it_behaves_like "permission is not set"
+          # --- end of bosa patch -------------------------------------------------------------------------------------------
         end
       end
     end

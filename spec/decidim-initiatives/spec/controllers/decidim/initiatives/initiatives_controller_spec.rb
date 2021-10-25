@@ -88,7 +88,8 @@ module Decidim
         end
       end
 
-      describe "GET signature_identities" do
+      # --- start of bosa patch -----------------------------------------------------------------------------------------
+      xdescribe "GET signature_identities" do
         let(:group_vote) { create(:organization_user_vote, initiative: initiative) }
 
         before do
@@ -101,6 +102,7 @@ module Decidim
           expect(assigns[:voted_groups]).to include(group_vote.decidim_user_group_id)
         end
       end
+      # --- end of bosa patch -----------------------------------------------------------------------------------------
     end
   end
 end

@@ -5,7 +5,9 @@ require "spec_helper"
 module Decidim
   module Initiatives
     module Admin
-      describe InitiativesTypeScopesController, type: :controller do
+      # --- start of bosa patch ---------------------------------------------------------------------------------------
+      describe Admin::InitiativesTypeScopesController, type: :controller do
+      # --- end of bosa patch -----------------------------------------------------------------------------------------
         routes { Decidim::Initiatives::AdminEngine.routes }
 
         let(:organization) { create(:organization) }

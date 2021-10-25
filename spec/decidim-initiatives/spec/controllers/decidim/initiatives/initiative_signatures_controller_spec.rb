@@ -38,7 +38,8 @@ module Decidim
           end
         end
 
-        context "and not authorized user" do
+        # --- start of bosa patch -------------------------------------------------------------------------------------
+        xcontext "and not authorized user" do
           let(:user) { create(:user, :confirmed, organization: organization) }
 
           it "can't vote" do
@@ -55,6 +56,7 @@ module Decidim
             end.not_to(change { InitiativesVote.where(initiative: initiative).count })
           end
         end
+        # --- end of bosa patch ---------------------------------------------------------------------------------------
 
         context "and Guest users" do
           it "receives unauthorized response" do
@@ -83,7 +85,8 @@ module Decidim
           end
         end
 
-        context "and not Authorized user" do
+        # --- start of bosa patch -------------------------------------------------------------------------------------
+        xcontext "and not Authorized user" do
           let(:user) { create(:user, :confirmed, organization: organization) }
 
           it "can't get first step" do
@@ -94,6 +97,7 @@ module Decidim
             expect(response).to have_http_status(:found)
           end
         end
+        # --- end of bosa patch ---------------------------------------------------------------------------------------
       end
 
       context "when GET initiative_signatures" do

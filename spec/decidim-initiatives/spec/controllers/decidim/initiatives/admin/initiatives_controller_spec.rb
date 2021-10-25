@@ -58,8 +58,11 @@ module Decidim
 
             it "initiative list is allowed" do
               get :index
-              expect(flash[:alert]).to be_nil
-              expect(response).to have_http_status(:ok)
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              # disallow regular users to access admin panel
+              expect(flash[:alert]).to eq("You are not authorized to perform this action")
+              expect(response).to have_http_status(:found)
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
 
@@ -70,8 +73,11 @@ module Decidim
 
             it "initiative list is allowed" do
               get :index
-              expect(flash[:alert]).to be_nil
-              expect(response).to have_http_status(:ok)
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              # disallow regular users to access admin panel
+              expect(flash[:alert]).to eq("You are not authorized to perform this action")
+              expect(response).to have_http_status(:found)
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
         end
@@ -104,8 +110,11 @@ module Decidim
 
             it "are allowed" do
               get :show, params: { slug: initiative.to_param }
-              expect(flash[:alert]).to be_nil
-              expect(response).to have_http_status(:ok)
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              # disallow regular users to access admin panel
+              expect(flash[:alert]).to eq("You are not authorized to perform this action")
+              expect(response).to have_http_status(:found)
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
 
@@ -116,8 +125,11 @@ module Decidim
 
             it "are allowed" do
               get :show, params: { slug: initiative.to_param }
-              expect(flash[:alert]).to be_nil
-              expect(response).to have_http_status(:ok)
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              # disallow regular users to access admin panel
+              expect(flash[:alert]).to eq("You are not authorized to perform this action")
+              expect(response).to have_http_status(:found)
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
 
@@ -128,8 +140,11 @@ module Decidim
 
             it "initiative list is allowed" do
               get :show, params: { slug: initiative.to_param }
-              expect(flash[:alert]).to be_nil
-              expect(response).to have_http_status(:ok)
+              # --- start of bosa patch -------------------------------------------------------------------------------
+              # disallow regular users to access admin panel
+              expect(flash[:alert]).to eq("You are not authorized to perform this action")
+              expect(response).to have_http_status(:found)
+              # --- end of bosa patch ---------------------------------------------------------------------------------
             end
           end
         end

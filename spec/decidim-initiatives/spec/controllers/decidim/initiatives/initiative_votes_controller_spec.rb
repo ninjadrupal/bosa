@@ -24,7 +24,8 @@ module Decidim
           end
         end
 
-        context "and Non authorized users" do
+        # --- start of bosa patch -------------------------------------------------------------------------------------
+        xcontext "and Non authorized users" do
           let(:user) { create(:user, :confirmed, organization: organization) }
 
           it "raise an exception" do
@@ -41,6 +42,7 @@ module Decidim
             end.not_to(change { InitiativesVote.where(initiative: initiative).count })
           end
         end
+        # --- end of bosa patch ---------------------------------------------------------------------------------------
 
         context "and Guest users" do
           it "receives unauthorized response" do
