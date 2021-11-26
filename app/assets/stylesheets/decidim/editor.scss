@@ -1,0 +1,25 @@
+//@import "quill.snow";
+@import "quill-plugins/2.0.0-dev.3-quill.snow.min";
+
+@import "decidim/variables";
+@import "decidim/utils/settings";
+
+.editor-container{
+  margin-bottom: 1.5rem;
+
+  p{
+    line-height: $paragraph-lineheight;
+    margin-bottom: $paragraph-margin-bottom;
+    text-rendering: $paragraph-text-rendering;
+  }
+}
+
+// Set disc style for bullet list items when displaying html produced by quill editor
+// quill-2.0.0-dev.3 stores all lists as OL lists + `data-list` attribute
+ol > li[data-list=bullet] {
+  list-style-type: disc;
+}
+// Don't set it for the editor itself as there is no issues in displaying ordered/bullet lists
+.ql-editor ol > li[data-list=bullet] {
+  list-style-type: none;
+}
