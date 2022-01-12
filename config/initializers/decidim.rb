@@ -161,6 +161,14 @@ Decidim.configure do |config|
   #   api_key: Rails.application.secrets.etherpad[:api_key],
   #   api_version: Rails.application.secrets.etherpad[:api_version]
   # }
+
+  # Rack-attack configuration
+  #
+  # Max requests in a time period to prevent DoS attacks. Only applied on production.
+  # Default is 100.
+  config.throttling_max_requests = 200
+  # Time window in which the throttling is applied.
+  #config.throttling_period = 1.minute
 end
 
 Rails.application.config.i18n.available_locales = Decidim.available_locales
