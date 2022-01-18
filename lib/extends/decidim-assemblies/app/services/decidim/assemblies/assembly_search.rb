@@ -10,10 +10,7 @@ module AssemblySearchExtend
     def search_area_id
       return query if area_id.blank?
 
-      query.
-        joins("JOIN decidim_assemblies_areas ON decidim_assemblies.id = decidim_assemblies_areas.decidim_assembly_id").
-        where(decidim_assemblies_areas: {decidim_area_id: area_id}).
-        group("decidim_assemblies.id")
+      query.includes(:areas).references(:decidim_areas).where("decidim_areas.id IN (?)", area_id.map(&:to_i))
     end
 
   end
