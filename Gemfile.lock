@@ -19,7 +19,7 @@ GIT
 
 GIT
   remote: https://github.com/belighted/decidim-module-homepage_interactive_map
-  revision: 7dc5d5c9adc978151bcf5207d9879c599f63a11a
+  revision: 498cfe6f18ee2f6cb47acfad723cce657b33f70f
   branch: 0.22.0
   specs:
     decidim-homepage_interactive_map (0.22.0)
