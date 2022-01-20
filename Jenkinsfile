@@ -51,60 +51,6 @@ podTemplate(
 
                 switch (job_base_name){
                     default:
-                        withDockerRegistry([credentialsId: "${docker_registry_credId}", url: "https://${docker_img_apps}/"]) {
-                            stage("Build test_runner") {
-                                dir("ops/release/test_runner") {
-                                    sh "./build"
-                                    echo "Done!"
-                                }
-
-                            }
-                            stage("Compile Assets") {
-                                sh """
-                                    docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:clean
-                                    docker run -e RAILS_ENV=production --env-file ${codePath}/ops/release/test_runner/app_env -v ${codePath}/public:/app/public bosa-testrunner:latest bundle exec rake assets:precompile
-                                """
-
-                            }
-                            stage("Build app image"){
-                                sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/app/build"
-                                sh "TAG=$job_base_name-$build_number ${codePath}/ops/release/assets/build"
-                                // This will push the assets image to registry
-                                pushToNexus(
-                                        "${docker_registry_credId}",
-                                        "${docker_img_apps}",
-                                        "${docker_img_apps}/bosa-assets:${job_base_name}-${build_number}"
-                                )
-                                // This will push the app image to registry
-                                pushToNexus(
-                                        "${docker_registry_credId}",
-                                        "${docker_img_apps}",
-                                        "${docker_img_apps}/bosa:${job_base_name}-${build_number}"
-                                )
-                            }
-                        }
-                        stage('Deploy app to dev'){
-                            kubeDeploy(
-                                    "v1.20.0",
-                                    "kube-jenkins-robot",
-                                    "${kube_conf_url}",
-                                    "bosa",
-                                    "bosa-dev",
-                                    ["bosa", "bosa-assets" ],
-                                    ["${docker_img_apps}/bosa:$job_base_name-$build_number", "${docker_img_apps}/bosa-assets:$job_base_name-$build_number"]
-                            )
-                        }
-                        stage('Deploy sidekiq to dev'){
-                            kubeDeploy(
-                                    "v1.20.0",
-                                    "kube-jenkins-robot",
-                                    "${kube_conf_url}",
-                                    "bosa-sidekiq",
-                                    "bosa-dev",
-                                    ["bosa-sidekiq" ],
-                                    ["${docker_img_apps}/bosa:$job_base_name-$build_number"]
-                            )
-                        }
                         break
 
                     case ~/^rc-\d+\.\d+\.\d+$/:
