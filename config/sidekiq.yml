@@ -35,3 +35,6 @@
   CleanSessions:
     cron: '0 5 * * *'
     class: CleanSessions
+  CleanSignInIps:
+    cron: '10 5 * * *'
+    class: CleanSignInIps
