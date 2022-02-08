@@ -1,0 +1,39 @@
+<%= hidden_field :authorization_handler, :handler_name, value: "socio_demographic_authorization_handler" %>
+
+<div class="card-section">
+  <div class="field">
+    <%= form.select :category,
+                    SocioDemographicAuthorizationHandler::CATEGORIES.map {|category| [I18n.t(category, scope: "decidim.authorization_handlers.socio_demographic_authorization_handler.categories"), category]},
+                    {
+                        include_blank: t("decidim.authorization_handlers.socio_demographic_authorization_handler.categories.blank_option"),
+                        label: t("category", scope: "decidim.authorization_handlers.socio_demographic_authorization_handler.fields")
+                    } %>
+  </div>
+  <div class="field">
+    <%= form.select :gender,
+                    SocioDemographicAuthorizationHandler::GENDERS.map {|gender| [I18n.t(gender, scope: "decidim.authorization_handlers.socio_demographic_authorization_handler.genders"), gender]},
+                    {
+                        include_blank: t("decidim.authorization_handlers.socio_demographic_authorization_handler.genders.blank_option"),
+                        label: t("gender", scope: "decidim.authorization_handlers.socio_demographic_authorization_handler.fields")
+                    } %>
+  </div>
+  <div class="field">
+    <%= form.select :age,
+                    SocioDemographicAuthorizationHandler::AGE_SLICES.map {|slice| [slice, slice]},
+                    {
+                        include_blank: t('decidim.authorization_handlers.socio_demographic_authorization_handler.age_slices.blank_option'),
+                        label: t("age", scope: "decidim.authorization_handlers.socio_demographic_authorization_handler.fields")
+                    } %>
+  </div>
+  <div class="field">
+    <%= form.text_field :study_level %>
+  </div>
+  <div class="field">
+    <%= form.select :scope_id,
+                    current_organization.scopes.map {|scopes| [translated_attribute(scopes.name), scopes.id]},
+                    {
+                        include_blank: t('decidim.authorization_handlers.socio_demographic_authorization_handler.scope_id.blank_option'),
+                        label: t("scope_id", scope: "decidim.authorization_handlers.socio_demographic_authorization_handler.fields")
+                    } %>
+  </div>
+</div>

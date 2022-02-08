@@ -1,0 +1,23 @@
+<%= hidden_field :authorization_handler, :handler_name, value: "brucity_socio_demographic_authorization_handler" %>
+
+<div class="card-section">
+  <div class="field">
+    <%= form.select :residence,
+                    BrucitySocioDemographicAuthorizationHandler::RESIDENCES.map {|residence| [I18n.t(residence, scope: "decidim.authorization_handlers.brucity_socio_demographic_authorization_handler.residences"), residence]},
+                    {
+                        include_blank: t("decidim.authorization_handlers.brucity_socio_demographic_authorization_handler.residences.blank_option"),
+                        label: t("residence", scope: "decidim.authorization_handlers.brucity_socio_demographic_authorization_handler.fields")
+                    } %>
+  </div>
+  <div class="field">
+    <%= form.select :gender,
+                    BrucitySocioDemographicAuthorizationHandler::GENDERS.map {|gender| [I18n.t(gender, scope: "decidim.authorization_handlers.brucity_socio_demographic_authorization_handler.genders"), gender]},
+                    {
+                        include_blank: t("decidim.authorization_handlers.brucity_socio_demographic_authorization_handler.genders.blank_option"),
+                        label: t("gender", scope: "decidim.authorization_handlers.brucity_socio_demographic_authorization_handler.fields")
+                    } %>
+  </div>
+  <div class="field">
+    <%= form.date_field :date_of_birth %>
+  </div>
+</div>
