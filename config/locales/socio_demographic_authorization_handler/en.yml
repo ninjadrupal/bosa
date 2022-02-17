@@ -1,0 +1,64 @@
+---
+en:
+  decidim:
+    authorization_handlers:
+      socio_demographic_authorization_handler:
+        name: Socio-demographic authorization
+        explanation: Complete your profile with additional socio-demographic information
+
+        fields:
+          category: Category
+          gender: Gender
+          age: Age
+          study_level: Study level
+          scope_id: Scope
+          postal_code: Postal code
+
+        categories:
+          blank_option: Please specify category
+          citizen: Citizen
+          association: Association
+          academic_environment: Academic environment
+          local_authorities: Local authorities
+        age_slices:
+          blank_option: Please specify an age slice
+        genders:
+          blank_option: Please specify gender
+          man: Man
+          woman: Woman
+          undefined: Undefined
+        scope_id:
+          blank_option: Please specify scope
+        postal_codes:
+          blank_option: Please specify postal code
+
+        errors:
+          messages:
+            integer_only: Integer only
+
+      brucity_socio_demographic_authorization_handler:
+        name: Brucity - your personal data
+        explanation: Complete your profile with additional socio-demographic information
+
+        fields:
+          residence: Place of residence
+          gender: Gender
+          date_of_birth: Date of birth
+
+        residences:
+          blank_option: Please specify the residence
+          haren: Haren
+          laeken-nord: Laeken-Nord
+          laken-south: Laeken-South
+          neder-over-heembeek: Neder-over-Heembeek
+          pentagone: Pentagone
+          european_district: European district
+          louise_district: Louise district
+          north_district: North district
+          outside_the_city_but_within_brussels-capital_region: Outside the City but within Brussels-Capital region
+          outside_of_brussels-capital_region: Outside of Brussels-Capital region
+        genders:
+          blank_option: Please specify gender
+          man: Man
+          woman: Woman
+          undefined: Undefined
