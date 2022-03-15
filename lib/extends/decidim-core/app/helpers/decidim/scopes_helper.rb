@@ -7,12 +7,12 @@ module ScopesHelperExtend
 
   included do
 
-    def current_participatory_space
-      # This is a stub
-      # Used to fix failing test: /spec/decidim-assemblies/spec/helpers/decidim/scopes_helper_spec.rb
-      # TODO: double check after upgrade to 0.24.3
-      raise NotImplementedError
-    end
+    # def current_participatory_space
+    #   # This is a stub
+    #   # Used to fix failing test: /spec/decidim-assemblies/spec/helpers/decidim/scopes_helper_spec.rb
+    #   # TODO: double check after upgrade to 0.24.3
+    #   raise NotImplementedError
+    # end
 
   end
 end
