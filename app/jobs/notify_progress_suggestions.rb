@@ -2,9 +2,8 @@
 
 class NotifyProgressSuggestions < ApplicationJob
   def perform
-    application_name = Rails.application.class.parent_name
-    application = Object.const_get(application_name)
-    application::Application.load_tasks
+    DecidimAws::Application.load_tasks if Rake::Task.tasks.empty?
+    Rake::Task["decidim_suggestions:notify_progress"].reenable
     Rake::Task["decidim_suggestions:notify_progress"].invoke
   end
 end

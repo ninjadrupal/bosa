@@ -2,9 +2,8 @@
 
 class PreloadOpenDataJob < ApplicationJob
   def perform
-    application_name = Rails.application.class.parent_name
-    application = Object.const_get(application_name)
-    application::Application.load_tasks
+    DecidimAws::Application.load_tasks if Rake::Task.tasks.empty?
+    Rake::Task["decidim:open_data:export"].reenable
     Rake::Task["decidim:open_data:export"].invoke
   end
 end
