@@ -437,7 +437,9 @@ nl:
       assemblies:
         assembly:
           more_info: Meer informatie
+          more_info_about: Meer informatie over overlegcommissie %{resource_name}
           take_part: Deelnemen
+          take_part_in: Deelnemen aan overlegcommissie %{resource_name}
         index:
           children: 'Overlegcommissies: '
           organizational_chart: Organogram
@@ -449,7 +451,9 @@ nl:
             other: "%{count} overlegcommissies"
         promoted_assembly:
           more_info: Meer informatie
+          more_info_about: Meer informatie over overlegcommissie %{resource_name}
           take_part: Deelnemen
+          take_part_in: Deelnemen aan overlegcommissie %{resource_name}
       assembly_navigation:
         assembly_member_menu_item: Leden
         assembly_menu_item: De bijeenkomst

@@ -3,5 +3,7 @@ nl:
   decidim:
     debates:
       debates:
+        debate:
+          participate_in: Deelnemen aan %{debate_name}
         show:
           back: Back to list
