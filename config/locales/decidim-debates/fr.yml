@@ -3,7 +3,5 @@ fr:
   decidim:
     debates:
       debates:
-        debate:
-          participate_in: Participer au débat %{debate_name}
         show:
           back: Retour à la liste
