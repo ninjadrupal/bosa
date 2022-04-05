@@ -10,10 +10,11 @@ module TermCustomizerAdminCachesControllerExtend
     def clear
       enforce_permission_to :update, :organization
 
-      Decidim::TermCustomizer.loader.clear_cache
-      if current_organization&.id
-        Rails.cache.delete_matched("decidim_term_customizer/organization_#{current_organization&.id}") rescue nil
-      end
+      # Decidim::TermCustomizer.loader.clear_cache
+      # if current_organization&.id
+      #   Rails.cache.delete_matched("decidim_term_customizer/organization_#{current_organization&.id}") rescue nil
+      # end
+      Rails.cache.clear
 
       flash[:notice] = I18n.t("caches.clear.success", scope: "decidim.term_customizer.admin")
 
