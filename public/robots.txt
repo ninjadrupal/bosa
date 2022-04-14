@@ -1,6 +1,8 @@
 # See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
 
 User-agent: *
+Disallow: /profiles/
+Disallow: /processes/*/*/*/results
 Disallow: /*/*/*/*/proposals/
 Disallow: /*.png$
 Disallow: /*/*/*/*/*/*/versions/
