@@ -1,0 +1,8 @@
+---
+en:
+  decidim:
+    accountability:
+      versions:
+        show:
+          no_display: This version comparison can't be displayed because it contains large images, we are working on a fix.
+
