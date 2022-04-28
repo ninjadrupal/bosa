@@ -42,7 +42,7 @@ module OrganizationExtend
       return true if !user || user.admin?
       allowed_regions = initiatives_settings_allowed_regions(action)
       return true if allowed_regions.blank?
-      region_codes = Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.slice(*allowed_regions).values.pluck(:municipalities).flatten.map {|m| m[:idM]}.uniq
+      region_codes = Decidim::Organization::INITIATIVES_SETTINGS_ALLOWED_REGIONS.slice(*allowed_regions).values.pluck(:municipalities).flatten.map { |m| m[:idM] }.uniq
       return true if region_codes.blank?
 
       authorization = Decidim::Initiatives::UserAuthorizations.for(user).where(name: :csam).first
@@ -75,6 +75,18 @@ module OrganizationExtend
 
     def basic_auth_enabled?
       self.basic_auth_username.present? || self.basic_auth_password.present?
+    end
+
+    def enabled_omniauth_providers
+      # This method is called many times at login page display.
+      # It includes decryption which has a high consumption of resources.
+      # For those reasons low-level caching is used, see https://guides.rubyonrails.org/caching_with_rails.html#low-level-caching
+      Rails.cache.fetch("#{cache_key_with_version}/enabled_omniauth_providers", expires_in: 1.day) do
+        return Decidim::OmniauthProvider.enabled || {} if omniauth_settings.nil?
+
+        default_except_disabled = Decidim::OmniauthProvider.enabled.except(*tenant_disabled_providers_keys)
+        default_except_disabled.merge(tenant_enabled_providers)
+      end
     end
 
   end
