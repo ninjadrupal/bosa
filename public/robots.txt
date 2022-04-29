@@ -3,7 +3,7 @@
 User-agent: *
 Disallow: /profiles/
 Disallow: /processes/*/*/*/results
-Disallow: /*/*/*/*/proposals/
+Disallow: /*/*/*/*/proposals?*filter*
 Disallow: /*.png$
 Disallow: /*/*/*/*/*/*/versions/
 Disallow: /users/auth/csam
