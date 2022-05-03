@@ -17,10 +17,10 @@
     <% accepts_online_and_offline_votes = current_initiative.accepts_online_votes? && current_initiative.accepts_offline_votes? %>
     <% multiple_scopes = current_initiative.votable_initiative_type_scopes.count > 1 %>
     <% if accepts_online_and_offline_votes || multiple_scopes %>
-      <% current_initiative.votable_initiative_type_scopes.each_with_index do |type_scope, index| %>
+      <% current_initiative.votable_initiative_type_scopes.each do |type_scope| %>
         <% next if multiple_scopes && type_scope.global_scope? %>
 
-        <% if current_initiative.accepts_online_votes? %>
+        <% if current_initiative.online_signature_type? || current_initiative.any_signature_type? %>
           <%= cell(
                   "decidim/progress_bar",
                   current_initiative.online_votes_count_for(type_scope.scope),
@@ -34,7 +34,7 @@
                   horizontal: true
               ) %>
         <% end %>
-        <% if current_initiative.accepts_offline_votes? %>
+        <% if current_initiative.offline_signature_type? || current_initiative.any_signature_type? %>
           <%= cell(
                   "decidim/progress_bar",
                   current_initiative.offline_votes_count_for(type_scope.scope),
