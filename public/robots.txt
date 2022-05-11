@@ -4,6 +4,7 @@ User-agent: *
 Disallow: /profiles/
 Disallow: /processes/*/*/*/results
 Disallow: /*/*/*/*/proposals?*filter*
+Disallow: /initiatives?*filter*
 Disallow: /*.png$
 Disallow: /*/*/*/*/*/*/versions/
 Disallow: /users/auth/csam
@@ -11,3 +12,5 @@ Disallow: /users/auth/saml
 Disallow: /*.ico$
 Disallow: /*.txt$
 Disallow: /*.jpg$
+Disallow: /*${link}
+Disallow: /api/

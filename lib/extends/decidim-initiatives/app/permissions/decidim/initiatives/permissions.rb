@@ -49,6 +49,8 @@ module PermissionsExtend
       return unless [:initiative, :participatory_space].include?(permission_action.subject) &&
         permission_action.action == :read
 
+      raise ActionController::RoutingError, "Not Found" unless initiative
+
       return allow! if readable?(initiative)
       return allow! if user && (initiative.has_authorship?(user) || user.admin?)
 
