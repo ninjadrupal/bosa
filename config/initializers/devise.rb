@@ -3,6 +3,22 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 
+# Devise failure app to randomly stall failed login attempts, to prevent timing attacks.
+class RandomStalling < Devise::FailureApp
+  def respond
+    sleep rand * 5
+    super
+  end
+
+  protected
+
+  def i18n_options(options)
+    options[:locale] =
+      session[:user_locale] || Decidim::Organization.find_by(host: request.host).try(:default_locale) || :nl
+    super
+  end
+end
+
 ::Devise.setup do |config|
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this
