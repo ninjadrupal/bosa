@@ -6,6 +6,7 @@ class CheckPublishedInitiatives < ApplicationJob
     Rake::Task["decidim_initiatives:check_published"].clear
 
     load Rails.root.join('lib', 'tasks', 'decidim_initiatives_extras.rake')
+    Rake::Task['decidim_initiatives:check_published'].reenable
     Rake::Task['decidim_initiatives:check_published'].invoke
   end
 end
