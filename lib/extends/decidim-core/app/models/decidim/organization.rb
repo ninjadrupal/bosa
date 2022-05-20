@@ -91,15 +91,15 @@ module OrganizationExtend
         hash[provider_key] = begin
           omniauth_settings.each_with_object({}) do |(key, value), provider_settings|
             next unless key.to_s.include?(provider_key.to_s)
-            Rails.logger.info " TCO decryption"
             value = Decidim::AttributeEncryptor.decrypt(value) if Decidim::OmniauthProvider.value_defined?(value)
             setting_key = Decidim::OmniauthProvider.extract_setting_key(key, provider_key)
+            Rails.logger.info " TCO decryption done for key #{setting_key}"
             provider_settings[setting_key] = value
           end
         end
       end
+      Rails.logger.info " TCO returns cached value for key #{provider}"
       @omniauth_provider_settings[provider]
-      Rails.logger.info " TCO returns cached value #{@omniauth_provider_settings[provider]} for key #{provider}"
     end
 
   end
