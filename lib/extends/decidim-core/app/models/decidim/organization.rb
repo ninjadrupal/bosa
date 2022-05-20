@@ -78,6 +78,7 @@ module OrganizationExtend
     end
 
     def omniauth_provider_settings(provider)
+      Rails.logger.info ' TCO check 1'
       @omniauth_provider_settings ||= Hash.new do |hash, provider_key|
         hash[provider_key] = begin
           omniauth_settings.each_with_object({}) do |(key, value), provider_settings|
