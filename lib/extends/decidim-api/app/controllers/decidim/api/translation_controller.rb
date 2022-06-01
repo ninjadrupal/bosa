@@ -9,12 +9,18 @@ module Decidim
         if params[:original].present? && params[:target].present?
           auth_key = current_organization.try(:deepl_api_key) || Rails.application.secrets.try(:deepl_api_key)
 
-          target = params[:target]
-          encode_text = CGI.escape(params[:original])
+          uri = URI.parse("https://api.deepl.com/v2/translate")
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
 
-          uri = URI.parse("https://api.deepl.com/v2/translate?target_lang=#{target}&text=#{encode_text}&auth_key=#{auth_key}&tag_handling=xml")
+          request = Net::HTTP::Post.new(uri)
+          request.set_form_data(target_lang: params[:target],
+                                text: params[:original],
+                                auth_key: auth_key,
+                                tag_handling: "xml")
 
-          result = api_request(uri)
+          response = http.request(request)
+          result = response.body.empty? ? empty_response : JSON.parse(response.body)
 
           render json: result
         else
@@ -23,21 +29,6 @@ module Decidim
       end
 
       private
-
-      def api_request(uri)
-        request = Net::HTTP::Get.new(uri)
-        request.content_type = "application/json"
-        req_options = {
-          use_ssl: uri.scheme == "https"
-        }
-
-        Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
-          req = http.request(request)
-          return empty_response if req.body.empty?
-
-          JSON.parse(req.body)
-        end
-      end
 
       def empty_response
         { status: :empty_response }
