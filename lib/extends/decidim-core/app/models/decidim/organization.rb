@@ -77,23 +77,16 @@ module OrganizationExtend
       self.basic_auth_username.present? || self.basic_auth_password.present?
     end
 
-    def omniauth_provider_settings(provider)
-      Rails.logger.info " TCO check 1 with provider #{provider}"
-      Rails.logger.info " TCO omniauth_provider_settings.size #{@omniauth_provider_settings.size}" if @omniauth_provider_settings
-      @omniauth_provider_settings ||= Hash.new do |hash, provider_key|
-        Rails.logger.info " TCO cache empty"
-        hash[provider_key] = begin
-          omniauth_settings.each_with_object({}) do |(key, value), provider_settings|
-            next unless key.to_s.include?(provider_key.to_s)
-            value = Decidim::AttributeEncryptor.decrypt(value) if Decidim::OmniauthProvider.value_defined?(value)
-            setting_key = Decidim::OmniauthProvider.extract_setting_key(key, provider_key)
-            Rails.logger.info " TCO decryption done for key #{setting_key}"
-            provider_settings[setting_key] = value
-          end
-        end
+    def enabled_omniauth_providers
+      # This methods is called up to 10 times at login page display.
+      # It includes decryption which has a high consumption of resources.
+      # For those reasons low-level caching is used, see https://guides.rubyonrails.org/caching_with_rails.html#low-level-caching
+      Rails.cache.fetch("#{cache_key_with_version}/enabled_omniauth_providers", expires_in: 1.day) do
+        return Decidim::OmniauthProvider.enabled || {} if omniauth_settings.nil?
+
+        default_except_disabled = Decidim::OmniauthProvider.enabled.except(*tenant_disabled_providers_keys)
+        default_except_disabled.merge(tenant_enabled_providers)
       end
-      Rails.logger.info " TCO returns cached value for key #{provider}"
-      @omniauth_provider_settings[provider]
     end
 
   end
