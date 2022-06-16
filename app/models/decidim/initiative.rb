@@ -469,6 +469,12 @@ module Decidim
       organization.available_authorizations.include?("sms") && type.validate_sms_code_on_votes?
     end
 
+    # Defines a way to get the user roles for the current participatory space.
+    # See Decidim::ParticipatorySpaceResourceable
+    def user_roles(_role_name = nil)
+      self.class.none
+    end
+
     # Public: Returns an empty object. This method should be implemented by
     # `ParticipatorySpaceResourceable`, but for some reason this model does not
     # implement this interface.
