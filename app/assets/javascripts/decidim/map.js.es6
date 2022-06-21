@@ -97,6 +97,17 @@ const loadMap = (mapId, markersData) => {
   return map;
 };
 
+const currentLanguage = () => {
+  switch (window.Decidim.locale) {
+    case 'fr':
+      return 'fre';
+    case 'nl':
+      return 'dut';
+    default:
+      return '';
+  }
+}
+
 window.Decidim = window.Decidim || {};
 
 window.Decidim.loadMap = loadMap;
@@ -119,7 +130,7 @@ $(() => {
 
   let mapApiConfig = null;
   if (hereApiKey) {
-    mapApiConfig = { apiKey: hereApiKey };
+    mapApiConfig = { apiKey: hereApiKey, language: currentLanguage() };
   } else {
     mapApiConfig = {
       appId: hereAppId,
