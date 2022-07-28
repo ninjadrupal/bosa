@@ -2,7 +2,9 @@
 
 User-agent: *
 Disallow: /profiles/
+Disallow: /processes?*filter*
 Disallow: /processes/*/*/*/results
+Disallow: /processes/*/*/*/results?*filter*
 Disallow: /*/*/*/*/proposals?*filter*
 Disallow: /initiatives?*filter*
 Disallow: /*.png$
@@ -14,3 +16,4 @@ Disallow: /*.txt$
 Disallow: /*.jpg$
 Disallow: /*${link}
 Disallow: /api/
+Disallow: /*.php
