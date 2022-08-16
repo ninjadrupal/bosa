@@ -15,17 +15,33 @@ Dependencies required to run the program and the version
 - PostgreSQL 12
 - Redis 6
 - ImageMagick 6+
+- NodeJS
 
-## Development environment
+## Setup the Development environment
 
-### Setup
+### Setup without docker 
 
-You will need to do some steps before having the app working properly once you've pulled it from git:
+You will need to do some steps before having the app working properly once you've pulled it from git and installed the dependencies:
 
 * make local copy for `.env` based on `.env.example`
-* make db setup via `bin/rails db:setup`
+* Install the correct version of rails and bundler and install the rails dependencies by running `bundle install`.
+* Make sure the postgress user and password are the same as in the .env file `DATABASE_USERNAME` and `DATABASE_PASSWORD`. To do so, you can follow the instruction from [this section](#setup-users-password-of-the-postgres-database)
+* create the database by running `bin/rails db:setup`
 
-### Setup via docker
+### Setup user's password of the postgres Database
+You will not be able to find the postgres password used in the creation of the database but you can change the password of the existing super user to comply with the password set in `.env` file.
+* Get the list of postgres user: `sudo -u postgres psql -c "\du"`
+* To change the password of the existing postgres user: 
+  1. Retrieve the username in the `Role Name` column from the command above
+  2. Edit and run this command by changing "yourusername" with the postgres username (default: postgres) and "yournewpass" with the new password you want to apply:
+  ```
+  sudo -u postgres psql -c "ALTER USER yourusername WITH PASSWORD 'yournewpass'"
+  ```
+* You can also access the postgres console by running `sudo -u postgres psql -c` and run any database command line from this new console.
+
+### Setup via docker [Not working anymore]
+
+You will find the instructions to setup the docker environement in this [readme file](./ops/README.md).
 
 #### Structure
 
