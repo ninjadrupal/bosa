@@ -192,3 +192,22 @@ Then:
 
 Now you are able to start the service with `systemctl --user start sidekiq.service`.
 
+## Deployment
+
+### Requirements for the First Deployment
+
+#### Setup Pritunl
+* Install pritunl client on your computer following [this link](https://client.pritunl.com/#install)
+* Ask the tech leader of the project to create your profile to connect on the Pritunl VPN
+* Link a two step authentification to your profile (you can use google authenticator)
+* Import your Pritunl profile to your pritunl client on your computer
+
+### Deployment
+* Create a tag on the commit you want to deploy in the master branch. The tag name should follow these conventions:
+  - ***Staging***: rc-version_number (ex: rc-0.0.25)
+  - ***Production***: version_number (ex: 0.0.25)
+* Connect to Bosa Pritunl VPN using your profile.
+* Click the `Scan Multibranch Pipeline Now` to check all the new tag created on the github branch.
+* Click on the new tag you created.
+* Click the `Build Now` button on the left tab.
+* Check if the build has correctly been released in production or in staging depending on the tag name starting with `rc` or not.
