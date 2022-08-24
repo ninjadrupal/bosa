@@ -16,8 +16,19 @@ if manifest.present? && manifest.export_manifests.present?
   export_manifest = manifest.export_manifests.find {|m| m.name == :initiatives}
 
   if export_manifest.present? && !export_manifest.include_in_open_data
-    export_manifest.collection do |initiative|
-      Decidim::Initiative.where(id: initiative.id)
+    # export_manifest.collection do |initiative|
+    #   Decidim::Initiative.where(id: initiative.id)
+    # end
+    export_manifest.collection do |initiative_ids|
+      Decidim::Initiative.where(id: initiative_ids).includes(
+        :author,
+        :attachment_collections,
+        :attachments,
+        :components,
+        :organization,
+        :votes,
+        scoped_type: :type
+      )
     end
 
     export_manifest.include_in_open_data = true
