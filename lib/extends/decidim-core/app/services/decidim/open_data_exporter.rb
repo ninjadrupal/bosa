@@ -29,7 +29,7 @@ module OpenDataExporterExtend
         components.where(manifest_name: export_manifest.manifest.name).find_each do |component|
           export_manifest.collection.call(component).find_in_batches(batch_size: 100) do |batch|
             exporter = Decidim::Exporters::CSV.new(batch, export_manifest.serializer)
-            headers.push(*exporter.headers)
+            headers.push(*exporter.send(:headers))
             exported = exporter.export
 
             tmpfile = Tempfile.new("#{export_manifest.name}-#{component.id}-")
@@ -56,9 +56,11 @@ module OpenDataExporterExtend
     end
 
     def data_for_participatory_space(export_manifest)
-      collection = participatory_spaces.filter { |space| space.manifest.name == export_manifest.manifest.name }.flat_map do |participatory_space|
-        export_manifest.collection.call(participatory_space)
-      end
+      # collection = participatory_spaces.filter { |space| space.manifest.name == export_manifest.manifest.name }.flat_map do |participatory_space|
+      #   export_manifest.collection.call(participatory_space)
+      # end
+      ids = participatory_spaces.filter { |space| space.manifest.name == export_manifest.manifest.name }.flat_map.map(&:id)
+      collection = export_manifest.collection.call(ids)
 
       Decidim::Exporters::CSV.new(collection, export_manifest.serializer).export
     end
